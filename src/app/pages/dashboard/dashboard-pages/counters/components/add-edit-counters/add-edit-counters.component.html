@@ -1,0 +1,9 @@
+<app-generic-form
+  [fields]="formFields"
+  [entityType]="'about-counters'"
+  [title]="isEditMode ? 'Edit Counter' : 'Add Counter'"
+  [redirectRoute]="'/dashboard/menu/counters/counters-index'"
+  [isEdit]="isEditMode"
+  [editData]="editData"
+  [extraFormData]="extraFormData">
+</app-generic-form>

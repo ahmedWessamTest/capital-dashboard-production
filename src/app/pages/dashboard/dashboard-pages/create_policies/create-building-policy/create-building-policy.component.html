@@ -1,0 +1,350 @@
+<form [formGroup]="policyForm" (ngSubmit)="onSubmit()">
+  <div class="flex flex-col gap-2 pt-8 px-4 policy-form">
+    <!-- @if (message?.text) {
+      <div [ngClass]="{
+        'bg-green-100 border-green-400 text-green-700': message?.type === 'success',
+        'bg-red-100 border-red-400 text-red-700': message?.type === 'error'
+      }" class="border px-4 py-3 rounded relative mb-4" role="alert">
+        <strong class="font-bold">{{ message?.type === 'success' ? 'Success!' : 'Error!' }}</strong>
+        <span class="block sm:inline ml-2">{{ message?.text }}</span>
+      </div>
+    } -->
+
+    <div class="flex flex-col sm:flex-row sm:justify-between gap-4 mb-3">
+      <div class="form-control-container flex-1">
+        <label for="user" class="flex items-center gap-1 mx-2 mb-2 font-semibold">User</label>
+        <div class="h-20">
+          <p-dropdown
+            id="user"
+            [ngClass]="{'cursor-disabled-drop': isSubmitting}"
+            [formControlName]="'user'"
+            [options]="users"
+            optionLabel="name"
+            [placeholder]="'Select User'"
+            [filter]="true"
+            filterBy="name"
+            [disabled]="isSubmitting"
+            [class.ng-dirty]="policyForm.get('user')?.dirty || policyForm.get('user')?.touched"
+            [class.ng-invalid]="policyForm.get('user')?.invalid && (policyForm.get('user')?.dirty || policyForm.get('user')?.touched)"
+            class="w-full"
+          ></p-dropdown>
+          @if (policyForm.get('user')?.invalid && (policyForm.get('user')?.dirty || policyForm.get('user')?.touched)) {
+            <small class="text-red-500 form-error">User is required.</small>
+          }
+        </div>
+      </div>
+      <div class="form-control-container flex-1">
+        <label for="admin_building_insurance_number" class="flex items-center gap-1 mx-2 mb-2 font-semibold">Admin Building Insurance Number</label>
+        <div class="h-20">
+          <input
+            type="text"
+            id="admin_building_insurance_number"
+            [formControlName]="'admin_building_insurance_number'"
+            [placeholder]="'Admin Building Insurance Number'"
+            [disabled]="isSubmitting"
+            [ngClass]="{'cursor-disabled': isSubmitting}"
+            class="form-input w-full"
+            [class.ng-dirty]="policyForm.get('admin_building_insurance_number')?.dirty || policyForm.get('admin_building_insurance_number')?.touched"
+            [class.ng-invalid]="policyForm.get('admin_building_insurance_number')?.invalid && (policyForm.get('admin_building_insurance_number')?.dirty || policyForm.get('admin_building_insurance_number')?.touched)"
+          >
+          @if (policyForm.get('admin_building_insurance_number')?.invalid && (policyForm.get('admin_building_insurance_number')?.dirty || policyForm.get('admin_building_insurance_number')?.touched)) {
+            <small class="text-red-500 form-error">
+              {{ policyForm.get('admin_building_insurance_number')?.errors?.['required'] ? 'Admin Building Insurance Number is required.':"" }}
+
+            </small>
+          }
+        </div>
+      </div>
+   
+    </div>
+
+    <div class="flex flex-col sm:flex-row sm:justify-between gap-4 mb-3">
+      <div class="form-control-container flex-1">
+        <label for="name" class="flex items-center gap-1 mx-2 mb-2 font-semibold">
+          Name
+          <span class="text-gray-500 text-sm">Read only</span>
+        </label>
+        <div class="h-20">
+          <input
+            type="text"
+            id="name"
+            [formControlName]="'name'"
+            [placeholder]="'Name'"
+            [disabled]="true"
+            [ngClass]="{'cursor-disabled': true}"
+            class="form-input w-full"
+          >
+        </div>
+      </div>
+      <div class="form-control-container flex-1">
+        <label for="email" class="flex items-center gap-1 mx-2 mb-2 font-semibold">
+          Email
+          <span class="text-gray-500 text-sm">Read only</span>
+        </label>
+        <div class="h-20">
+          <input
+            type="text"
+            id="email"
+            [formControlName]="'email'"
+            [placeholder]="'Email'"
+            [disabled]="true"
+            [ngClass]="{'cursor-disabled': true}"
+            class="form-input w-full"
+          >
+          @if (policyForm.get('email')?.invalid && (policyForm.get('email')?.dirty || policyForm.get('email')?.touched)) {
+            <small class="text-red-500 form-error">
+              {{ policyForm.get('email')?.errors?.['required'] ? 'Email is required.' : 'Invalid email format.' }}
+            </small>
+          }
+        </div>
+      </div>
+      <div class="form-control-container flex-1">
+        <label for="phone" class="flex items-center gap-1 mx-2 mb-2 font-semibold">
+          Phone
+          <span class="text-gray-500 text-sm">Read only</span>
+        </label>
+        <div class="h-20">
+          <input
+            type="text"
+            id="phone"
+            [formControlName]="'phone'"
+            [placeholder]="'Phone'"
+            [disabled]="true"
+            [ngClass]="{'cursor-disabled': true}"
+            class="form-input w-full"
+          >
+          @if (policyForm.get('phone')?.invalid && (policyForm.get('phone')?.dirty || policyForm.get('phone')?.touched)) {
+            <small class="text-red-500 form-error">
+              {{ policyForm.get('phone')?.errors?.['required'] ? 'Phone is required.' : 'Invalid phone number.' }}
+            </small>
+          }
+        </div>
+      </div>
+    </div>
+
+    <div class="flex flex-col sm:flex-row sm:justify-between gap-4 mb-3">
+      <div class="form-control-container flex-1">
+        <label for="build_type" class="flex items-center gap-1 mx-2 mb-2 font-semibold">Building Type</label>
+        <div class="h-20">
+          <p-dropdown
+            id="build_type"
+            [ngClass]="{'cursor-disabled-drop': isSubmitting}"
+            [formControlName]="'build_type'"
+            [options]="types"
+            optionLabel="en_title"
+            [placeholder]="'Select Building Type'"
+            [filter]="true"
+            filterBy="en_title"
+            [disabled]="isSubmitting"
+            [class.ng-dirty]="policyForm.get('build_type')?.dirty || policyForm.get('build_type')?.touched"
+            [class.ng-invalid]="policyForm.get('build_type')?.invalid && (policyForm.get('build_type')?.dirty || policyForm.get('build_type')?.touched)"
+            class="w-full"
+          ></p-dropdown>
+          @if (policyForm.get('build_type')?.invalid && (policyForm.get('build_type')?.dirty || policyForm.get('build_type')?.touched)) {
+            <small class="text-red-500 form-error">Building Type is required.</small>
+          }
+        </div>
+      </div>
+      <div class="form-control-container flex-1">
+        <label for="country" class="flex items-center gap-1 mx-2 mb-2 font-semibold">Country</label>
+        <div class="h-20">
+          <p-dropdown
+            id="country"
+            [ngClass]="{'cursor-disabled-drop': isSubmitting}"
+            [formControlName]="'country'"
+            [options]="countries"
+            optionLabel="en_title"
+            [placeholder]="'Select Country'"
+            [filter]="true"
+            filterBy="en_title"
+            [disabled]="isSubmitting"
+            [class.ng-dirty]="policyForm.get('country')?.dirty || policyForm.get('country')?.touched"
+            [class.ng-invalid]="policyForm.get('country')?.invalid && (policyForm.get('country')?.dirty || policyForm.get('country')?.touched)"
+            class="w-full"
+          ></p-dropdown>
+          @if (policyForm.get('country')?.invalid && (policyForm.get('country')?.dirty || policyForm.get('country')?.touched)) {
+            <small class="text-red-500 form-error">Country is required.</small>
+          }
+        </div>
+
+      </div>
+    
+    </div>
+
+    <div class="flex flex-col sm:flex-row sm:justify-between gap-4 mb-3">
+      <div class="form-control-container flex-1">
+        <label for="building_value" class="flex items-center gap-1 mx-2 mb-2 font-semibold">Building Value (LE)</label>
+        <div class="h-20">
+          <input
+            type="text"
+            id="building_value"
+            [formControlName]="'building_value'"
+            [placeholder]="'Building Value (LE)'"
+            (input)="restrictToNumbers($event)"
+            [disabled]="isSubmitting"
+            [ngClass]="{'cursor-disabled': isSubmitting}"
+            class="form-input w-full"
+            [class.ng-dirty]="policyForm.get('building_value')?.dirty || policyForm.get('building_value')?.touched"
+            [class.ng-invalid]="policyForm.get('building_value')?.invalid && (policyForm.get('building_value')?.dirty || policyForm.get('building_value')?.touched)"
+          >
+          @if (policyForm.get('building_value')?.invalid && (policyForm.get('building_value')?.dirty || policyForm.get('building_value')?.touched)) {
+            <small class="text-red-500 form-error">
+              {{ policyForm.get('building_value')?.errors?.['required'] ? 'Building Value is required.' : 'Building Value must be at least 500,000 LE.' }}
+            </small>
+          }
+        </div>
+      </div>
+      <div class="form-control-container flex-1">
+        <label for="building_insurance" class="flex items-center gap-1 mx-2 mb-2 font-semibold">Building Insurance</label>
+        <div class="h-20">
+          <p-dropdown
+            id="building_insurance"
+            [ngClass]="{'cursor-disabled-drop': isSubmitting}"
+            [formControlName]="'building_insurance'"
+            [options]="insurances"
+            optionLabel="en_title"
+            [placeholder]="'Select Building Insurance'"
+            [filter]="true"
+            filterBy="en_title"
+            [disabled]="isSubmitting"
+            [class.ng-dirty]="policyForm.get('building_insurance')?.dirty || policyForm.get('building_insurance')?.touched"
+            [class.ng-invalid]="policyForm.get('building_insurance')?.invalid && (policyForm.get('building_insurance')?.dirty || policyForm.get('building_insurance')?.touched)"
+            class="w-full"
+          ></p-dropdown>
+          @if (policyForm.get('building_insurance')?.invalid && (policyForm.get('building_insurance')?.dirty || policyForm.get('building_insurance')?.touched)) {
+            <small class="text-red-500 form-error">Building Insurance is required.</small>
+          }
+        </div>
+      </div>
+    </div>
+
+    <div class="flex flex-col sm:flex-row sm:justify-between gap-4 mb-3">
+      <div class="form-control-container flex-1">
+        <label for="payment_method" class="flex items-center gap-1 mx-2 mb-2 font-semibold">Payment Method</label>
+        <div class="h-20">
+          <p-dropdown
+            id="payment_method"
+            [ngClass]="{'cursor-disabled-drop': isSubmitting}"
+            [formControlName]="'payment_method'"
+            [options]="paymentMethods"
+            optionLabel="label"
+            optionValue="value"
+            [placeholder]="'Select Payment Method'"
+            [disabled]="isSubmitting"
+            [class.ng-dirty]="policyForm.get('payment_method')?.dirty || policyForm.get('payment_method')?.touched"
+            [class.ng-invalid]="policyForm.get('payment_method')?.invalid && (policyForm.get('payment_method')?.dirty || policyForm.get('payment_method')?.touched)"
+            class="w-full"
+          ></p-dropdown>
+          @if (policyForm.get('payment_method')?.invalid && (policyForm.get('payment_method')?.dirty || policyForm.get('payment_method')?.touched)) {
+            <small class="text-red-500 form-error">Payment Method is required.</small>
+          }
+        </div>
+      </div>
+      <div class="form-control-container flex-1">
+        <label for="active_status" class="flex items-center gap-1 mx-2 mb-2 font-semibold">Active Status</label>
+        <div class="h-20">
+          <p-dropdown
+            id="active_status"
+            [ngClass]="{'cursor-disabled-drop': isSubmitting}"
+            [formControlName]="'active_status'"
+            [options]="activeStatuses"
+            optionLabel="label"
+            optionValue="value"
+            [placeholder]="'Select Active Status'"
+            [disabled]="isSubmitting"
+            [class.ng-dirty]="policyForm.get('active_status')?.dirty || policyForm.get('active_status')?.touched"
+            [class.ng-invalid]="policyForm.get('active_status')?.invalid && (policyForm.get('active_status')?.dirty || policyForm.get('active_status')?.touched)"
+            class="w-full"
+          ></p-dropdown>
+          @if (policyForm.get('active_status')?.invalid && (policyForm.get('active_status')?.dirty || policyForm.get('active_status')?.touched)) {
+            <small class="text-red-500 form-error">Active Status is required.</small>
+          }
+        </div>
+      </div>
+    </div>
+
+    <div class="flex flex-col sm:flex-row sm:justify-between gap-4 mb-3">
+      <div class="form-control-container flex-1">
+        <label for="start_date" class="flex items-center gap-1 mx-2 mb-2 font-semibold">Start Date</label>
+        <div class="h-20">
+          <p-calendar
+            id="start_date"
+            [ngClass]="{'cursor-disabled-drop': isSubmitting}"
+            [formControlName]="'start_date'"
+            [dateFormat]="'dd-mm-yy'"
+            [placeholder]="'Start Date'"
+            inputId="icon"
+            [disabled]="isSubmitting"
+            [class.ng-dirty]="policyForm.get('start_date')?.dirty || policyForm.get('start_date')?.touched"
+            [class.ng-invalid]="policyForm.get('start_date')?.invalid && (policyForm.get('start_date')?.dirty || policyForm.get('start_date')?.touched)"
+            class="w-full"
+          ></p-calendar>
+          @if (policyForm.get('start_date')?.invalid && (policyForm.get('start_date')?.dirty || policyForm.get('start_date')?.touched)) {
+            <small class="text-red-500 form-error">Start Date is required.</small>
+          }
+        </div>
+      </div>
+      <div class="form-control-container flex-1">
+        <label for="duration" class="flex items-center gap-1 mx-2 mb-2 font-semibold">Duration (Years)</label>
+        <div class="h-20">
+          <p-dropdown
+            id="duration"
+            [ngClass]="{'cursor-disabled-drop': isSubmitting}"
+            [formControlName]="'duration'"
+            [options]="durations"
+            optionLabel="label"
+            optionValue="value"
+            [placeholder]="'Select Duration (Years)'"
+            [disabled]="isSubmitting"
+            [class.ng-dirty]="policyForm.get('duration')?.dirty || policyForm.get('duration')?.touched"
+            [class.ng-invalid]="policyForm.get('duration')?.invalid && (policyForm.get('duration')?.dirty || policyForm.get('duration')?.touched)"
+            class="w-full"
+          ></p-dropdown>
+          @if (policyForm.get('duration')?.invalid && (policyForm.get('duration')?.dirty || policyForm.get('duration')?.touched)) {
+            <small class="text-red-500 form-error">Duration is required.</small>
+          }
+        </div>
+      </div>
+    </div>
+
+    <div class="flex flex-col sm:flex-row sm:justify-between gap-4 mb-3">
+      <div class="form-control-container flex-1">
+        <label for="end_date" class="flex items-center gap-1 mx-2 mb-2 font-semibold">
+          End Date
+          <small class="text-gray-500 italic mt-1 flex items-center">
+            (Calculated automatically)
+          </small>
+        </label>
+        <div class="h-20">
+          <p-calendar
+            id="end_date"
+            [ngClass]="{'cursor-disabled-drop': true}"
+            [formControlName]="'end_date'"
+            [dateFormat]="'dd-mm-yy'"
+            [placeholder]="'End Date'"
+            inputId="icon"
+            [readonlyInput]="true"
+            [disabled]="true"
+            [class.ng-dirty]="policyForm.get('end_date')?.dirty || policyForm.get('end_date')?.touched"
+            [class.ng-invalid]="policyForm.get('end_date')?.invalid && (policyForm.get('end_date')?.dirty || policyForm.get('end_date')?.touched)"
+            class="w-full cursor-not-allowed"
+          ></p-calendar>
+          @if (policyForm.get('end_date')?.invalid && (policyForm.get('end_date')?.dirty || policyForm.get('end_date')?.touched)) {
+            <small class="text-red-500 form-error">End Date is required.</small>
+          }
+        </div>
+      </div>
+      <div class="form-control-container flex-1"></div>
+    </div>
+
+    <div class="flex justify-end mt-4">
+      <p-button
+        type="submit"
+        icon="pi pi-check"
+        [label]="isSubmitting ? 'Loading...' : 'Create Policy'"
+        [disabled]="policyForm.invalid || isSubmitting"
+        styleClass="text-white bg-blue-400 hover:bg-blue-500 px-y py-2"
+      ></p-button>
+    </div>
+  </div>
+</form>

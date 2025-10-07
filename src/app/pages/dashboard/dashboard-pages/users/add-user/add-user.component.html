@@ -1,0 +1,105 @@
+<div class="card">
+  <h2 class="text-2xl font-semibold mb-4">Add User</h2>
+
+  <form [formGroup]="userForm" (ngSubmit)="onSubmit()">
+    <div class="grid grid-cols-1  gap-4 mb-4">
+      <!-- Basic Information -->
+      <div class="p-4 border rounded">
+        <h3 class="text-lg font-medium mb-4">Basic Information</h3>
+        
+        <!-- Name -->
+        <div class="flex flex-col mb-3 h-20">
+          <label for="name" class="block text-sm font-medium mb-1">Name *</label>
+          <input
+            id="name"
+            type="text"
+            pInputText
+            formControlName="name"
+            class="w-full h-10"
+            [ngClass]="{'ng-invalid ng-dirty': userForm.get('name')?.touched && userForm.get('name')?.invalid}" />
+          @if (userForm.get('name')?.touched && userForm.get('name')?.errors?.['required']) {
+            <small class="mt-1 text-red-500">Name is required.</small>
+          }
+        </div>
+
+ <!-- Phone -->
+ <div class="flex flex-col mb-3 h-20">
+  <label for="phone" class="block text-sm font-medium mb-1">Phone</label>
+  <input
+    id="phone"
+    type="text"
+    pInputText
+    formControlName="phone"
+    class="w-full h-10"
+    [ngClass]="{'ng-invalid ng-dirty': userForm.get('phone')?.touched && userForm.get('phone')?.invalid}" />
+  @if (userForm.get('phone')?.touched && userForm.get('phone')?.errors) {
+    <small class="mt-1 text-red-500">
+      @if (userForm.get('phone')?.errors?.['pattern']) {
+        Phone must be 11 digits.
+      }
+    </small>
+  }
+</div>
+
+<!-- Role -->
+<div class="form-control-container flex-1">
+  <label for="role" class="flex items-center gap-1 mx-2 mb-2 font-semibold">Role *</label>
+  <div class="h-20">
+    <p-dropdown
+      id="role"
+      [ngClass]="{'cursor-disabled-drop': isSubmitting}"
+      [formControlName]="'role'"
+      [options]="roles"
+      optionLabel="label"
+      optionValue="value"
+      [placeholder]="'Select Role'"
+      [disabled]="isSubmitting"
+      [class.ng-dirty]="userForm.get('role')?.dirty || userForm.get('role')?.touched"
+      [class.ng-invalid]="userForm.get('role')?.invalid && (userForm.get('role')?.dirty || userForm.get('role')?.touched)"
+      class="w-full"
+    ></p-dropdown>
+    @if (userForm.get('role')?.invalid && (userForm.get('role')?.dirty || userForm.get('role')?.touched)) {
+      <small class="text-red-500 form-error">Role is required.</small>
+    }
+  </div>
+</div>
+
+        <!-- Email -->
+        <div class="flex flex-col mb-3 h-20">
+          <label for="email" class="block text-sm font-medium mb-1">Email *</label>
+          <input
+            id="email"
+            type="email"
+            pInputText
+            formControlName="email"
+            class="w-full h-10"
+            [ngClass]="{'ng-invalid ng-dirty': userForm.get('email')?.touched && userForm.get('email')?.invalid}" />
+          @if (userForm.get('email')?.touched && userForm.get('email')?.errors) {
+            <small class="mt-1 text-red-500">
+              @if (userForm.get('email')?.errors?.['required']) {
+                Email is required.
+              } @else if (userForm.get('email')?.errors?.['email']) {
+                Please enter a valid email.
+              }
+            </small>
+          }
+        </div>
+      </div>
+
+      <!-- Additional Information -->
+
+    </div>
+
+    <!-- Submit Button -->
+    <div class="flex justify-end">
+      <p-button
+        type="submit"
+        label="Add User"
+        icon="pi pi-check"
+        class="btn-main"
+        [disabled]="userForm.invalid || isSubmitting"></p-button>
+    </div>
+  </form>
+</div>
+
+<p-toast></p-toast>

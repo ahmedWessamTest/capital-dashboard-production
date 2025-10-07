@@ -1,0 +1,80 @@
+
+<div class="card">
+  <div class="flex justify-between items-center mb-3">
+    <h2 class="text-2xl font-semibold">Admin Notifications</h2>
+  </div>
+
+  <!-- Search Input -->
+
+  <p-table
+    #dt
+    [paginator]="true"
+    [rows]="rowsPerPage"
+    [totalRecords]="totalRecords"
+    [rowsPerPageOptions]="getPagination()"
+    [showCurrentPageReport]="true"
+    [value]="adminNotifications()"
+    responsiveLayout="scroll"
+    [customSort]="true"
+  (sortFunction)="customSort($event)"
+  >
+    <ng-template pTemplate="header">
+      <tr>
+        <th class="text-center" pSortableColumn="user_id">
+          User Id <p-sortIcon field="user_id"></p-sortIcon>
+        </th>
+        <th class="text-center" pSortableColumn="user_name">
+          User Name <p-sortIcon field="user_name"></p-sortIcon>
+        </th>
+        <th class="text-center" pSortableColumn="req_id">
+          Request Id <p-sortIcon field="req_id"></p-sortIcon>
+        </th>
+        <th class="text-center" pSortableColumn="req_type">
+          Request Type <p-sortIcon field="req_type"></p-sortIcon>
+        </th>
+        <th class="text-center" pSortableColumn="category_name">
+          Category<p-sortIcon field="category_name"></p-sortIcon>
+        </th>
+        <th class="text-center" pSortableColumn="comment_date">
+          Expiry Date <p-sortIcon field="comment_date"></p-sortIcon>
+        </th>
+        <th class="text-center">Actions</th>
+      </tr>
+    </ng-template>
+
+    <ng-template pTemplate="body" let-adminNotify>
+      <tr>
+        <td class="text-center">{{ adminNotify?.user_id }}</td>
+        <td class="text-center">{{ adminNotify?.user_name }}</td>
+        <td class="text-center">{{ adminNotify?.req_id }}</td>
+        <td class="text-center">{{ adminNotify?.req_type }}</td>
+        <td class="text-center">{{  getCategoryLabel(adminNotify?.category_name)}}</td>
+        <td class="text-center">{{ formatDateTime(adminNotify.comment_date) }}</td>
+        <td class="text-center">
+          <div class="flex justify-center items-center">
+            <button
+              (click)="viewExpiryNotification(adminNotify.category_id, adminNotify.id,adminNotify.req_type)"
+              pButton
+              icon="pi pi-comments"
+            ></button>
+          </div>
+        </td>
+      </tr>
+    </ng-template>
+
+    <ng-template pTemplate="emptymessage">
+      <tr>
+        <td colspan="6">
+          <div>
+            <div class="h-48 flex justify-center items-center flex-col">
+              <app-no-data-found-banner></app-no-data-found-banner>
+            </div>
+          </div>
+        </td>
+      </tr>
+    </ng-template>
+  </p-table>
+</div>
+
+
+<p-toast></p-toast>

@@ -1,0 +1,13 @@
+<app-generic-form
+  [fields]="formFields"
+  [entityType]="'jop-requests'"
+  [title]="
+    isEditMode ? 'Edit Professional Request' : 'Add Professional Request'
+  "
+  [redirectRoute]="'/dashboard/menu/jop-requests'"
+  [isEdit]="isEditMode"
+  [editData]="editData"
+  [extraFormData]="extraFormData"
+  [category]="'jop'"
+  [changeStatus]="true"
+></app-generic-form>

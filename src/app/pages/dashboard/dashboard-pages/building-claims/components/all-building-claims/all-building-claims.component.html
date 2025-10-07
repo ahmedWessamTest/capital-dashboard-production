@@ -1,0 +1,162 @@
+<p-toast></p-toast>
+
+@if (isLoading()) {
+  
+  <app-loading-data-banner></app-loading-data-banner>
+} @else {
+  <div class="card">
+    <div class="flex justify-between items-center mb-3">
+      <h2 class="text-2xl font-semibold">Property Claims</h2>
+    </div>
+
+    <div class="mb-3 flex justify-content-end gap-3">
+      <span class="p-input-icon-right">
+        <i class="pi pi-search"></i>
+        <input
+          type="text"
+          pInputText
+          placeholder="Search claims..."
+          (input)="onGlobalFilter(dt, $event)"
+        />
+      </span>
+    </div>
+<div class="overflow-x-auto">
+    <p-table
+      #dt
+      [paginator]="true"
+      [rows]="rowsPerPage"
+      [totalRecords]="totalRecords"
+      [rowsPerPageOptions]="getPagination()"
+      [showCurrentPageReport]="true"
+      [value]="filteredClaims"
+      responsiveLayout="scroll"
+      [tableStyle]="{ 'min-width': '70rem' }"
+      currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries"
+      [sortMode]="'multiple'"
+      (onSort)="onSort($event)"
+      (onPage)="onPageChange($event)"
+    >
+      <ng-template pTemplate="header">
+        <tr class="text-center">
+          <th pSortableColumn="id" class="text-center">
+            ID <p-sortIcon field="id"></p-sortIcon>
+          </th>
+          <th pSortableColumn="name" class="text-center">
+            Name <p-sortIcon field="name"></p-sortIcon>
+          </th>
+          <th pSortableColumn="email" class="text-center">
+            Email <p-sortIcon field="email"></p-sortIcon>
+          </th>
+          <th pSortableColumn="phone" class="text-center">
+            Phone <p-sortIcon field="phone"></p-sortIcon>
+          </th>
+          <th pSortableColumn="created_at" class="text-center">
+            Created <p-sortIcon field="created_at"></p-sortIcon>
+          </th>
+          <th class="text-center">Comments</th>
+          <th pSortableColumn="status" class="text-center">
+            <p-dropdown
+              [options]="selectOptions"
+              optionLabel="label"
+              optionValue="value"
+              (onChange)="onFilterChange($event.value)"
+              placeholder="Filter by Status"
+              [showClear]="true"
+              [autoZIndex]="true"
+            >
+              <ng-template pTemplate="selectedItem" let-selected>
+                <div class="flex items-center justify-center">
+                  <i [class]="selected.icon + ' ' + selected.color" class="mr-2"></i>
+                  <span [class]="selected.color">{{ selected.label }}</span>
+                </div>
+              </ng-template>
+              <ng-template pTemplate="item" let-option>
+                <div class="flex items-center justify-center">
+                  <i [class]="option.icon + ' ' + option.color" class="mr-2"></i>
+                  <span [class]="option.color">{{ option.label }}</span>
+                </div>
+              </ng-template>
+            </p-dropdown>
+          </th>
+          <th pSortableColumn="type" class="text-center">
+            <p-dropdown
+              [options]="typeOptions"
+              optionLabel="label"
+              optionValue="value"
+              (onChange)="onTypeFilterChange($event.value)"
+              placeholder="Filter by Type"
+              [showClear]="true"
+              [autoZIndex]="true"
+            >
+              <ng-template pTemplate="selectedItem" let-selected>
+                <span>{{ selected.label }}</span>
+              </ng-template>
+              <ng-template pTemplate="item" let-option>
+                <span>{{ option.label }}</span>
+              </ng-template>
+            </p-dropdown>
+          </th>
+          <th class="text-center">Actions</th>
+        </tr>
+      </ng-template>
+
+      <ng-template pTemplate="body" let-claim>
+        <tr class="text-center">
+          <td>{{ claim.id }}</td>
+          <td>{{ claim.name }}</td>
+          <td>{{ claim.email }}</td>
+          <td>{{ claim.phone }}</td>
+          <td>{{ formatDate(claim.created_at) }}</td>
+          <td>
+            <a [routerLink]="['/dashboard/menu/building-claims/comments', claim.id]">
+              <i class="pi pi-comments"></i>
+            </a>
+          </td>
+          <td [ngClass]="getStatusClass(claim.status)">
+            <p-dropdown
+              [options]="getAvailableStatusOptions(claim.status)"
+              [(ngModel)]="claim.status"
+              optionLabel="label"
+              optionValue="value"
+              [autoZIndex]="true"
+              [appendTo]="'body'"
+              styleClass="status-dropdown"
+              [style]="{'width': '100%'}"
+              (onChange)="updateClaimStatus(claim, $event.value)"
+            >
+              <ng-template pTemplate="selectedItem" let-selected>
+                <div class="flex items-center justify-center">
+                  <i [class]="selected.icon + ' ' + selected.color" class="mr-2"></i>
+                  <span [class]="selected.color">{{ selected.label }}</span>
+                </div>
+              </ng-template>
+              <ng-template pTemplate="item" let-option>
+                <div class="flex items-center justify-center">
+                  <i [class]="option.icon + ' ' + option.color" class="mr-2"></i>
+                  <span [class]="option.color">{{ option.label }}</span>
+                </div>
+              </ng-template>
+            </p-dropdown>
+          </td>
+          <td>{{ getClaimType(claim) }}</td>
+          <td>
+            <div class="flex gap-2 items-center justify-center">
+              <a [routerLink]="['/dashboard/menu/building-claims/view-building-claim', claim.id]">
+                <i class="pi pi-eye"></i>
+              </a>
+            </div>
+          </td>
+        </tr>
+      </ng-template>
+
+      <ng-template pTemplate="emptymessage">
+        <tr class="text-center">
+          <td colspan="9">
+            <app-no-data-found-banner></app-no-data-found-banner>
+          </td>
+        </tr>
+      </ng-template>
+    </p-table>
+  </div>
+  </div>
+}

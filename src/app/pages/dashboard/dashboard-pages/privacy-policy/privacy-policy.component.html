@@ -1,0 +1,89 @@
+<p-toast position="top-right" [baseZIndex]="5000"></p-toast>
+
+<div class="privacy-policy-control p-4 w-full">
+  @if (privacyForm) {
+    <h2 class="mb-4">Privacy Policy Information</h2>
+    <form [formGroup]="privacyForm" (ngSubmit)="onSubmit()" class="w-full">
+      <div class="privacy-policy-items w-full">
+        <!-- Title Section -->
+        <h3 class="mt-4 mb-3">Title</h3>
+        <div class="privacy-policy-item w-full">
+          <label for="en_title" class="font-medium">English Title</label>
+          <div class="input-container w-full">
+            <input id="en_title" type="text" pInputText formControlName="en_title" placeholder="Enter English Title" class="w-full" />
+          </div>
+          <div class="error-container">
+            @if (privacyForm.get('en_title')?.invalid && privacyForm.get('en_title')?.touched) {
+              <small class="error-message">English Title is required</small>
+            }
+          </div>
+        </div>
+        <div class="privacy-policy-item w-full">
+          <label for="ar_title" class="font-medium">Arabic Title</label>
+          <div class="input-container w-full">
+            <input id="ar_title" type="text" pInputText formControlName="ar_title" placeholder="Enter Arabic Title" class="w-full" />
+          </div>
+          <div class="error-container">
+            @if (privacyForm.get('ar_title')?.invalid && privacyForm.get('ar_title')?.touched) {
+              <small class="error-message">Arabic Title is required</small>
+            }
+          </div>
+        </div>
+
+        <!-- Description Section -->
+        <h3 class="mt-4 mb-3">Description</h3>
+        <div class="privacy-policy-item w-full">
+          <label for="en_description" class="font-medium">English Description</label>
+          <div class="input-container w-full">
+            <ngx-jodit
+              id="en_description"
+              formControlName="en_description"
+              placeholder="Enter English Description"
+              [options]="{ language: 'en', direction: 'ltr', height: 400 }"
+              class="w-full rich-text-content"
+              [ngClass]="{'p-invalid': privacyForm.get('en_description')?.touched && privacyForm.get('en_description')?.invalid}"
+              [attr.disabled]="isLoading ? true : null"
+            ></ngx-jodit>
+          </div>
+          <div class="error-container">
+            @if (privacyForm.get('en_description')?.invalid && privacyForm.get('en_description')?.touched) {
+              <small class="error-message">English Description is required</small>
+            }
+          </div>
+        </div>
+        <div class="privacy-policy-item w-full">
+          <label for="ar_description" class="font-medium">Arabic Description</label>
+          <div class="input-container w-full">
+            <ngx-jodit
+              id="ar_description"
+              formControlName="ar_description"
+              placeholder="Enter Arabic Description"
+              [options]="{ language: 'ar', direction: 'rtl', height: 400 }"
+              class="w-full rich-text-content"
+              [ngClass]="{'p-invalid': privacyForm.get('ar_description')?.touched && privacyForm.get('ar_description')?.invalid}"
+              [attr.disabled]="isLoading ? true : null"
+            ></ngx-jodit>
+          </div>
+          <div class="error-container">
+            @if (privacyForm.get('ar_description')?.invalid && privacyForm.get('ar_description')?.touched) {
+              <small class="error-message">Arabic Description is required</small>
+            }
+          </div>
+        </div>
+      </div>
+
+      <div class="mt-4 w-full">
+        <button 
+          pButton 
+          type="submit" 
+          class="btn-main px-3 w-full"
+          [disabled]="privacyForm.invalid || isLoading"
+          [icon]="isLoading ? 'pi pi-spin pi-spinner mx-2' : ''"
+          label="Save Changes">
+        </button>
+      </div>
+    </form>
+  } @else {
+    <app-loading-data-banner class="w-full"></app-loading-data-banner>
+  }
+</div>

@@ -1,0 +1,50 @@
+// // Specific styles for add-jop-choice component
+// .add-jop-choice-container {
+//   padding: 1rem;
+// }
+
+// .form-section {
+//   margin-bottom: 1.5rem;
+// }
+
+// .dropdown-section {
+//   margin-bottom: 1rem;
+// }
+
+// .field-group {
+//   display: flex;
+//   flex-direction: column;
+//   gap: 0.5rem;
+// }
+
+// .form-actions {
+//   display: flex;
+//   justify-content: flex-end;
+//   gap: 1rem;
+//   margin-top: 2rem;
+// }
+
+// @media (max-width: 768px) {
+//   .form-actions {
+//     flex-direction: column;
+//     align-items: stretch;
+//   }
+// }
+
+:host ::ng-deep {
+  .p-dropdown {
+    width: 100%;
+    height: 50px;
+    background: white;
+    border-radius: 12px;
+    padding: 0 20px;
+    color: #1f2937;
+    transition: all 0.2s ease;
+    border: 1px solid rgba(0, 0, 0, 0.285);
+  }
+  .p-dropdown .p-dropdown-label {
+    font-size: 16px;
+    color: #6b7280;
+    margin-top: 1px;
+  }
+}

@@ -1,0 +1,24 @@
+/* Responsive table styles */
+.overflow-x-auto {
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+  }
+  
+  /* Small screen adjustments */
+  @media screen and (max-width: 768px) {
+    .p-datatable {
+      font-size: 0.9rem;
+      
+      .p-dropdown {
+        width: 100%;
+      }
+      
+      th, td {
+        padding: 0.5rem;
+      }
+    }
+    
+    .p-inputtext {
+      width: 100%;
+    }
+  }

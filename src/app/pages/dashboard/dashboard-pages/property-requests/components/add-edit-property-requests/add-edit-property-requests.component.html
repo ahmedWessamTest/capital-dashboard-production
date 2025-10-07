@@ -1,0 +1,11 @@
+<app-generic-form
+  [fields]="formFields"
+  [entityType]="'building-requests'"
+  [title]="isEditMode ? 'Edit Building Request' : 'Add Building Request'"
+  [redirectRoute]="'/dashboard/menu/building-requests'"
+  [isEdit]="isEditMode"
+  [editData]="editData"
+  [extraFormData]="extraFormData"
+  [category]="'building'"
+  [changeStatus]="true"
+></app-generic-form>

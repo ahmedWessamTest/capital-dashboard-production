@@ -1,0 +1,26 @@
+@if (!isLoading) {
+<app-generic-table
+  [data]="jopInsuranceChoices"
+  [columns]="columns"
+  [title]="'Professional Insurance Choices'"
+  entityType="jop-insurance-choices"
+  [viewRoute]="
+    '/dashboard/menu/jop-insurances/choices/' + jopInsuranceId + '/view'
+  "
+  [rowsPerPage]="10"
+  [needCall]="false"
+  [ToggelStatus]="true"
+  [addRoute]="
+    '/dashboard/menu/jop-insurances/choices/' +
+    jopInsuranceId +
+    '/add/' +
+    jopInsuranceId
+  "
+  [editRoute]="
+    '/dashboard/menu/jop-insurances/choices/' + jopInsuranceId + '/edit'
+  "
+>
+</app-generic-table>
+} @else {
+<app-loading-data-banner></app-loading-data-banner>
+}

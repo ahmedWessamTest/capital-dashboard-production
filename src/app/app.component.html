@@ -1,0 +1,26 @@
+@if (isBrowser) {
+
+    <!-- <p-toast [style]="{zIndex: 10000}"></p-toast> -->
+
+<div class="text-main">
+
+  <router-outlet></router-outlet>
+
+  <!-- <div class="absolute top-0 !z-[9999]">
+    <button class="  bg-red-400 w-full" (click)="test()">test message</button>
+  </div>  -->
+  
+</div>
+
+<p-toast  [baseZIndex]="9999"></p-toast>
+}
+
+<ngx-spinner
+  name="actionsLoader"
+  bdColor="rgba(55, 166, 222, 0.8)"
+  size="medium"
+  color="#fff"
+  type="square-spin"
+  [fullScreen]="true"
+  ><p style="color: white">Loading...</p></ngx-spinner
+>

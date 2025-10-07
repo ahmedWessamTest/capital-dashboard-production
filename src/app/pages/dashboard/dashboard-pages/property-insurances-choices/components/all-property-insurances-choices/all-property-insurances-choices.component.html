@@ -1,0 +1,17 @@
+@if (!isLoading) {
+    <app-generic-table
+      [data]="buildingInsuranceChoices"
+      [columns]="columns"
+      [title]="'Building Insurance Choices'"
+      entityType="building-insurance-choices"
+      [viewRoute]="'/dashboard/menu/building-insurances/choices/' + buildingInsuranceId + '/view'"
+      [rowsPerPage]="10"
+      [needCall]="false"
+      [ToggelStatus]="true"
+      [addRoute]="'/dashboard/menu/building-insurances/choices/' + buildingInsuranceId + '/add/' + buildingInsuranceId"
+      [editRoute]="'/dashboard/menu/building-insurances/choices/' + buildingInsuranceId + '/edit'"
+    >
+    </app-generic-table>
+  } @else {
+    <app-loading-data-banner></app-loading-data-banner>
+  }

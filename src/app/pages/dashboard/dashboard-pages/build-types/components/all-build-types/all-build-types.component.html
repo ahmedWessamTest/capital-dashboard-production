@@ -1,0 +1,12 @@
+<app-generic-table
+      [data]="buildTypes"
+      [columns]="columns"
+      [entityType]="'build-types'"
+      [title]="'Build Types'"
+      [addRoute]="'/dashboard/menu/build-types/add'"
+      [editRoute]="'/dashboard/menu/build-types/edit'"
+      [viewRoute]="'/dashboard/menu/build-types/view'"
+      [rowsPerPage]="10"
+    [getData]="false"
+    [ToggelStatus]="true" >
+    </app-generic-table>

@@ -1,0 +1,135 @@
+<p-toast></p-toast>
+
+@if (isLoading()) {
+  <app-loading-data-banner></app-loading-data-banner>
+} @else {
+  <div class="card overflow-x-auto">
+    <div class="flex justify-between items-center mb-3">
+      <h2 class="text-2xl font-semibold">Motor Insurance Requests</h2>
+    </div>
+
+    <div class="mb-3 flex justify-content-end gap-3">
+      <span class="p-input-icon-right">
+        <i class="pi pi-search"></i>
+        <input
+          type="text"
+          pInputText
+          placeholder="Search requests..."
+          (input)="onGlobalFilter($event)" />
+      </span>
+    </div>
+
+    <p-table
+      #dt
+      [paginator]="true"
+      [rows]="rowsPerPage"
+      [totalRecords]="totalRecords"
+      [rowsPerPageOptions]="getPagination()"
+      [showCurrentPageReport]="true"
+      [value]="filteredRequests"
+      responsiveLayout="scroll"
+      [sortMode]="'single'"
+      (onSort)="onSort($event)"
+      (onPage)="onPageChange($event)">
+      <ng-template pTemplate="header">
+        <tr class="text-center">
+          <th pSortableColumn="id" class="text-center">ID <p-sortIcon field="id"></p-sortIcon></th>
+          <th pSortableColumn="name" class="text-center">Name <p-sortIcon field="name"></p-sortIcon></th>
+          <th pSortableColumn="phone" class="text-center">Phone <p-sortIcon field="phone"></p-sortIcon></th>
+          <th pSortableColumn="car_type" class="text-center">Car Type <p-sortIcon field="car_type"></p-sortIcon></th>
+          <th pSortableColumn="car_brand" class="text-center">Car Brand <p-sortIcon field="car_brand"></p-sortIcon></th>
+          <th pSortableColumn="car_model" class="text-center">Car Model <p-sortIcon field="car_model"></p-sortIcon></th>
+          <th class="text-center">
+            <p-dropdown
+              #requestTypeFilter
+              class="mx-auto max-w-[120px]"
+              styleClass="mx-auto"
+              [options]="requestTypeOptions"
+              optionLabel="label"
+              optionValue="value"
+              (onChange)="
+                onRequestTypeFilterChange($event.value); requestTypeFilter.showClear = true
+              "
+              placeholder="Request Type"
+              [showClear]="true"
+              [autoZIndex]="true"
+            ></p-dropdown>
+          </th>
+          <th pSortableColumn="created_at" class="text-center">Created <p-sortIcon field="created_at"></p-sortIcon></th>
+          <th class="text-center">Comments</th>
+          <th class="text-center">
+            <p-dropdown
+              [options]="selectOptions"
+              optionLabel="label"
+              optionValue="value"
+              (onChange)="onFilterChange($event.value)"
+              placeholder="Filter by Status"
+              [showClear]="true"
+              [autoZIndex]="true">
+              <ng-template pTemplate="selectedItem" let-selected>
+                <div class="flex items-center justify-center">
+                  <i [class]="selected.icon + ' ' + selected.color" class="mr-2"></i>
+                  <span [class]="selected.color">{{ selected.label }}</span>
+                </div>
+              </ng-template>
+              <ng-template pTemplate="item" let-option>
+                <div class="flex items-center justify-center">
+                  <i [class]="option.icon + ' ' + option.color" class="mr-2"></i>
+                  <span [class]="option.color">{{ option.label }}</span>
+                </div>
+              </ng-template>
+            </p-dropdown>
+          </th>
+          <th class="text-center">View</th>
+        </tr>
+      </ng-template>
+
+      <ng-template pTemplate="body" let-request>
+        <tr class="text-center">
+          <td>{{ request.id }}</td>
+          <td>{{ request.name }}</td>
+          <td>{{ request.phone }}</td>
+          <td>{{ request.car_type }}</td>
+          <td>{{ request.car_brand }}</td>
+          <td>{{ request.car_model }}</td>
+          <td>{{ request.request_type || "individual" }}</td>
+          <td>{{ formatDate(request.created_at) }}</td>
+          <td class="text-center">
+            <a [routerLink]="['/dashboard/menu/motor-requests/comments', request.id]">
+              <i class="pi pi-comments"></i>
+            </a>
+          </td>
+          <td [ngClass]="getStatusClass(request.active_status)">
+  <div class="flex items-center justify-center border rounded px-2  bg-white py-3">
+    <i
+      [class]="getStatusIcon(request.active_status) + ' ' + getStatusColor(request.active_status)"
+      class="mr-2"
+    ></i>
+    <span [class]="getStatusColor(request.active_status)">
+      {{ getStatusLabel(request.active_status) }}
+    </span>
+  </div>
+</td>
+          <td>
+            <div class="flex gap-2 items-center">
+              <a [routerLink]="['/dashboard/menu/motor-requests/edit', request.id]">
+                <i class="pi pi-pencil"></i>
+              </a>
+              <a [routerLink]="['/dashboard/menu/motor-requests/view-motor-request', request.id]">
+                <i class="pi pi-eye"></i>
+              </a>
+            </div>
+          </td>
+        </tr>
+      </ng-template>
+
+      <ng-template pTemplate="emptymessage">
+        <tr class="text-center">
+          <td colspan="11">
+            <app-no-data-found-banner></app-no-data-found-banner>
+          </td>
+        </tr>
+      </ng-template>
+    </p-table>
+  </div>
+}

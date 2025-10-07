@@ -1,0 +1,107 @@
+The comment file must be a file of type: jpeg, png, jpg, gif.   
+
+comment file dont accept pdf  or word files 
+
+the clients images path in the edit only itis path changes (it would be better to normalize it through th eapplication )
+
+i need admin credentials 
+
+in the adminstartions i cant update image 500 internal error 
+
+need the user in the morotr request it doesnot exist 
+
+cant find claims and claims comments 
+
+cant send the image empty or not send it when i update in featiures 
+also the image in the features 
+the same for parteners 
+
+
+so fix this 500 error 
+الكلاينتس في الاد بتضيف صح وف يالابديت بتغير في الباث بتاع الكلاينتس بتاع الايمدج 
+
+
+
+need to update the cancel and confirm to take the active status as the 4 pending requested confirmed canceled 
+
+when you send build type id itis not accept it 500 internal error in the request building in the edit (i cant send afile with the image ? 
+
+in the features and all images allow webp images 
+
+
+ and to be with one request 
+
+
+i dont want the category id to be required 
+i use the end point related to it i will only get the insurance id 
+
+ليه لن نا ادلوقتي هجيب الكاتيجوري اي دي بناء علي ايه لو هبعته من عندي وكمان مش منطقي اني ابعت كاتيجوري اي دي مثلا للمديكال 
+وهبعت انشورنس اي دي ؟  طيب لو الشخص اختار كاتيجوري اي دي مع انشورنس اي  دي مختلف 
+
+في حل تاني اني ممكن اجيب الكاتيجوري اي دي من الانشورنس اخد اول واحد ولو مفيش انت هتقوله لازم يضيف مييدكال انشورنس الاول وهكذا 
+
+وبكده ابقي حليت مشكلة الا لاني بقررا الاد من اليو ار ال اصلا ومش هحتاج اخزن اي حاجه بره 
+
+
+انا مش عايز اليوزر يلغبط في الكاتيجوري 
+يعني  انا عندي 3 كاتيجوري ولازم اختار انشورنس اي دي ميداكل في الميدديكال والموتور ف يالموتور والبيلدنج ف يالبيلدنج 
+ولو بعتها ملعبطه هتتقبل 
+فالحل اني اقبل اخد الكاتيجوري ال من انالورنس ذات نفسه 
+متنساش مينفعش تثبتها من عندك لانها الاسم ممكن يتغير الال لو الباك اند هيعملك تلت قيم ثابته للكاتيجوريز  
+
+hamed 
+--------------
+
+need all leads in one page 
+challenge make the resolver check teh category the call the needed api 
+
+
+ with digital bond company logo and phone add footer
+
+
+remove the space from the dashboard 
+
+make all the dashboard responsive (less priority for now )
+
+all rows will be if it is less than 10 only display itis number if it less than the 25 10 the number and so on so this mean the biggest number will be at the end 
+
+
+add afilteration by the calender 
+
+
+________________________________________________________________ 
+
+
+faried
+______
+dont forgot to add all tables to th resolver 
+creat the all leads component and dont use the generic table with it make it with the caod and make the view link based on the category to be changed and in the resolver to read the link and decide whide aoi will it called if it includes specific word 
+
+
+
+
+search for n easy way to go back to the previos route 
+
+
+
+
+
+search for the topic of the seo duplication content 
+
+
+
+
+
+
+notes
+
+need to add abloge edit and add and the other the same way 
+
+
+
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+in the feature check teh resolver for the id 
+
+if nno change of the image dont send it ?
+
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~

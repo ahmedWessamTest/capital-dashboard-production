@@ -1,0 +1,283 @@
+<p-toast></p-toast>
+
+@if (!isLoading) {
+<div class="card overflow-x-auto">
+  <!-- Header Section -->
+  <div
+    class="flex flex-column md:flex-row md:justify-content-between md:align-items-center mb-3 gap-2"
+  >
+    <h2 class="text-xl md:text-2xl font-semibold m-0">{{ title }}</h2>
+    <div class="flex flex-column md:flex-row gap-2 w-full md:w-auto">
+      @if (addRoute) { @if(addRoute2){
+      <a [routerLink]="[addRoute, addRoute2]" class="w-full md:w-auto">
+        <p-button
+          label="Add {{ title }}"
+          icon="pi pi-plus"
+          class="btn-main text-white w-full md:w-auto"
+        >
+        </p-button>
+      </a>
+      } @else{
+      <a [routerLink]="addRoute" class="w-full md:w-auto">
+        <p-button
+          label="Add {{ title }}"
+          icon="pi pi-plus"
+          class="btn-main text-white w-full md:w-auto"
+        >
+        </p-button>
+      </a>
+      } }
+      <!-- @if(entityType === "medical-insurances"){
+          <a [routerLink]="['/dashboard/menu/medical/add-medical-choice']" class="w-full md:w-auto">
+            <p-button
+              label="Add {{ title }} Choice"
+              icon="pi pi-plus"
+              class="btn-main mt-4 md:mt-0 text-white w-full md:w-auto">
+            </p-button>
+          </a>
+        }
+        @else if(entityType === "motor-insurances"){
+          <a [routerLink]="['/dashboard/menu/motor/add-motor-choice']" class="w-full md:w-auto">
+            <p-button
+              label="Add {{ title }} Choice"
+              icon="pi pi-plus"
+              class="btn-main mt-4 md:mt-0 text-white w-full md:w-auto">
+            </p-button>
+          </a>
+        }
+        @else if(entityType === "building-insurances"){
+          <a [routerLink]="['/dashboard/menu/building/add-building-choice']" class="w-full md:w-auto">
+            <p-button
+              label="Add {{ title }} Choice"
+              icon="pi pi-plus"
+              class="btn-main mt-4 md:mt-0 text-white w-full md:w-auto">
+            </p-button>
+          </a>
+        } -->
+    </div>
+  </div>
+
+  <!-- Search Section -->
+  <div class="mb-3 flex justify-content-end">
+    <span class="p-input-icon-right w-full md:w-auto">
+      <i class="pi pi-search"></i>
+      <input
+        #search
+        class="mb-0 w-full md:!w-[188px] ps-1 block"
+        type="text"
+        pInputText
+        [title]="'Search ' + title.toLowerCase()"
+          [placeholder]="'Search ' + title.toLowerCase().split(' ',2).join(' ') + '...'"
+        (input)="onGlobalFilter(dt, $event)"
+      />
+    </span>
+  </div>
+
+  <!-- <p-table
+  #dt
+  [paginator]="data.length >= 10"
+  [rows]="rowsPerPage"
+  [totalRecords]="totalRecords"
+  [rowsPerPageOptions]="getPagination()"
+  [showCurrentPageReport]="true"
+  [value]="filteredData"
+  (onSort)="onSort($event)"
+  (onPage)="onPageChange($event)"
+  [tableStyle]="{'min-width': '700px'}"
+  responsiveLayout="scroll"
+> -->
+  <p-table
+    #dt
+    [paginator]="true"
+    [rows]="rowsPerPage"
+    [totalRecords]="totalRecords"
+    [rowsPerPageOptions]="getPagination()"
+    [showCurrentPageReport]="true"
+    currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries"
+    [value]="filteredData"
+    responsiveLayout="scroll"
+    [scrollable]="true"
+    scrollDirection="both"
+    (onPage)="onPageChange($event)"
+    [tableStyle]="{ 'min-width': '700px' }"
+  >
+    <ng-template pTemplate="header">
+      <tr class="text-center">
+        @for (col of columns; track col.field) { @if (col.sortable) {
+        <th class="text-center" [pSortableColumn]="col.field">
+          {{ col.header }} <p-sortIcon [field]="col.field"></p-sortIcon>
+        </th>
+        } @else if (col.field === 'category_id' || col.field ===
+        'build_type_id') {
+        <th class="text-center">
+          <p-dropdown
+            #categoryDropdown
+            class="mx-auto"
+            styleClass="mx-auto"
+            [options]="categoryOptions"
+            optionLabel="label"
+            optionValue="value"
+            [(ngModel)]="selectedCategory"
+            (onChange)="onCategoryFilterChange($event.value)"
+            placeholder="Category"
+            [showClear]="true"
+            [autoZIndex]="true"
+          >
+          </p-dropdown>
+        </th>
+        } @else if (col.field === 'need_call') {
+        <th class="text-center">
+          <p-dropdown
+            #needCallDropdown
+            class="mx-auto"
+            styleClass="mx-auto"
+            [options]="needCallOptions"
+            optionLabel="label"
+            optionValue="value"
+            [(ngModel)]="selectedNeedCall"
+            (onChange)="onNeedCallFilterChange($event.value)"
+            placeholder="Need Call"
+            [showClear]="true"
+            [autoZIndex]="true"
+          >
+          </p-dropdown>
+        </th>
+        } @else {
+        <th class="text-center">
+          {{ col.header }}
+        </th>
+        } } @if (ToggelStatus) {
+        <th class="text-center">
+          <p-dropdown
+            #statusDropdown
+            class="mx-auto"
+            styleClass="mx-auto"
+            [options]="selectOptions"
+            optionLabel="label"
+            optionValue="value"
+            [(ngModel)]="selectedStatus"
+            (onChange)="onFilterChange($event.value)"
+            placeholder="Status"
+            [showClear]="true"
+            [autoZIndex]="true"
+          >
+          </p-dropdown>
+        </th>
+        }
+        <th class="text-center">Actions</th>
+      </tr>
+    </ng-template>
+
+    <ng-template pTemplate="body" let-item>
+      <tr class="bg-[#CBE9F7] hover:bg-[#a4c6d6]">
+        @for (col of columns; track col.field) {
+        <td class="text-center">
+          @if (col.type === 'image') {
+          <div class="w-16 h-16 mx-auto">
+            <img
+              class="w-full h-full object-cover"
+              [src]="getImageUrl(item[col.field])"
+              [alt]="
+                item['en_title'] ||
+                item['en_name'] ||
+                item['en_blog_title'] ||
+                'image'
+              "
+              appImageLoader
+            />
+          </div>
+          } @else if (col.type === 'date') {
+          {{ formatDate(item[col.field]) }}
+          } @else if (col.type === 'link') {
+          <a
+            [href]="item[col.field]"
+            target="_blank"
+            class="!text-main-500 hover:underline"
+          >
+            {{ "Network_link" }}
+          </a>
+          } @else if(col.field === 'choices'){ @if(col.choicesProperty &&
+          item[col.choicesProperty]?.length > 0){ @if(choicesRoute2){
+          <a
+            [routerLink]="[choicesRoute, item.id, choicesRoute2]"
+            [title]="col.displayFn ? col.displayFn(item) : ''"
+          >
+            <p-button icon="pi pi-list" class="p-button-text p-button-sm">
+            </p-button>
+          </a>
+          }@else{
+          <a
+            [routerLink]="[choicesRoute, item.id]"
+            [title]="col.displayFn ? col.displayFn(item) : ''"
+          >
+            <p-button icon="pi pi-list" class="p-button-text p-button-sm">
+            </p-button>
+          </a>
+          } } @else {
+          <span>N/A</span>
+          } } @else { @if (col.displayFn) {
+          <span [title]="col.displayFn(item)">
+            {{ truncateText(col.displayFn(item), col.maxLength || 30) }}
+          </span>
+          } @else {
+          <span [title]="item[col.field]">
+            {{
+              item[col.field] !== null
+                ? truncateText(item[col.field], col.maxLength || 30)
+                : "N/A"
+            }}
+          </span>
+          } }
+        </td>
+        } @if(ToggelStatus){
+        <td class="text-center">
+          <p-inputSwitch
+            [ngModel]="item.active_status"
+            (onChange)="toggleStatus(item)"
+          >
+          </p-inputSwitch>
+        </td>
+        }
+
+        <td class="text-center">
+          <div class="flex justify-center gap-2">
+            @if (editRoute) { @if(editRoute2){
+            <a [routerLink]="[editRoute, item.id, editRoute2]">
+              <p-button icon="pi pi-pencil" class="p-button-text p-button-sm">
+              </p-button>
+            </a>
+            } @else{
+            <a [routerLink]="[editRoute, item.id]">
+              <p-button icon="pi pi-pencil" class="p-button-text p-button-sm">
+              </p-button>
+            </a>
+            } } @if (viewRoute) { @if(viewRoute2){
+            <a [routerLink]="[viewRoute, item.id, viewRoute2]">
+              <p-button icon="pi pi-eye" class="p-button-text p-button-sm">
+              </p-button>
+            </a>
+            } @else{
+            <a [routerLink]="[viewRoute, item.id]">
+              <p-button icon="pi pi-eye" class="p-button-text p-button-sm">
+              </p-button>
+            </a>
+            }}
+          </div>
+        </td>
+      </tr>
+    </ng-template>
+
+    <ng-template pTemplate="emptymessage">
+      <tr>
+        <td [attr.colspan]="columns.length + 2">
+          <div class="h-48 flex justify-center items-center flex-col">
+            <app-no-data-found-banner></app-no-data-found-banner>
+          </div>
+        </td>
+      </tr>
+    </ng-template>
+  </p-table>
+</div>
+} @else {
+<app-loading-data-banner></app-loading-data-banner>
+}

@@ -1,0 +1,78 @@
+@if (isLoading()) {
+<app-loading-data-banner></app-loading-data-banner>
+} @else {
+<div class="card">
+  <div class="flex justify-between items-center mb-3">
+    <h2 class="text-2xl font-semibold">Expiry Notifications</h2>
+  </div>
+
+  <!-- Search Input -->
+
+  <p-table
+    #dt
+    [paginator]="true"
+    [rows]="rowsPerPage"
+    [totalRecords]="totalRecords"
+    [rowsPerPageOptions]="getPagination()"
+    [showCurrentPageReport]="true"
+    [value]="expiryNotifications()"
+    responsiveLayout="scroll"
+    [customSort]="true"
+  (sortFunction)="customSort($event)"
+  >
+    <ng-template pTemplate="header">
+      <tr>
+        <th class="text-center" pSortableColumn="user_id">
+          User Id <p-sortIcon field="user_id"></p-sortIcon>
+        </th>
+        <th class="text-center" pSortableColumn="name">
+          Name <p-sortIcon field="name"></p-sortIcon>
+        </th>
+        <th class="text-center" pSortableColumn="id">
+          Policy Id <p-sortIcon field="id"></p-sortIcon>
+        </th>
+        <th class="text-center" pSortableColumn="category">
+          Category<p-sortIcon field="category"></p-sortIcon>
+        </th>
+        <th class="text-center" pSortableColumn="end_date">
+          Expiry Date <p-sortIcon field="end_date"></p-sortIcon>
+        </th>
+        <th class="text-center">Actions</th>
+      </tr>
+    </ng-template>
+
+    <ng-template pTemplate="body" let-expiryNotify>
+      <tr>
+        <td class="text-center">{{ expiryNotify.user_id }}</td>
+        <td class="text-center">{{ expiryNotify.name }}</td>
+        <td class="text-center">{{ expiryNotify.id }}</td>
+        <td class="text-center">{{ getCategoryLabel(expiryNotify.category) }}</td>
+        <td class="text-center">{{expiryNotify.end_date | date:'dd-MM-yyyy'  }}</td>
+        <td class="text-center">
+          <div class="flex justify-center items-center">
+            <button
+              (click)="viewExpiryNotification(expiryNotify.category_id, expiryNotify.id)"
+              pButton
+              icon="pi pi-search"
+            ></button>
+          </div>
+        </td>
+      </tr>
+    </ng-template>
+
+    <ng-template pTemplate="emptymessage">
+      <tr>
+        <td colspan="6">
+          <div>
+            <div class="h-48 flex justify-center items-center flex-col">
+              <app-no-data-found-banner></app-no-data-found-banner>
+            </div>
+          </div>
+        </td>
+      </tr>
+    </ng-template>
+  </p-table>
+</div>
+}
+
+<p-toast></p-toast>

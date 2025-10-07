@@ -1,0 +1,18 @@
+@if (!isLoading) {
+    <app-generic-table
+      [data]="buildingInsurances"
+      [columns]="columns"
+      [title]="'Building Insurances'"
+      entityType="building-insurances"
+      [viewRoute]="'/dashboard/menu/building-insurances/view'"
+      [rowsPerPage]="10"
+      [needCall]="false"
+      [ToggelStatus]="true"
+      choicesRoute="/dashboard/menu/building-insurances/choices"
+      [addRoute]="'/dashboard/menu/building-insurances/create'"
+      [editRoute]="'/dashboard/menu/building-insurances/edit/'"
+    >
+    </app-generic-table>
+  } @else {
+    <app-loading-data-banner></app-loading-data-banner>
+  }

@@ -1,0 +1,29 @@
+i want you to make cehck not to add an existed years ? 
+
+
+there is no check about the car years ? in the post man 
+why it take array and how to update it make it like the others as asingle value ? 
+
+how i will display it ? now i need to change teh design display 
+under each model ? how i put the years and in update i need all the years to update them 
+
+
+you need to check the car year that if it exist in car model or not before adding it 
+
+
+to make the design consitant when you update you update one car year not patch of them ? so ?
+also the same for brands and models 
+you dont push more brands in specific type and more models in specicf brand so too make the design consitant 
+
+
+
+you need validation from teh server in this point becouse the user can add the year multi[ple times 
+
+if no refresh so he can bypass this from front end so we need to make i tfrom back end 
+iy you opened two pages ? 
+and add year from one page and then open another year from the second page it will be accepted 
+
+
+
+and the same for the others 
+so you need validation 

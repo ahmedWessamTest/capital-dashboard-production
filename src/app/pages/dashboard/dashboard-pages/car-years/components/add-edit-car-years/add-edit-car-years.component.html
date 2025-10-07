@@ -1,0 +1,9 @@
+<app-generic-form
+  [fields]="formFields"
+  [entityType]="'car-years'"
+  [title]="isEditMode ? 'Edit Car Year' : 'Add Car Year'"
+  [redirectRoute]="'/dashboard/menu/car-years'"
+  [isEdit]="isEditMode"
+  [editData]="editData"
+  [extraFormData]="extraFormData"
+></app-generic-form>

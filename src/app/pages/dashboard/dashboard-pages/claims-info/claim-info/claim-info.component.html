@@ -1,0 +1,225 @@
+<p-toast position="top-right" [baseZIndex]="5000"></p-toast>
+
+<div class="about-download-control p-4 w-full">
+  @if (claimForm) {
+    <h2 class="mb-4">Claim Information</h2>
+    <form [formGroup]="claimForm" (ngSubmit)="onSubmit()" class="w-full">
+      <div class="about-download-items w-full">
+        <div class="about-download-item w-full">
+          <label for="main_image" class="font-medium">Main Image</label>
+          <div class="input-container w-full">
+            <app-image-upload
+              [initialImages]="initialImages"
+              [singleImageMode]="true"
+              id="main-image"
+              (imagesChanged)="onImagesChanged($event)"
+            ></app-image-upload>
+          </div>
+        </div>
+
+        <div class="about-download-item w-full">
+          <label for="en_main_title" class="font-medium">English Main Title</label>
+          <div class="input-container w-full">
+            <input id="en_main_title" type="text" pInputText formControlName="en_main_title" placeholder="Enter English Main Title" class="w-full" />
+          </div>
+          <div class="error-container">
+            @if (claimForm.get('en_main_title')?.invalid && claimForm.get('en_main_title')?.touched) {
+              <small class="error-message">English Main Title is required</small>
+            }
+          </div>
+        </div>
+
+        <div class="about-download-item w-full">
+          <label for="ar_main_title" class="font-medium">Arabic Main Title</label>
+          <div class="input-container w-full">
+            <input id="ar_main_title" type="text" pInputText formControlName="ar_main_title" placeholder="Enter Arabic Main Title" class="w-full" />
+          </div>
+          <div class="error-container">
+            @if (claimForm.get('ar_main_title')?.invalid && claimForm.get('ar_main_title')?.touched) {
+              <small class="error-message">Arabic Main Title is required</small>
+            }
+          </div>
+        </div>
+
+        <div class="about-download-item w-full">
+          <label for="en_main_text" class="font-medium">English Main Text</label>
+          <div class="input-container w-full">
+            <ngx-jodit
+              id="en_main_text"
+              formControlName="en_main_text"
+              placeholder="Enter English Main Text"
+              [options]="{ language: 'en', direction: 'ltr', height: 400 }"
+              class="w-full rich-text-content"
+              [ngClass]="{'p-invalid': claimForm.get('en_main_text')?.touched && claimForm.get('en_main_text')?.invalid}"
+              [attr.disabled]="isLoading ? true : null"
+            ></ngx-jodit>
+          </div>
+          <div class="error-container">
+            @if (claimForm.get('en_main_text')?.invalid && claimForm.get('en_main_text')?.touched) {
+              <small class="error-message">English Main Text is required</small>
+            }
+          </div>
+        </div>
+
+        <div class="about-download-item w-full mt-8 mb-4">
+          <label for="ar_main_text" class="font-medium">Arabic Main Text</label>
+          <div class="input-container w-full">
+            <ngx-jodit
+              id="ar_main_text"
+              formControlName="ar_main_text"
+              placeholder="Enter Arabic Main Text"
+              [options]="{ language: 'ar', direction: 'rtl', height: 400 }"
+              class="w-full rich-text-content"
+              [ngClass]="{'p-invalid': claimForm.get('ar_main_text')?.touched && claimForm.get('ar_main_text')?.invalid}"
+              [attr.disabled]="isLoading ? true : null"
+            ></ngx-jodit>
+          </div>
+          <div class="error-container">
+            @if (claimForm.get('ar_main_text')?.invalid && claimForm.get('ar_main_text')?.touched) {
+              <small class="error-message">Arabic Main Text is required</small>
+            }
+          </div>
+        </div>
+
+        <div class="about-download-item w-full">
+          <label for="en_second_title" class="font-medium">English Second Title</label>
+          <div class="input-container w-full">
+            <input id="en_second_title" type="text" pInputText formControlName="en_second_title" placeholder="Enter English Second Title" class="w-full" />
+          </div>
+          <div class="error-container">
+            @if (claimForm.get('en_second_title')?.invalid && claimForm.get('en_second_title')?.touched) {
+              <small class="error-message">English Second Title is required</small>
+            }
+          </div>
+        </div>
+
+        <div class="about-download-item w-full">
+          <label for="ar_second_title" class="font-medium">Arabic Second Title</label>
+          <div class="input-container w-full">
+            <input id="ar_second_title" type="text" pInputText formControlName="ar_second_title" placeholder="Enter Arabic Second Title" class="w-full" />
+          </div>
+          <div class="error-container">
+            @if (claimForm.get('ar_second_title')?.invalid && claimForm.get('ar_second_title')?.touched) {
+              <small class="error-message">Arabic Second Title is required</small>
+            }
+          </div>
+        </div>
+
+        <div class="about-download-item w-full">
+          <label for="en_second_text" class="font-medium">English Second Text</label>
+          <div class="input-container w-full">
+            <ngx-jodit
+              id="en_second_text"
+              formControlName="en_second_text"
+              placeholder="Enter English Second Text"
+              [options]="{ language: 'en', direction: 'ltr', height: 400 }"
+              class="w-full rich-text-content"
+              [ngClass]="{'p-invalid': claimForm.get('en_second_text')?.touched && claimForm.get('en_second_text')?.invalid}"
+              [attr.disabled]="isLoading ? true : null"
+            ></ngx-jodit>
+          </div>
+          <div class="error-container">
+            @if (claimForm.get('en_second_text')?.invalid && claimForm.get('en_second_text')?.touched) {
+              <small class="error-message">English Second Text is required</small>
+            }
+          </div>
+        </div>
+
+        <div class="about-download-item w-full mt-8 mb-4">
+          <label for="ar_second_text" class="font-medium">Arabic Second Text</label>
+          <div class="input-container w-full">
+            <ngx-jodit
+              id="ar_second_text"
+              formControlName="ar_second_text"
+              placeholder="Enter Arabic Second Text"
+              [options]="{ language: 'ar', direction: 'rtl', height: 400 }"
+              class="w-full rich-text-content"
+              [ngClass]="{'p-invalid': claimForm.get('ar_second_text')?.touched && claimForm.get('ar_second_text')?.invalid}"
+              [attr.disabled]="isLoading ? true : null"
+            ></ngx-jodit>
+          </div>
+          <div class="error-container">
+            @if (claimForm.get('ar_second_text')?.invalid && claimForm.get('ar_second_text')?.touched) {
+              <small class="error-message">Arabic Second Text is required</small>
+            }
+          </div>
+        </div>
+
+        <h3 class="mt-4 mb-3">Meta Information</h3>
+
+        <div class="about-download-item w-full">
+          <label for="en_meta_title" class="font-medium">English Meta Title</label>
+          <div class="input-container w-full">
+            <input id="en_meta_title" type="text" pInputText formControlName="en_meta_title" placeholder="Enter English Meta Title" class="w-full" />
+          </div>
+          <div class="error-container">
+            @if (claimForm.get('en_meta_title')?.invalid && claimForm.get('en_meta_title')?.touched) {
+              <small class="error-message">English Meta Title is required</small>
+            }
+          </div>
+        </div>
+
+        <div class="about-download-item w-full">
+          <label for="ar_meta_title" class="font-medium">Arabic Meta Title</label>
+          <div class="input-container w-full">
+            <input id="ar_meta_title" type="text" pInputText formControlName="ar_meta_title" placeholder="Enter Arabic Meta Title" class="w-full" />
+          </div>
+          <div class="error-container">
+            @if (claimForm.get('ar_meta_title')?.invalid && claimForm.get('ar_meta_title')?.touched) {
+              <small class="error-message">Arabic Meta Title is required</small>
+            }
+          </div>
+        </div>
+
+        <div class="about-download-item w-full">
+          <label for="en_meta_text" class="font-medium">English Meta Text</label>
+          <div class="input-container w-full">
+            <textarea id="en_meta_text" pInputTextarea formControlName="en_meta_text" placeholder="Enter English Meta Text" class="w-full"></textarea>
+          </div>
+          <div class="error-container">
+            @if (claimForm.get('en_meta_text')?.invalid && claimForm.get('en_meta_text')?.touched) {
+              <small class="error-message">English Meta Text is required</small>
+            }
+          </div>
+        </div>
+
+        <div class="about-download-item w-full">
+          <label for="ar_meta_text" class="font-medium">Arabic Meta Text</label>
+          <div class="input-container w-full">
+            <textarea id="ar_meta_text" pInputTextarea formControlName="ar_meta_text" placeholder="Enter Arabic Meta Text" class="w-full"></textarea>
+          </div>
+          <div class="error-container">
+            @if (claimForm.get('ar_meta_text')?.invalid && claimForm.get('ar_meta_text')?.touched) {
+              <small class="error-message">Arabic Meta Text is required</small>
+            }
+          </div>
+        </div>
+
+      </div>
+
+      <div class="mt-4 w-full">
+        <button
+          pButton
+          type="submit"
+          class="btn-main px-3 w-full"
+          [disabled]="claimForm.invalid || isLoading"
+          [icon]="isLoading ? 'pi pi-spin pi-spinner mx-2' : ''"
+          label="Save Changes">
+        </button>
+      </div>
+    </form>
+  } @else {
+    <app-loading-data-banner class="w-full"></app-loading-data-banner>
+  }
+</div>
+
+<ngx-spinner
+  name="claimSpinner"
+  bdColor="rgba(0, 0, 0, 0.8)"
+  size="medium"
+  color="#fff"
+  type="square-spin"
+  [fullScreen]="true"
+>
+  <p style="color: white">Loading...</p>
+</ngx-spinner>

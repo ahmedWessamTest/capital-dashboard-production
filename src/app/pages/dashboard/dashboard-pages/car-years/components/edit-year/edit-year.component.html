@@ -1,0 +1,100 @@
+<div class="py-8">
+    <div class="w-full mb-4">
+      <h2 class="text-xl font-semibold">Edit Car Year</h2>
+    </div>
+  
+    @if (message.text) {
+      <div [ngClass]="{
+        'bg-green-100 border-green-400 text-green-700': message.type === 'success',
+        'bg-red-100 border-red-400 text-red-700': message.type === 'error',
+        'bg-yellow-100 border-yellow-400 text-yellow-700': message.type === 'warn'
+      }" class="border px-4 py-3 rounded relative mb-4" role="alert">
+        <strong class="font-bold">{{ message.type === 'success' ? 'Success!' : message.type === 'error' ? 'Error!' : 'Warning!' }}</strong>
+        <span class="block sm:inline ml-2">{{ message.text }}</span>
+      </div>
+    }
+  
+    <form [formGroup]="carYearForm" (ngSubmit)="onSubmit()" class="w-full">
+      <div class="flex flex-col sm:flex-row gap-4 mb-6">
+        <!-- Car Model Dropdown -->
+        <div class="flex-1 w-full">
+          <label for="car_model_id" class="flex items-center gap-1 mx-2 mb-2 font-semibold">Car Model</label>
+          <div class="w-full">
+            <p-dropdown
+              id="car_model_id"
+              formControlName="car_model_id"
+              [options]="carModels"
+              optionLabel="en_title"
+              optionValue="id"
+              [showClear]="false"
+              placeholder="Select Car Model"
+              [ngClass]="{ 'ng-invalid ng-dirty': carYearForm.get('car_model_id')?.invalid && carYearForm.get('car_model_id')?.touched }"
+              class="w-full"
+              [style]="{'width': '100%'}"
+            ></p-dropdown>
+            <div class="h-6 mt-2">
+              <small
+                *ngIf="carYearForm.get('car_model_id')?.touched && carYearForm.get('car_model_id')?.errors?.['required']"
+                class="text-red-500 text-sm mx-4 block"
+              >Car Model is required</small>
+            </div>
+          </div>
+        </div>
+  
+        <!-- Year Input -->
+        <div class="flex-1 w-full">
+          <label for="year_date" class="flex items-center gap-1 mx-2 mb-2 font-semibold">Year</label>
+          <div class="w-full">
+            <input
+              id="year_date"
+              type="text"
+              pInputText
+              formControlName="year_date"
+              placeholder="Enter year (e.g. 2023)"
+              (keypress)="numericOnly($event)"
+              (paste)="preventInvalidPaste($event)"
+              [ngClass]="{ 'ng-invalid ng-dirty': carYearForm.get('year_date')?.invalid && carYearForm.get('year_date')?.touched }"
+              class="w-full border rounded form-input"
+            />
+            <div class="h-6 mt-2">
+                @if(carYearForm.get('year_date')?.touched && carYearForm.get('year_date')?.errors?.['required']){
+                    <small
+                    class="text-red-500 text-sm mx-4 block"
+                  >Year is required</small>
+                }
+                @else if(carYearForm.get('year_date')?.touched && carYearForm.get('year_date')?.errors?.['pattern']){
+                    <small
+                    class="text-red-500 text-sm mx-4 block"
+                  >Please enter a valid 4-digit year</small>
+                }
+                @else if(carYearForm.get('year_date')?.touched && carYearForm.get('year_date')?.errors?.['yearRange']){
+                    <small
+                    class="text-red-500 text-sm mx-4 block"
+                  >Please enter a valid year (e.g., between 1900 and current year + 1)</small>
+                }
+            </div>
+          </div>
+        </div>
+      </div>
+  
+      <!-- Status Switch and Submit Button -->
+      <div class="flex gap-2 mx-4 items-center ">
+        <div class=" ">
+          <div class="flex gap-2 items-center">
+            <p-inputSwitch id="active_status" formControlName="active_status"></p-inputSwitch>
+            <label for="active_status" class="text-lg">
+              {{ carYearForm.get('active_status')?.value ? 'Active' : 'Inactive' }}
+            </label>
+          </div>
+        </div>
+        <div class="flex-1"></div>
+        <button
+          class=" px-4 py-2 bg-blue-500 text-white rounded text-xl hover:bg-blue-600 disabled:opacity-50 disabled:cursor-not-allowed"
+          type="submit"
+          [disabled]="loading || !carYearForm.valid"
+        >
+          {{ loading ? 'Loading...' : 'Submit' }}
+        </button>
+      </div>
+    </form>
+  </div>

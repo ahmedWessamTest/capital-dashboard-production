@@ -1,0 +1,49 @@
+    .policy-form {
+      .p-dropdown {
+        width: 100%;
+        height: 50px;
+        background: white;
+        border-radius: 12px;
+        padding: 0 20px;
+        color: #1f2937;
+        transition: all 0.2s ease;
+        border: 1px solid rgba(0, 0, 0, 0.285);
+        
+        .p-dropdown-label {
+          font-size: 16px;
+          color: #6b7280;
+          margin-top: 1px;
+        }
+      }
+  
+      .p-calendar {
+        width: 100%;
+        
+        .p-inputtext {
+          width: 100%;
+          height: 50px;
+          background: white;
+          border-radius: 12px;
+          padding: 0 20px;
+          color: #1f2937;
+          transition: all 0.2s ease;
+          border: 1px solid rgba(0, 0, 0, 0.285);
+          font-size: 16px;
+          
+          &::placeholder {
+            color: #6b7280;
+          }
+        }
+        
+        .p-datepicker-trigger {
+          background: transparent;
+          border: none;
+          position: absolute;
+          right: 10px;
+          top: 50%;
+          transform: translateY(-50%);
+          color: #6b7280;
+        }
+      }
+    
+  }

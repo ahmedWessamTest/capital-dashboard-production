@@ -1,0 +1,352 @@
+<p-toast position="top-right" [baseZIndex]="5000"></p-toast>
+
+<div class="contact-us-control p-4 w-full">
+  @if (contactForm) {
+    <h2 class="mb-4">Contact Information</h2>
+    <form [formGroup]="contactForm" (ngSubmit)="onSubmit()" class="w-full">
+      <div class="contact-us-items w-full">
+        <!-- English Address -->
+        <div class="contact-us-item w-full">
+          <label for="en_address" class="font-medium">English Address</label>
+          <div class="input-container w-full">
+            <i class="pi pi-home text-gray-600 input-icon"></i>
+            <input id="en_address" type="text" pInputText formControlName="en_address" placeholder="Enter English Address" class="w-full" />
+          </div>
+          <div class="error-container">
+            @if (contactForm.get('en_address')?.invalid && contactForm.get('en_address')?.touched) {
+              <small class="error-message">English Address is required</small>
+            }
+          </div>
+        </div>
+
+        <!-- Arabic Address -->
+        <div class="contact-us-item w-full">
+          <label for="ar_address" class="font-medium">Arabic Address</label>
+          <div class="input-container w-full">
+            <i class="pi pi-home text-gray-600 input-icon"></i>
+            <input id="ar_address" type="text" pInputText formControlName="ar_address" placeholder="Enter Arabic Address" class="w-full" />
+          </div>
+          <div class="error-container">
+            @if (contactForm.get('ar_address')?.invalid && contactForm.get('ar_address')?.touched) {
+              <small class="error-message">Arabic Address is required</small>
+            }
+          </div>
+        </div>
+
+        <!-- Phone Numbers Section -->
+        <h3 class="mt-4 mb-3">Phone Numbers</h3>
+        <div class="phone-row">
+          <!-- First Phone -->
+          <div class="contact-us-item w-full">
+            <label for="first_phone" class="font-medium">First Phone</label>
+            <div class="input-container w-full">
+              <i class="pi pi-phone text-green-500 input-icon"></i>
+              <input id="first_phone" type="text" pInputText formControlName="first_phone" placeholder="Enter First Phone Number" class="w-full" />
+            </div>
+          </div>
+
+          <!-- Second Phone -->
+          <div class="contact-us-item w-full">
+            <label for="second_phone" class="font-medium">Second Phone</label>
+            <div class="input-container w-full">
+              <i class="pi pi-phone text-green-500 input-icon"></i>
+              <input id="second_phone" type="text" pInputText formControlName="second_phone" placeholder="Enter Second Phone Number" class="w-full" />
+            </div>
+          </div>
+        </div>
+
+        <div class="phone-row">
+          <!-- Third Phone -->
+          <div class="contact-us-item w-full">
+            <label for="third_phone" class="font-medium">Third Phone</label>
+            <div class="input-container w-full">
+              <i class="pi pi-phone text-green-500 input-icon"></i>
+              <input id="third_phone" type="text" pInputText formControlName="third_phone" placeholder="Enter Third Phone Number" class="w-full" />
+            </div>
+          </div>
+
+          <!-- Fourth Phone -->
+          <div class="contact-us-item w-full">
+            <label for="fourth_phone" class="font-medium">Fourth Phone</label>
+            <div class="input-container w-full">
+              <i class="pi pi-phone text-green-500 input-icon"></i>
+              <input id="fourth_phone" type="text" pInputText formControlName="fourth_phone" placeholder="Enter Fourth Phone Number" class="w-full" />
+            </div>
+          </div>
+        </div>
+
+        <!-- WhatsApp -->
+        <div class="contact-us-item w-full">
+          <label for="whatsapp" class="font-medium">WhatsApp</label>
+          <div class="input-container w-full">
+            <i class="pi pi-whatsapp text-green-500 input-icon"></i>
+            <input id="whatsapp" type="text" pInputText formControlName="whatsapp" placeholder="Enter WhatsApp Number" class="w-full" />
+          </div>
+        </div>
+
+        <!-- Email -->
+        <div class="contact-us-item w-full">
+          <label for="email" class="font-medium">Email</label>
+          <div class="input-container w-full">
+            <i class="pi pi-envelope text-blue-500 input-icon"></i>
+            <input id="email" type="email" pInputText formControlName="email" placeholder="Enter Email Address" class="w-full" />
+          </div>
+          <div class="error-container">
+            @if (contactForm.get('email')?.invalid && contactForm.get('email')?.touched) {
+              <small class="error-message">Valid email is required</small>
+            }
+          </div>
+        </div>
+
+        <!-- Social Media Links Section -->
+        <h3 class="mt-4 mb-3">Social Media Links</h3>
+
+        <!-- Facebook -->
+        <div class="contact-us-item w-full">
+          <label for="facebook" class="font-medium">Facebook</label>
+          <div class="input-container w-full">
+            <i class="pi pi-facebook text-blue-600 input-icon"></i>
+            <input id="facebook" type="text" pInputText formControlName="facebook" placeholder="Enter Facebook URL" class="w-full" />
+          </div>
+          <div class="error-container">
+            @if (contactForm.get('facebook')?.invalid && contactForm.get('facebook')?.touched) {
+              <small class="error-message">Valid URL is required</small>
+            }
+          </div>
+        </div>
+
+        <!-- Twitter -->
+        <div class="contact-us-item w-full">
+          <label for="twitter" class="font-medium">X</label>
+          <div class="input-container w-full">
+            <i class="pi pi-twitter text-blue-400 input-icon"></i>
+            <input id="twitter" type="text" pInputText formControlName="twitter" placeholder="Enter Twitter URL" class="w-full" />
+          </div>
+          <div class="error-container">
+            @if (contactForm.get('twitter')?.invalid && contactForm.get('twitter')?.touched) {
+              <small class="error-message">Valid URL is required</small>
+            }
+          </div>
+        </div>
+
+        <!-- Instagram -->
+        <div class="contact-us-item w-full">
+          <label for="instagram" class="font-medium">Instagram</label>
+          <div class="input-container w-full">
+            <i class="pi pi-instagram text-pink-500 input-icon"></i>
+            <input id="instagram" type="text" pInputText formControlName="instagram" placeholder="Enter Instagram URL" class="w-full" />
+          </div>
+          <div class="error-container">
+            @if (contactForm.get('instagram')?.invalid && contactForm.get('instagram')?.touched) {
+              <small class="error-message">Valid URL is required</small>
+            }
+          </div>
+        </div>
+
+        <!-- LinkedIn -->
+        <div class="contact-us-item w-full">
+          <label for="linkedin" class="font-medium">LinkedIn</label>
+          <div class="input-container w-full">
+            <i class="pi pi-linkedin text-blue-700 input-icon"></i>
+            <input id="linkedin" type="text" pInputText formControlName="linkedin" placeholder="Enter LinkedIn URL" class="w-full" />
+          </div>
+          <div class="error-container">
+            @if (contactForm.get('linkedin')?.invalid && contactForm.get('linkedin')?.touched) {
+              <small class="error-message">Valid URL is required</small>
+            }
+          </div>
+        </div>
+
+        <!-- YouTube -->
+        <!-- <div class="contact-us-item w-full">
+          <label for="youtube" class="font-medium">YouTube</label>
+          <div class="input-container w-full">
+            <i class="pi pi-youtube text-red-600 input-icon"></i>
+            <input id="youtube" type="text" pInputText formControlName="youtube" placeholder="Enter YouTube URL" class="w-full" />
+          </div>
+          <div class="error-container">
+            @if (contactForm.get('youtube')?.invalid && contactForm.get('youtube')?.touched) {
+              <small class="error-message">Valid URL is required</small>
+            }
+          </div>
+        </div> -->
+
+        <!-- Google Plus -->
+        <!-- <div class="contact-us-item w-full">
+          <label for="google_plus" class="font-medium">Google Plus</label>
+          <div class="input-container w-full">
+            <i class="pi pi-google text-red-500 input-icon"></i>
+            <input id="google_plus" type="text" pInputText formControlName="google_plus" placeholder="Enter Google Plus URL" class="w-full" />
+          </div>
+          <div class="error-container">
+            @if (contactForm.get('google_plus')?.invalid && contactForm.get('google_plus')?.touched) {
+              <small class="error-message">Valid URL is required</small>
+            }
+          </div>
+        </div> -->
+
+        <!-- Meta Data Section -->
+        <h3 class="mt-4 mb-3">Meta Data</h3>
+
+        <!-- English Meta Title -->
+        <div class="contact-us-item w-full">
+          <label for="en_meta_title" class="font-medium">English Meta Title</label>
+          <div class="input-container w-full">
+            <i class="pi pi-file text-gray-600 input-icon"></i>
+            <input id="en_meta_title" type="text" pInputText formControlName="en_meta_title" placeholder="Enter English Meta Title" class="w-full" />
+          </div>
+          <div class="error-container">
+            @if (contactForm.get('en_meta_title')?.invalid && contactForm.get('en_meta_title')?.touched) {
+              <small class="error-message">English Meta Title is required</small>
+            }
+          </div>
+        </div>
+
+        <!-- Arabic Meta Title -->
+        <div class="contact-us-item w-full">
+          <label for="ar_meta_title" class="font-medium">Arabic Meta Title</label>
+          <div class="input-container w-full">
+            <i class="pi pi-file text-gray-600 input-icon"></i>
+            <input id="ar_meta_title" type="text" pInputText formControlName="ar_meta_title" placeholder="Enter Arabic Meta Title" class="w-full" />
+          </div>
+          <div class="error-container">
+            @if (contactForm.get('ar_meta_title')?.invalid && contactForm.get('ar_meta_title')?.touched) {
+              <small class="error-message">Arabic Meta Title is required</small>
+            }
+          </div>
+        </div>
+
+        <!-- English Meta Description -->
+        <div class="contact-us-item w-full">
+          <label for="en_meta_description" class="font-medium">English Meta Description</label>
+          <div class="input-container w-full">
+            <i class="pi pi-file text-gray-600 input-icon"></i>
+            <textarea id="en_meta_description" pInputTextarea formControlName="en_meta_description" placeholder="Enter English Meta Description" class="w-full"></textarea>
+          </div>
+          <div class="error-container">
+            @if (contactForm.get('en_meta_description')?.invalid && contactForm.get('en_meta_description')?.touched) {
+              @if (contactForm.get('en_meta_description')?.errors?.['required']) {
+                <small class="error-message">English Meta Description is required</small>
+              }
+              @if (contactForm.get('en_meta_description')?.errors?.['minlength']) {
+                <small class="error-message">English Meta Description must be at least 20 characters</small>
+              }
+            }
+          </div>
+        </div>
+
+        <!-- Arabic Meta Description -->
+        <div class="contact-us-item w-full mt-8 mb-4">
+          <label for="ar_meta_description" class="font-medium">Arabic Meta Description</label>
+          <div class="input-container w-full">
+            <i class="pi pi-file text-gray-600 input-icon"></i>
+            <textarea id="ar_meta_description" pInputTextarea formControlName="ar_meta_description" placeholder="Enter Arabic Meta Description" class="w-full"></textarea>
+          </div>
+          <div class="error-container">
+            @if (contactForm.get('ar_meta_description')?.invalid && contactForm.get('ar_meta_description')?.touched) {
+              @if (contactForm.get('ar_meta_description')?.errors?.['required']) {
+                <small class="error-message">Arabic Meta Description is required</small>
+              }
+              @if (contactForm.get('ar_meta_description')?.errors?.['minlength']) {
+                <small class="error-message">Arabic Meta Description must be at least 20 characters</small>
+              }
+            }
+          </div>
+        </div>
+
+        <!-- Contact Title Section -->
+        <h3 class="mt-4 mb-3">Contact Title</h3>
+
+        <!-- English Contact Title -->
+        <div class="contact-us-item w-full">
+          <label for="en_contact_title" class="font-medium">English Contact Title</label>
+          <div class="input-container w-full">
+            <i class="pi pi-file text-gray-600 input-icon"></i>
+            <input id="en_contact_title" type="text" pInputText formControlName="en_contact_title" placeholder="Enter English Contact Title" class="w-full" />
+          </div>
+          <div class="error-container">
+            @if (contactForm.get('en_contact_title')?.invalid && contactForm.get('en_contact_title')?.touched) {
+              <small class="error-message">English Contact Title is required</small>
+            }
+          </div>
+        </div>
+
+        <!-- Arabic Contact Title -->
+        <div class="contact-us-item w-full">
+          <label for="ar_contact_title" class="font-medium">Arabic Contact Title</label>
+          <div class="input-container w-full">
+            <i class="pi pi-file text-gray-600 input-icon"></i>
+            <input id="ar_contact_title" type="text" pInputText formControlName="ar_contact_title" placeholder="Enter Arabic Contact Title" class="w-full" />
+          </div>
+          <div class="error-container">
+            @if (contactForm.get('ar_contact_title')?.invalid && contactForm.get('ar_contact_title')?.touched) {
+              <small class="error-message">Arabic Contact Title is required</small>
+            }
+          </div>
+        </div>
+
+        <!-- English Contact Text -->
+        <div class="contact-us-item w-full">
+          <label for="en_contact_text" class="font-medium">English Contact Text</label>
+          <div class="input-container w-full">
+            <i class="pi pi-file text-gray-600 input-icon"></i>
+            <textarea id="en_contact_text" pInputTextarea formControlName="en_contact_text" placeholder="Enter English Contact Text" class="w-full"></textarea>
+          </div>
+          <div class="error-container">
+            @if (contactForm.get('en_contact_text')?.invalid && contactForm.get('en_contact_text')?.touched) {
+              @if (contactForm.get('en_contact_text')?.errors?.['required']) {
+                <small class="error-message">English Contact Text is required</small>
+              }
+              @if (contactForm.get('en_contact_text')?.errors?.['minlength']) {
+                <small class="error-message">English Contact Text must be at least 20 characters</small>
+              }
+            }
+          </div>
+        </div>
+
+        <!-- Arabic Contact Text -->
+        <div class="contact-us-item w-full mt-8 mb-4">
+          <label for="ar_contact_text" class="font-medium">Arabic Contact Text</label>
+          <div class="input-container w-full">
+            <i class="pi pi-file text-gray-600 input-icon"></i>
+            <textarea id="ar_contact_text" pInputTextarea formControlName="ar_contact_text" placeholder="Enter Arabic Contact Text" class="w-full"></textarea>
+          </div>
+          <div class="error-container">
+            @if (contactForm.get('ar_contact_text')?.invalid && contactForm.get('ar_contact_text')?.touched) {
+              @if (contactForm.get('ar_contact_text')?.errors?.['required']) {
+                <small class="error-message">Arabic Contact Text is required</small>
+              }
+              @if (contactForm.get('ar_contact_text')?.errors?.['minlength']) {
+                <small class="error-message">Arabic Contact Text must be at least 20 characters</small>
+              }
+            }
+          </div>
+        </div>
+      </div>
+
+      <div class="mt-4 w-full">
+        <button 
+          pButton 
+          type="submit" 
+          class="btn-main px-3 w-full"
+          [disabled]=" contactForm.invalid || isLoading"
+          [icon]="isLoading ? 'pi pi-spin pi-spinner mx-2' : ''"
+          label="Save Changes">
+        </button>
+      </div>
+    </form>
+  } @else {
+    <app-loading-data-banner class="w-full"></app-loading-data-banner>
+  }
+</div>
+
+<ngx-spinner
+  name="contactSpinner"
+  bdColor="rgba(0, 0, 0, 0.8)"
+  size="medium"
+  color="#fff"
+  type="square-spin"
+  [fullScreen]="true"
+>
+  <p style="color: white">Loading...</p>
+</ngx-spinner>

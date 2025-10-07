@@ -1,0 +1,20 @@
+@if(!isLoading){
+<app-generic-table
+  [data]="medicalInsurances"
+  [columns]="columns"
+  [title]="'Medical Insurances'"
+  entityType="medical-insurances"
+  [viewRoute]="'/dashboard/menu/medical-insurances/view'"
+  [rowsPerPage]="10"
+  [needCall]="false"
+  [ToggelStatus]="true"
+  choicesRoute="/dashboard/menu/medical-insurances/choices"
+  [addRoute]="'/dashboard/menu/medical-insurances/create'"
+  [editRoute]="'/dashboard/menu/medical-insurances/edit/'"
+  app-all-jop-insurance
+>
+</app-generic-table>
+} @else {
+<app-loading-data-banner></app-loading-data-banner>
+
+}

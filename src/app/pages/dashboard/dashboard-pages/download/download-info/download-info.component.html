@@ -1,0 +1,139 @@
+<p-toast position="top-right" [baseZIndex]="5000"></p-toast>
+
+<div class="about-download-control p-4 w-full">
+  @if (downloadForm) {
+    <h2 class="mb-4">About Downloads Information</h2>
+    <form [formGroup]="downloadForm" (ngSubmit)="onSubmit()" class="w-full">
+      <div class="about-download-items w-full">
+        <div class="about-download-item w-full">
+          <label for="en_title" class="font-medium">English Title</label>
+          <div class="input-container w-full">
+            <i class="pi pi-book text-gray-600 input-icon"></i>
+            <input id="en_title" type="text" pInputText formControlName="en_title" placeholder="Enter English Title" class="w-full" />
+          </div>
+          <div class="error-container">
+            @if (downloadForm.get('en_title')?.invalid && downloadForm.get('en_title')?.touched) {
+              <small class="error-message">English Title is required</small>
+            }
+          </div>
+        </div>
+
+        <div class="about-download-item w-full">
+          <label for="ar_title" class="font-medium">Arabic Title</label>
+          <div class="input-container w-full">
+            <i class="pi pi-book text-gray-600 input-icon"></i>
+            <input id="ar_title" type="text" pInputText formControlName="ar_title" placeholder="Enter Arabic Title" class="w-full" />
+          </div>
+          <div class="error-container">
+            @if (downloadForm.get('ar_title')?.invalid && downloadForm.get('ar_title')?.touched) {
+              <small class="error-message">Arabic Title is required</small>
+            }
+          </div>
+        </div>
+
+        <div class="about-download-item w-full">
+          <label for="en_text" class="font-medium">English Text</label>
+          <div class="input-container w-full">
+            <i class="pi pi-align-left text-gray-600 input-icon"></i>
+            <textarea id="en_text" pInputTextarea formControlName="en_text" placeholder="Enter English Text" class="w-full"></textarea>
+          </div>
+          <div class="error-container">
+            @if (downloadForm.get('en_text')?.invalid && downloadForm.get('en_text')?.touched) {
+              <small class="error-message">English Text is required</small>
+            }
+          </div>
+        </div>
+
+        <div class="about-download-item w-full mt-8 mb-4">
+          <label for="ar_text" class="font-medium">Arabic Text</label>
+          <div class="input-container w-full">
+            <i class="pi pi-align-right text-gray-600 input-icon"></i>
+            <textarea id="ar_text" pInputTextarea formControlName="ar_text" placeholder="Enter Arabic Text" class="w-full"></textarea>
+          </div>
+          <div class="error-container">
+            @if (downloadForm.get('ar_text')?.invalid && downloadForm.get('ar_text')?.touched) {
+              <small class="error-message">Arabic Text is required</small>
+            }
+          </div>
+        </div>
+
+        <h3 class="mt-4 mb-3">Download Links</h3>
+
+        <div class="about-download-item w-full">
+          <label for="android_download_link" class="font-medium">Android Download Link</label>
+          <div class="input-container w-full">
+            <i class="pi pi-android text-green-500 input-icon"></i>
+            <input id="android_download_link" type="text" pInputText formControlName="android_download_link" placeholder="Enter Android Download URL" class="w-full" />
+          </div>
+          <div class="error-container">
+            @if (downloadForm.get('android_download_link')?.invalid && downloadForm.get('android_download_link')?.touched) {
+              <small class="error-message">Valid URL is required</small>
+            }
+          </div>
+        </div>
+
+        <div class="about-download-item w-full">
+          <label for="ios_download_link" class="font-medium">iOS Download Link</label>
+          <div class="input-container w-full">
+            <i class="pi pi-apple text-gray-500 input-icon"></i>
+            <input id="ios_download_link" type="text" pInputText formControlName="ios_download_link" placeholder="Enter iOS Download URL" class="w-full" />
+          </div>
+          <div class="error-container">
+            @if (downloadForm.get('ios_download_link')?.invalid && downloadForm.get('ios_download_link')?.touched) {
+              <small class="error-message">Valid URL is required</small>
+            }
+          </div>
+        </div>
+
+        <div class="about-download-item w-full">
+          <label for="elwinsh_link" class="font-medium">Elwinsh Link</label>
+          <div class="input-container w-full">
+            <i class="pi pi-globe text-blue-500 input-icon"></i>
+            <input id="elwinsh_link" type="text" pInputText formControlName="elwinsh_link" placeholder="Enter Elwinsh URL" class="w-full" />
+          </div>
+          <div class="error-container">
+            @if (downloadForm.get('elwinsh_link')?.invalid && downloadForm.get('elwinsh_link')?.touched) {
+              <small class="error-message">Valid URL is required</small>
+            }
+          </div>
+        </div>
+        <div class="about-download-item w-full">
+          <label for="main_download_link" class="font-medium">Main Download Link</label>
+          <div class="input-container w-full">
+            <i class="pi pi-globe text-blue-500 input-icon"></i>
+            <input id="main_download_link" type="text" pInputText formControlName="main_download_link" placeholder="Enter Main Download URL" class="w-full" />
+          </div>
+          <div class="error-container">
+            @if (downloadForm.get('main_download_link')?.invalid && downloadForm.get('main_download_link')?.touched) {
+              <small class="error-message">Valid URL is required</small>
+            }
+          </div>
+        </div>
+      </div>
+
+      <div class="mt-4 w-full">
+        <button
+          pButton
+          type="submit"
+          class="btn-main px-3 w-full"
+          [disabled]=" downloadForm.invalid || isLoading"
+          [icon]="isLoading ? 'pi pi-spin pi-spinner mx-2' : ''"
+          label="Save Changes">
+        </button>
+      </div>
+    </form>
+  } @else {
+    <app-loading-data-banner class="w-full"></app-loading-data-banner>
+  }
+</div>
+
+<ngx-spinner
+  name="downloadSpinner"
+  bdColor="rgba(0, 0, 0, 0.8)"
+  size="medium"
+  color="#fff"
+  type="square-spin"
+  [fullScreen]="true"
+>
+  <p style="color: white">Loading...</p>
+</ngx-spinner>

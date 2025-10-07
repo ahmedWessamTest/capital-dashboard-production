@@ -1,0 +1,13 @@
+<app-generic-table
+      [data]="buildCountries"
+      [columns]="columns"
+      [title]="'Build Countries'"
+      [entityType]="'build-countries'"
+      [viewRoute]="'/dashboard/menu/build-countries/view'"
+      [editRoute]="'/dashboard/menu/build-countries/edit'"
+      [addRoute]="'/dashboard/menu/build-countries/add'"
+      [rowsPerPage]="10"
+      [needCall]="true"
+      [ToggelStatus]="true"
+      [categoryOptions]="categoryOptions">
+    </app-generic-table>    

@@ -1,0 +1,105 @@
+<div class="min-h-dvh flex justify-center items-center">
+  <main class="dashboard">
+    <!-- login -->
+    <div class="flex align-items-start py-6 justify-content-center min-w-screen overflow-hidden">
+      <div class="flex flex-column align-items-center justify-content-center py-5">
+        <div
+          style="
+            border-radius: 56px;
+            padding: 0.3rem;
+            background: linear-gradient(180deg, #37a6de 10%, rgba(33, 150, 243, 0) 30%);
+          ">
+          <div class="shadow-inner surface-card py-8 px-5 sm:px-8 box-shadow" style="border-radius: 53px; min-height: 500px;">
+            <div class="text-center mb-2">
+              <img class="mx-auto mb-9 rounded-md max-w-[150px]" src="./assets/favicon_io/logo.png" alt="Image" />
+            </div>
+
+            <form [formGroup]="userData" (ngSubmit)="onSignInFormSubmitClick()">
+              <!-- Email Field -->
+              <div>
+                <div class="">
+                  <div class="flex justify-between items-center">
+                    <label for="email1" class="block text-900 text-xl font-medium">Username</label>
+                  </div>
+                  <input
+                    id="email1"
+                    type="text"
+                    placeholder="User Name"
+                    pInputText
+                    autocomplete="name"
+                    class="w-full md:w-30rem mb-1"
+                    style="padding: 1rem"
+                    formControlName="email" />
+                  <div class="min-h-[24px]">
+                    @if (userData.controls['email'].touched && userData.controls['email'].hasError('required')) {
+                      <div class="text-red-500">
+                        <small class="font-italic">Required*</small>
+                      </div>
+                    }
+                  </div>
+                </div>
+              </div>
+
+              <!-- Password Field -->
+              <div class="passs">
+                <div class="flex justify-between items-center">
+                  <label for="password1" class="block text-900 font-medium text-xl">Password</label>
+                </div>
+                <p-password
+                  id="password1"
+                  [toggleMask]="true"
+                  placeholder="Password"
+                  styleClass="mb-1"
+                  inputStyleClass="w-full p-3 md:w-30rem"
+                  formControlName="password"
+                  [feedback]="false"></p-password>
+                <div class="min-h-[24px]">
+                  @if (userData.controls['password'].touched && userData.controls['password'].hasError('required')) {
+                    <div class="text-red-500">
+                      <small class="font-italic">Required*</small>
+                    </div>
+                  }
+                </div>
+              </div>
+
+              <!-- Remember Me Checkbox -->
+              <div class="flex items-center justify-between mb-2  gap-5">
+                <div class="flex items-center">
+                  <p-checkbox
+                    id="rememberme1"
+                    [binary]="true"
+                    [label]="'Remember me'"
+                    labelStyleClass="cursor-pointer"
+                    styleClass="mx-2 border rounded"
+                    formControlName="rememberMe"></p-checkbox>
+                </div>
+              </div>
+
+              <!-- Submit Button -->
+              <div class="relative">
+                <button
+                  pButton
+                  pRipple
+                  [icon]="isLoading ? 'pi pi-spin pi-spinner' : ''"
+                  [iconPos]="'right'"
+                  label="Login"
+                  class="w-full !mx-auto block p-3 py-3 text-xl text-white rounded-md disabled:bg-main-300 !bg-main-500"
+                  [disabled]="isLoading">
+                </button>
+                <div class="min-h-[24px]">
+                  @if (isErrorMessage) {
+                    <div class="text-red-500 my-2 text-center">
+                      <p>Wrong username or password!</p>
+                    </div>
+                  }
+                </div>
+              </div>
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+  </main>
+</div>
+
+<app-dashboard-footer />

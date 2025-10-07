@@ -1,0 +1,124 @@
+<p-toast></p-toast>
+
+@if (isLoading()) {
+<app-loading-data-banner></app-loading-data-banner>
+} @else {
+<div class="card">
+  <div class="flex justify-between items-center mb-3">
+    <h2 class="text-2xl font-semibold">Car Models Control</h2>
+    <p-button 
+      routerLink="/dashboard/menu/car-models/add" 
+      label="Add Car Model" 
+      icon="pi pi-plus" 
+      class="btn-main text-white">
+    </p-button>
+  </div>
+
+  <div class="mb-3 flex justify-content-end">
+    <span class="p-input-icon-right">
+      <i class="pi pi-search"></i>
+      <input 
+        #search 
+        class="mb-0" 
+        type="text" 
+        pInputText 
+        placeholder="Search car models..." 
+        (input)="onGlobalFilter($event)" />
+    </span>
+  </div>
+
+  <p-table 
+    #dt 
+    [paginator]="true" 
+    [rows]="rowsPerPage" 
+    [totalRecords]="totalRecords" 
+    [rowsPerPageOptions]="getPagination()" 
+    [showCurrentPageReport]="true" 
+    [value]="filteredData" 
+    responsiveLayout="scroll"
+    (onSort)="onSort($event)">
+    
+    <ng-template pTemplate="header">
+      <tr>
+        <th pSortableColumn="id" class="text-center">
+          ID <p-sortIcon field="id"></p-sortIcon>
+        </th>
+        <th pSortableColumn="en_title" class="text-center">
+          English Title <p-sortIcon field="en_title"></p-sortIcon>
+        </th>
+        <th pSortableColumn="ar_title" class="text-center">
+          Arabic Title <p-sortIcon field="ar_title"></p-sortIcon>
+        </th>
+        <th class="text-center">
+          <p-dropdown 
+            [options]="brandOptions" 
+            optionLabel="label" 
+            optionValue="value"
+            [(ngModel)]="activeFilters['brand']" 
+            (onChange)="onFilterChange('brand', $event.value)"
+            placeholder="Brand" 
+            [showClear]="true" 
+            [autoZIndex]="true">
+          </p-dropdown>
+        </th>
+        <!-- <th class="text-center">
+          <p-dropdown 
+            [options]="typeOptions" 
+            optionLabel="label" 
+            optionValue="value"
+            [(ngModel)]="activeFilters['type']" 
+            (onChange)="onFilterChange('type', $event.value)"
+            placeholder="Type" 
+            [showClear]="true" 
+            [autoZIndex]="true">
+          </p-dropdown>
+        </th> -->
+        <th class="text-center">
+          <p-dropdown 
+            [options]="statusOptions" 
+            optionLabel="label" 
+            optionValue="value"
+            [(ngModel)]="activeFilters['status']" 
+            (onChange)="onFilterChange('status', $event.value)"
+            placeholder="Status" 
+            [showClear]="true" 
+            [autoZIndex]="true">
+          </p-dropdown>
+        </th>
+        <th class="text-center">Actions</th>
+      </tr>
+    </ng-template>
+
+    <ng-template pTemplate="body" let-item>
+      <tr>
+        <td class="text-center">{{ item.id }}</td>
+        <td class="text-center">{{ item.en_title }}</td>
+        <td class="text-center">{{ item.ar_title }}</td>
+        <td class="text-center">{{ item.car_brand_title }}</td>
+        <!-- <td class="text-center">{{ item.car_type_title }}</td> -->
+        <td class="text-center">
+          <p-inputSwitch 
+            [ngModel]="normalizeActiveStatus.normalizeActiveStatus(item.active_status)"
+            (onChange)="toggleStatus(item)">
+          </p-inputSwitch>
+        </td>
+        <td class="text-center">
+          <p-button 
+            icon="pi pi-pencil" 
+            [routerLink]="['/dashboard/menu/car-models/edit', item.id]" 
+            class="p-button-text">
+          </p-button>
+        </td>
+      </tr>
+    </ng-template>
+
+    <ng-template pTemplate="emptymessage">
+      <tr>
+        <td colspan="7">
+          <app-no-data-found-banner></app-no-data-found-banner>
+        </td>
+      </tr>
+    </ng-template>
+  </p-table>
+</div>
+}

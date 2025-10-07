@@ -1,0 +1,308 @@
+<!-- <app-generic-form
+  [fields]="formFields"
+  [entityType]="'categories'"
+  [title]="'Edit Category'"
+  [redirectRoute]="'/dashboard/menu/categories'"
+  [isEdit]="isEditMode"
+  [editData]="editData">
+</app-generic-form> -->
+
+
+<ngx-spinner
+  name="actionsLoader"
+  bdColor="rgba(0, 0, 0, 0.8)"
+  size="medium"
+  color="#fff"
+  type="square-spin"
+  [fullScreen]="true">
+  <p style="color: white">Loading...</p>
+</ngx-spinner>
+
+<div class="card">
+  <h2 class="card-title">{{ isEditMode ? 'Edit Category' : 'Add New Category' }}</h2>
+
+  <form [formGroup]="categoryForm" (ngSubmit)="onSubmit()" class="category-form">
+    <div class="form-section">
+      <h3 class="section-title">Title</h3>
+      <div class="form-row">
+        <div class="form-field">
+          <label for="en_title" class="field-label">English Title</label>
+          <div class="input-container">
+            <input
+              pInputText
+              id="en_title"
+              formControlName="en_title"
+              placeholder="Enter English Title"
+              [ngClass]="{'p-invalid': categoryForm.get('en_title')?.touched && categoryForm.get('en_title')?.invalid}"
+              [disabled]="isSubmitting"
+            />
+          </div>
+          <div class="error-container">
+            @if (categoryForm.get('en_title')?.touched && categoryForm.get('en_title')?.hasError('required')) {
+              <small class="error-message">English Title is required</small>
+            }
+          </div>
+        </div>
+        <div class="form-field">
+          <label for="ar_title" class="field-label">Arabic Title</label>
+          <div class="input-container">
+            <input
+              pInputText
+              id="ar_title"
+              formControlName="ar_title"
+              placeholder="Enter Arabic Title"
+              [ngClass]="{'p-invalid': categoryForm.get('ar_title')?.touched && categoryForm.get('ar_title')?.invalid}"
+              [disabled]="isSubmitting"
+            />
+          </div>
+          <div class="error-container">
+            @if (categoryForm.get('ar_title')?.touched && categoryForm.get('ar_title')?.hasError('required')) {
+              <small class="error-message">Arabic Title is required</small>
+            }
+          </div>
+        </div>
+      </div>
+    </div>
+
+    
+    <div class="form-section">
+      <h3 class="section-title">Description</h3>
+      <div class="form-row">
+        <div class="form-field">
+          <label for="en_small_description" class="field-label">English Small Description</label>
+          <textarea
+            pInputTextarea
+            id="en_small_description"
+            formControlName="en_small_description"
+            rows="4"
+            placeholder="Enter English Small Description"
+            [ngClass]="{'p-invalid': categoryForm.get('en_small_description')?.touched && categoryForm.get('en_small_description')?.invalid}"
+            [disabled]="isSubmitting"
+          ></textarea>
+          <div class="error-container">
+            @if (categoryForm.get('en_small_description')?.touched && categoryForm.get('en_small_description')?.hasError('required')) {
+              <small class="error-message">English Small Description is required</small>
+            }
+          </div>
+        </div>
+        <div class="form-field">
+          <label for="ar_small_description" class="field-label">Arabic Small Description</label>
+          <textarea
+            pInputTextarea
+            id="ar_small_description"
+            formControlName="ar_small_description"
+            rows="4"
+            placeholder="Enter Arabic Small Description"
+            [ngClass]="{'p-invalid': categoryForm.get('ar_small_description')?.touched && categoryForm.get('ar_small_description')?.invalid}"
+            [disabled]="isSubmitting"
+          ></textarea>
+        </div>
+      </div>
+      <div class="form-row">
+        <div class="form-field">
+          <label for="en_main_description" class="field-label">English Main Description</label>
+          <ngx-jodit
+            [options]="{ language: 'en', height: 400 }"
+            formControlName="en_main_description"
+            class="rich-text-content"
+            [ngClass]="{'p-invalid': categoryForm.get('en_main_description')?.touched && categoryForm.get('en_main_description')?.invalid}"
+            [attr.disabled]="isSubmitting ? true : null"
+          ></ngx-jodit>
+          <div class="error-container">
+            @if (categoryForm.get('en_main_description')?.touched && categoryForm.get('en_main_description')?.hasError('required')) {
+              <small class="error-message">English Main Description is required</small>
+            }
+          </div>
+        </div>
+        <div class="form-field">
+          <label for="ar_main_description" class="field-label">Arabic Main Description</label>
+          <ngx-jodit
+            dir="rtl"
+            [options]="{ language: 'ar', direction: 'rtl', height: 400 }"
+            formControlName="ar_main_description"
+            class="rich-text-content"
+            [ngClass]="{'p-invalid': categoryForm.get('ar_main_description')?.touched && categoryForm.get('ar_main_description')?.invalid}"
+            [attr.disabled]="isSubmitting ? true : null"
+          ></ngx-jodit>
+          <div class="error-container">
+            @if (categoryForm.get('ar_main_description')?.touched && categoryForm.get('ar_main_description')?.hasError('required')) {
+              <small class="error-message">Arabic Main Description is required</small>
+            }
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="form-section">
+      <h3 class="section-title">Meta Information</h3>
+      <div class="form-row">
+        <div class="form-field">
+          <label for="en_meta_title" class="field-label">English Meta Title</label>
+          <div class="input-container">
+            <input
+              pInputText
+              id="en_meta_title"
+              formControlName="en_meta_title"
+              placeholder="Enter English Meta Title"
+              [disabled]="isSubmitting"
+            />
+          </div>
+        </div>
+        <div class="form-field">
+          <label for="ar_meta_title" class="field-label">Arabic Meta Title</label>
+          <div class="input-container">
+            <input
+              pInputText
+              id="ar_meta_title"
+              formControlName="ar_meta_title"
+              placeholder="Enter Arabic Meta Title"
+              [disabled]="isSubmitting"
+            />
+          </div>
+        </div>
+      </div>
+      <div class="form-row">
+        <div class="form-field">
+          <label for="en_meta_description" class="field-label">English Meta Description</label>
+          <textarea
+            pInputTextarea
+            id="en_meta_description"
+            formControlName="en_meta_description"
+            rows="4"
+            placeholder="Enter English Meta Description"
+            [disabled]="isSubmitting"
+          ></textarea>
+        </div>
+        <div class="form-field">
+          <label for="ar_meta_description" class="field-label">Arabic Meta Description</label>
+          <textarea
+            pInputTextarea
+            id="ar_meta_description"
+            formControlName="ar_meta_description"
+            rows="4"
+            placeholder="Enter Arabic Meta Description"
+            [disabled]="isSubmitting"
+          ></textarea>
+        </div>
+      </div>
+    </div>
+
+    <div class="form-section">
+      <h3 class="section-title">Additional Details</h3>
+      <div class="form-row">
+        <div class="form-field">
+          <label for="network_link" class="field-label">Network Link</label>
+          <div class="input-container">
+            <input
+              pInputText
+              id="network_link"
+              formControlName="network_link"
+              placeholder="Enter Network Link"
+              [disabled]="isSubmitting"
+            />
+          </div>
+        </div>
+        <div class="form-field">
+          <label for="counter_number" class="field-label">Counter Number</label>
+          <div class="input-container">
+            <input
+              type="number"
+              pInputText
+              id="counter_number"
+              formControlName="counter_number"
+              placeholder="Enter Counter Number"
+              [disabled]="isSubmitting"
+            />
+          </div>
+        </div>
+      </div>
+      <div class="form-row">
+        <div class="form-field">
+          <label for="active_status" class="field-label">Status</label>
+          <div class="status-container">
+            <p-inputSwitch
+              id="active_status"
+              formControlName="active_status"
+              [trueValue]="true"
+              [falseValue]="false"
+              (onChange)="onActiveStatusChange($event)"
+              [disabled]="isSubmitting"
+            ></p-inputSwitch>
+            <span class="status-label">{{ categoryForm.get('active_status')?.value === true ? 'Active' : 'Inactive' }}</span>
+          </div>
+          <div class="error-container">
+            @if (categoryForm.get('active_status')?.touched && categoryForm.get('active_status')?.hasError('required')) {
+              <small class="error-message">Status is required</small>
+            }
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="form-section">
+      <h3 class="section-title">Script Information</h3>
+      <div class="form-row">
+        <div class="form-field">
+          <label for="en_first_script" class="field-label">English First Script</label>
+          <div class="input-container">
+            <input
+              pInputText
+              id="en_first_script"
+              formControlName="en_first_script"
+              placeholder="Enter English First Script"
+              [ngClass]="{'p-invalid': categoryForm.get('en_first_script')?.touched && categoryForm.get('en_first_script')?.invalid}"
+              [disabled]="isSubmitting"
+            />
+          </div>
+          <div class="error-container">
+            @if (categoryForm.get('en_first_script')?.touched && categoryForm.get('en_first_script')?.hasError('required')) {
+              <small class="error-message">English First Script is required</small>
+            }
+          </div>
+        </div>
+        <div class="form-field">
+          <label for="ar_first_script" class="field-label">Arabic First Script</label>
+          <div class="input-container">
+            <input
+              pInputText
+              id="ar_first_script"
+              formControlName="ar_first_script"
+              placeholder="Enter Arabic First Script"
+              [ngClass]="{'p-invalid': categoryForm.get('ar_first_script')?.touched && categoryForm.get('ar_first_script')?.invalid}"
+              [disabled]="isSubmitting"
+            />
+          </div>
+          <div class="error-container">
+            @if (categoryForm.get('ar_first_script')?.touched && categoryForm.get('ar_first_script')?.hasError('required')) {
+              <small class="error-message">Arabic First Script is required</small>
+            }
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="flex justify-between items-center">
+      <p-button
+        type="button"
+        label="Cancel"
+        styleClass="p-button-text p-button-secondary"
+        [routerLink]="['/dashboard/menu/categories']"
+        [disabled]="isSubmitting"
+      ></p-button>
+      <button
+        type="submit"
+        [disabled]="categoryForm.invalid || isSubmitting"
+        class="btn-main"
+      >{{ isEditMode ? isSubmitting ? 'Updating...' : 'Update Category' : isSubmitting ? 'Creating...' : 'Create Category' }}</button>
+    </div>
+  </form>
+</div>
+
+@if (message.text) {
+  <div [ngClass]="{
+    'bg-green-100 border-green-400 text-green-700': message.type === 'success',
+    'bg-red-100 border-red-400 text-red-700': message.type === 'error'
+  }" class="border px-4 py-3 rounded relative mb-4" role="alert">
+    <strong class="font-bold">{{ message.type === 'success' ? 'Success!' : 'Error!' }}</strong>
+    <span class="block sm:inline ml-2">{{ message.text }}</span>
+  </div>
+}

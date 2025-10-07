@@ -1,0 +1,101 @@
+.about-download-control {
+    background-color: white;
+    border-radius: 8px;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.08);
+  }
+
+  .about-download-control h2 {
+    font-size: 1.5rem;
+    font-weight: 600;
+    color: #333;
+  }
+
+  .about-download-control h3 {
+    font-size: 1.2rem;
+    font-weight: 500;
+    color: #555;
+  }
+
+  .about-download-items {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+  }
+
+  .about-download-item {
+    display: flex;
+    flex-direction: column;
+  }
+
+  .about-download-item label {
+    margin-bottom: 0.5rem;
+    font-weight: 500;
+  }
+
+  .about-download-item .input-container {
+    position: relative;
+    height: 42px; /* Standard height for inputs */
+  }
+
+  .about-download-item .input-container .input-icon {
+    position: absolute;
+    left: 10px;
+    top: 50%;
+    transform: translateY(-50%);
+    font-size: 1rem;
+    z-index: 1;
+  }
+
+  .about-download-item .input-container input,
+  .about-download-item .input-container textarea {
+    height: 100%;
+    padding: 0.75rem 0.75rem 0.75rem 3rem; /* Adjust padding for icon */
+    border-radius: 6px;
+    border: 1px solid #ced4da;
+    transition: border-color 0.2s;
+    width: 100%;
+  }
+
+  .about-download-item .input-container textarea {
+    height: 100px; /* Specific height for textareas */
+    resize: none;
+    margin-bottom: 1rem; /* Added spacing between textareas */
+  }
+
+  .about-download-item .input-container input:focus,
+  .about-download-item .input-container textarea:focus {
+    outline: none;
+    border-color: #2196F3;
+    box-shadow: 0 0 0 2px rgba(33, 150, 243, 0.2);
+  }
+
+  .error-container {
+    min-height: 20px;
+    margin-top: 4px;
+  }
+
+  .error-message {
+    color: #f44336;
+    font-size: 0.8rem;
+  }
+
+  .btn-main {
+    background-color: #2196F3;
+    border-color: #2196F3;
+    color: white;
+    border-radius: 6px; /* Added border-radius for consistency */
+    padding: 0.75rem 1.5rem; /* Added padding for better button size */
+    font-size: 1rem;
+    font-weight: 500;
+    transition: background-color 0.2s, border-color 0.2s;
+  }
+
+  .btn-main:hover:not(:disabled) {
+    background-color: #1976D2;
+    border-color: #1976D2;
+  }
+
+  .btn-main:disabled {
+    opacity: 0.6;
+    cursor: not-allowed;
+  }

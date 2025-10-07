@@ -1,0 +1,11 @@
+<app-generic-form
+  [fields]="formFields"
+  [entityType]="'medical-requests'"
+  [title]="isEditMode ? 'Edit Medical Request' : 'Add Medical Request'"
+  [redirectRoute]="'/dashboard/menu/medical-requests'"
+  [isEdit]="isEditMode"
+  [editData]="editData"
+  [extraFormData]="extraFormData"
+  [category]="'medical'"
+  [changeStatus]="true"
+></app-generic-form>

@@ -1,0 +1,98 @@
+
+<!-- Toast Containers -->
+<div class="toast-container-top-left-ahshsh">
+  <ng-container #topLeft></ng-container>
+</div>
+<div class="toast-container-top-right-ahshsh">
+  <ng-container #topRight></ng-container>
+</div>
+<div class="toast-container-bottom-right-ahshsh">
+  <ng-container #bottomRight></ng-container>
+</div>
+<div class="toast-container-bottom-left-ahshsh">
+  <ng-container #bottomLeft></ng-container>
+</div>
+
+<!-- Toast Template -->
+<ng-template #Toast let-toast="$implicit">
+  <div tabindex="0" class="toast-ahshsh" [ngClass]="{
+    'toast-success-ahshsh': toast.type === 'success',
+    'toast-error-ahshsh': toast.type === 'error',
+    'toast-info-ahshsh': toast.type === 'info',
+    'toast-warning-ahshsh': toast.type === 'warning'
+  }">
+    <!-- Icon -->
+    <div class="toast-icon-ahshsh">
+      <ng-container [ngSwitch]="toast.type">
+        <svg *ngSwitchCase="'success'" class="toast-icon-ahshsh success-ahshsh" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
+        </svg>
+        <svg *ngSwitchCase="'error'" class="toast-icon-ahshsh error-ahshsh" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
+        </svg>
+        <svg *ngSwitchCase="'info'" class="toast-icon-ahshsh info-ahshsh" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+        </svg>
+        <svg *ngSwitchCase="'warning'" class="toast-icon-ahshsh warning-ahshsh" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z"></path>
+        </svg>
+      </ng-container>
+    </div>
+    <!-- Content -->
+    <div class="toast-content-ahshsh">
+      <!-- Title -->
+      <p class="toast-title-ahshsh">{{ toast.title }}</p>
+      <!-- Message -->
+      <p class="toast-message-ahshsh">{{ toast.msg }}</p>
+    </div>
+    <!-- Close Button -->
+    <button (click)="toast.close()" class="toast-close-ahshsh">
+      <svg class="toast-close-icon-ahshsh" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
+      </svg>
+    </button>
+  </div>
+</ng-template>
+
+<!-- Demo content to show the toasts work -->
+<div style="padding: 20px; font-family: Arial, sans-serif;">
+    <h1>Toast Components with 'ahshsh' Classes</h1>
+    <p>All CSS classes have been updated to include '-ahshsh' suffix for uniqueness.</p>
+    
+    <!-- Sample toast demonstrations -->
+    <div class="toast-container-top-right-ahshsh">
+        <div class="toast-ahshsh toast-success-ahshsh">
+            <div class="toast-icon-ahshsh success-ahshsh">
+                <svg fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
+                </svg>
+            </div>
+            <div class="toast-content-ahshsh">
+                <p class="toast-title-ahshsh">Success!</p>
+                <p class="toast-message-ahshsh">Your action was completed successfully.</p>
+            </div>
+            <button class="toast-close-ahshsh">
+                <svg class="toast-close-icon-ahshsh" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
+                </svg>
+            </button>
+        </div>
+        
+        <div class="toast-ahshsh toast-error-ahshsh">
+            <div class="toast-icon-ahshsh error-ahshsh">
+                <svg fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
+                </svg>
+            </div>
+            <div class="toast-content-ahshsh">
+                <p class="toast-title-ahshsh">Error!</p>
+                <p class="toast-message-ahshsh">Something went wrong with your request.</p>
+            </div>
+            <button class="toast-close-ahshsh">
+                <svg class="toast-close-icon-ahshsh" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
+                </svg>
+            </button>
+        </div>
+    </div>
+</div>

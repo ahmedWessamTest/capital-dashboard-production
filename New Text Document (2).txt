@@ -1,0 +1,40 @@
+this is teh data i send {
+  "category_id": "1",
+  "user_id": 8,
+  "medical_insurance_id": 22,
+  "name": "Faried Fouad",
+  "email": "fariedezz4@gmail.com",
+  "phone": "01552805430",
+  "gender": "male",
+  "birthdate": "2025-07-17",
+  "payment_method": "cash",
+  "active_status": "pending",
+  "start_date": "2025-07-22",
+  "duration": "3",
+  "end_date": "2028-07-22"
+} 
+
+
+and this is the response of the api 
+
+so why i see the start date in te input of teh start date as 1928 15 1
+
+ ? and no problem in teh duration  and the end date 
+
+
+
+
+
+
+Duration is not rendered in the view well it is N/A
+
+محتاجين نوحد الديتس بتاعتنا بطريقة واحده للباك اند 
+او نعمل فانكشن جينيريك تحسبلنا الوقت 
+ MM-DD_YYYY
+
+
+
+من المشاكل ال واجهتها قريب انك تستخدم دايماutc Time 
+هي بتتحول للديت العالمي مش الديت اللوكال بتاع بلدك 
+؟
+ 

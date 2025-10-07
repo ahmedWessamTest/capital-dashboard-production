@@ -1,0 +1,18 @@
+@if (!isLoading) {
+<app-generic-table
+  [data]="jopInsurances"
+  [columns]="columns"
+  [title]="'Professional Insurances'"
+  entityType="jop-insurances"
+  [viewRoute]="'/dashboard/menu/jop-insurances/view'"
+  [rowsPerPage]="10"
+  [needCall]="false"
+  [ToggelStatus]="true"
+  choicesRoute="/dashboard/menu/jop-insurances/choices"
+  [addRoute]="'/dashboard/menu/jop-insurances/create'"
+  [editRoute]="'/dashboard/menu/jop-insurances/edit/'"
+>
+</app-generic-table>
+} @else {
+<app-loading-data-banner></app-loading-data-banner>
+}

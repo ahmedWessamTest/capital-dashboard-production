@@ -1,0 +1,539 @@
+<form [formGroup]="policyForm" (ngSubmit)="onSubmit()">
+  <div class="flex flex-col gap-2 pt-8 px-4 policy-form">
+    @if (message?.text) {
+    <div
+      [ngClass]="{
+        'bg-green-100 border-green-400 text-green-700':
+          message?.type === 'success',
+        'bg-red-100 border-red-400 text-red-700': message?.type === 'error'
+      }"
+      class="border px-4 py-3 rounded relative mb-4"
+      role="alert"
+    >
+      <strong class="font-bold">{{
+        message?.type === "success" ? "Success!" : "Error!"
+      }}</strong>
+      <span class="block sm:inline ml-2">{{ message?.text }}</span>
+    </div>
+    }
+
+    <!-- User and Job Insurance Row -->
+    <div class="flex flex-col sm:flex-row sm:justify-between gap-4 mb-3">
+      <div class="form-control-container flex-1">
+        <label
+          for="user"
+          class="flex items-center gap-1 mx-2 mb-2 font-semibold"
+          >User</label
+        >
+        <div class="h-20">
+          <p-dropdown
+            id="user"
+            [ngClass]="{ 'cursor-disabled-drop': isSubmitting }"
+            [formControlName]="'user'"
+            [options]="users"
+            optionLabel="name"
+            [placeholder]="'Select User'"
+            [filter]="true"
+            filterBy="name"
+            [disabled]="isSubmitting"
+            [class.ng-dirty]="
+              policyForm.get('user')?.dirty || policyForm.get('user')?.touched
+            "
+            [class.ng-invalid]="
+              policyForm.get('user')?.invalid &&
+              (policyForm.get('user')?.dirty || policyForm.get('user')?.touched)
+            "
+            class="w-full"
+          ></p-dropdown>
+          @if (policyForm.get('user')?.invalid && (policyForm.get('user')?.dirty
+          || policyForm.get('user')?.touched)) {
+          <small class="text-red-500 form-error">User is required.</small>
+          }
+        </div>
+      </div>
+      <div class="form-control-container flex-1">
+        <label
+          for="jop_insurance"
+          class="flex items-center gap-1 mx-2 mb-2 font-semibold"
+          >Professional Insurance</label
+        >
+        <div class="h-20">
+          <p-dropdown
+            id="jop_insurance"
+            [ngClass]="{ 'cursor-disabled-drop': isSubmitting }"
+            [formControlName]="'jop_insurance'"
+            [options]="insurances"
+            optionLabel="en_title"
+            [placeholder]="'Select Job Insurance'"
+            [filter]="true"
+            filterBy="en_title"
+            [disabled]="isSubmitting"
+            [class.ng-dirty]="
+              policyForm.get('jop_insurance')?.dirty ||
+              policyForm.get('jop_insurance')?.touched
+            "
+            [class.ng-invalid]="
+              policyForm.get('jop_insurance')?.invalid &&
+              (policyForm.get('jop_insurance')?.dirty ||
+                policyForm.get('jop_insurance')?.touched)
+            "
+            class="w-full"
+          ></p-dropdown>
+          @if (policyForm.get('jop_insurance')?.invalid &&
+          (policyForm.get('jop_insurance')?.dirty ||
+          policyForm.get('jop_insurance')?.touched)) {
+          <small class="text-red-500 form-error"
+            >Professional Insurance is required.</small
+          >
+          }
+        </div>
+      </div>
+    </div>
+
+    <!-- Name, Email, Phone Row -->
+    <div class="flex flex-col sm:flex-row sm:justify-between gap-4 mb-3">
+      <div class="form-control-container flex-1">
+        <label
+          for="name"
+          class="flex items-center gap-1 mx-2 mb-2 font-semibold"
+        >
+          Name <span class="text-gray-500 text-sm">Read only</span>
+        </label>
+        <div class="h-20">
+          <input
+            type="text"
+            id="name"
+            [formControlName]="'name'"
+            [placeholder]="'Name'"
+            [disabled]="true"
+            [ngClass]="{ 'cursor-disabled': true }"
+            class="form-input w-full"
+          />
+        </div>
+      </div>
+      <div class="form-control-container flex-1">
+        <label
+          for="email"
+          class="flex items-center gap-1 mx-2 mb-2 font-semibold"
+        >
+          Email <span class="text-gray-500 text-sm">Read only</span>
+        </label>
+        <div class="h-20">
+          <input
+            type="text"
+            id="email"
+            [formControlName]="'email'"
+            [placeholder]="'Email'"
+            [disabled]="true"
+            [ngClass]="{ 'cursor-disabled': true }"
+            class="form-input w-full"
+          />
+        </div>
+      </div>
+      <div class="form-control-container flex-1">
+        <label
+          for="phone"
+          class="flex items-center gap-1 mx-2 mb-2 font-semibold"
+        >
+          Phone <span class="text-gray-500 text-sm">Read only</span>
+        </label>
+        <div class="h-20">
+          <input
+            type="text"
+            id="phone"
+            [formControlName]="'phone'"
+            [placeholder]="'Phone'"
+            [disabled]="true"
+            [ngClass]="{ 'cursor-disabled': true }"
+            class="form-input w-full"
+          />
+        </div>
+      </div>
+    </div>
+
+    <!-- Job Title and Job Price Row -->
+    <div class="flex flex-col sm:flex-row sm:justify-between gap-4 mb-3">
+      <div class="form-control-container flex-1">
+        <label
+          for="jop_title"
+          class="flex items-center gap-1 mx-2 mb-2 font-semibold"
+          >Occupation Title</label
+        >
+        <div class="h-20">
+          <p-dropdown
+            id="jop_title"
+            [ngClass]="{ 'cursor-disabled-drop': isSubmitting }"
+            [formControlName]="'jop_title'"
+            [options]="jobTitles"
+            optionLabel="label"
+            [placeholder]="'Select Professional Title'"
+            [disabled]="isSubmitting"
+            [class.ng-dirty]="
+              policyForm.get('jop_title')?.dirty ||
+              policyForm.get('jop_title')?.touched
+            "
+            [class.ng-invalid]="
+              policyForm.get('jop_title')?.invalid &&
+              (policyForm.get('jop_title')?.dirty ||
+                policyForm.get('jop_title')?.touched)
+            "
+            class="w-full"
+          ></p-dropdown>
+          @if (policyForm.get('jop_title')?.invalid &&
+          (policyForm.get('jop_title')?.dirty ||
+          policyForm.get('jop_title')?.touched)) {
+          <small class="text-red-500 form-error"
+            >Professional Title is required.</small
+          >
+          }
+        </div>
+      </div>
+      <div class="form-control-container flex-1">
+        <label
+          for="jop_price"
+          class="flex items-center gap-1 mx-2 mb-2 font-semibold"
+          >Sum Insured Amount
+          <span class="text-gray-500 text-sm"
+            >(Min: 50,000 - Max: 1,000,000)</span
+          ></label
+        >
+        <div class="h-20">
+          <input
+            type="number"
+            id="jop_price"
+            [formControlName]="'jop_price'"
+            [placeholder]="'Enter amount between 50,000 and 1,000,000'"
+            [disabled]="isSubmitting"
+            [ngClass]="{ 'cursor-disabled': isSubmitting }"
+            class="form-input w-full"
+            [class.ng-dirty]="
+              policyForm.get('jop_price')?.dirty ||
+              policyForm.get('jop_price')?.touched
+            "
+            [class.ng-invalid]="
+              policyForm.get('jop_price')?.invalid &&
+              (policyForm.get('jop_price')?.dirty ||
+                policyForm.get('jop_price')?.touched)
+            "
+          />
+          @if (policyForm.get('jop_price')?.invalid &&
+          (policyForm.get('jop_price')?.dirty ||
+          policyForm.get('jop_price')?.touched)) {
+          <small class="text-red-500 form-error">
+            @if (policyForm.get('jop_price')?.errors?.['required']) {
+            Professional Price is required. } @else if
+            (policyForm.get('jop_price')?.errors?.['min']) { Minimum amount is
+            50,000. } @else if (policyForm.get('jop_price')?.errors?.['max']) {
+            Maximum amount is 1,000,000. } @else { Please enter a valid number.
+            }
+          </small>
+          }
+        </div>
+      </div>
+    </div>
+
+    <!-- Custom Job Title Row (shown when 'Others' is selected) -->
+    @if (showCustomJobTitle) {
+    <div class="flex flex-col sm:flex-row sm:justify-between gap-4 mb-3">
+      <div class="form-control-container flex-1">
+        <label
+          for="custom_jop_title"
+          class="flex items-center gap-1 mx-2 mb-2 font-semibold"
+          >Custom Professional Title</label
+        >
+        <div class="h-20">
+          <input
+            type="text"
+            id="custom_jop_title"
+            [formControlName]="'custom_jop_title'"
+            [placeholder]="'Enter your custom Professional title'"
+            [disabled]="isSubmitting"
+            [ngClass]="{ 'cursor-disabled': isSubmitting }"
+            class="form-input w-full"
+            [class.ng-dirty]="
+              policyForm.get('custom_jop_title')?.dirty ||
+              policyForm.get('custom_jop_title')?.touched
+            "
+            [class.ng-invalid]="
+              policyForm.get('custom_jop_title')?.invalid &&
+              (policyForm.get('custom_jop_title')?.dirty ||
+                policyForm.get('custom_jop_title')?.touched)
+            "
+          />
+          @if (policyForm.get('custom_jop_title')?.invalid &&
+          (policyForm.get('custom_jop_title')?.dirty ||
+          policyForm.get('custom_jop_title')?.touched)) {
+          <small class="text-red-500 form-error"
+            >Custom Professional Title is required.</small
+          >
+          }
+        </div>
+      </div>
+      <div class="form-control-container flex-1">
+        <!-- Empty space for alignment -->
+      </div>
+    </div>
+    }
+
+    <!-- Image Uploads Row -->
+    <div class="flex flex-col sm:flex-row sm:justify-between gap-4 mb-3">
+      <!-- Main ID Image Upload -->
+      <div class="form-control-container flex-1">
+        <label
+          for="jop_main_id"
+          class="flex items-center gap-1 mx-2 mb-2 font-semibold"
+          >Copy of ID image</label
+        >
+        <div class="min-h-20">
+          @if (!selectedMainImage) {
+          <div
+            class="border-2 border-dashed border-gray-300 rounded-lg p-4 text-center hover:border-gray-400 transition-colors"
+          >
+            <input
+              type="file"
+              id="jop_main_id"
+              (change)="onMainImageSelect($event)"
+              accept="image/*"
+              [disabled]="isSubmitting"
+              class="hidden"
+            />
+            <label
+              for="jop_main_id"
+              class="cursor-pointer flex flex-col items-center"
+              [ngClass]="{ 'cursor-not-allowed': isSubmitting }"
+            >
+              <i class="pi pi-cloud-upload text-2xl text-gray-400 mb-2"></i>
+              <span class="text-sm text-gray-600"
+                >Click to upload Main ID Image</span
+              >
+              <span class="text-xs text-gray-400 mt-1"
+                >PNG, JPG, JPEG up to 10MB</span
+              >
+            </label>
+          </div>
+          } @else {
+          <div class="border border-gray-300 rounded-lg p-3 bg-gray-50">
+            <div class="flex items-center justify-between">
+              <div class="flex items-center">
+                <i class="pi pi-file-image text-blue-500 mr-2"></i>
+                <span class="text-sm font-medium text-gray-700">{{
+                  selectedMainImage.name
+                }}</span>
+              </div>
+              <button
+                type="button"
+                (click)="removeMainImage()"
+                [disabled]="isSubmitting"
+                class="text-red-500 hover:text-red-700 p-1"
+              >
+                <i class="pi pi-times"></i>
+              </button>
+            </div>
+            <div class="text-xs text-gray-500 mt-1">
+              {{ (selectedMainImage.size / 1024 / 1024).toFixed(2) }} MB
+            </div>
+          </div>
+          } @if (policyForm.get('jop_main_id')?.invalid &&
+          (policyForm.get('jop_main_id')?.dirty ||
+          policyForm.get('jop_main_id')?.touched)) {
+          <small class="text-red-500 form-error mt-1 block"
+            >Main ID Image is required.</small
+          >
+          }
+        </div>
+      </div>
+
+      <!-- Second ID Image Upload -->
+      <div class="form-control-container flex-1">
+        <label
+          for="jop_second_id"
+          class="flex items-center gap-1 mx-2 mb-2 font-semibold"
+          >Copy of Occupation ID image if it exists</label
+        >
+        <div class="min-h-20">
+          @if (!selectedSecondImage) {
+          <div
+            class="border-2 border-dashed border-gray-300 rounded-lg p-4 text-center hover:border-gray-400 transition-colors"
+          >
+            <input
+              type="file"
+              id="jop_second_id"
+              (change)="onSecondImageSelect($event)"
+              accept="image/*"
+              [disabled]="isSubmitting"
+              class="hidden"
+            />
+            <label
+              for="jop_second_id"
+              class="cursor-pointer flex flex-col items-center"
+              [ngClass]="{ 'cursor-not-allowed': isSubmitting }"
+            >
+              <i class="pi pi-cloud-upload text-2xl text-gray-400 mb-2"></i>
+              <span class="text-sm text-gray-600"
+                >Click to upload Second ID Image</span
+              >
+              <span class="text-xs text-gray-400 mt-1"
+                >PNG, JPG, JPEG up to 10MB</span
+              >
+            </label>
+          </div>
+          } @else {
+          <div class="border border-gray-300 rounded-lg p-3 bg-gray-50">
+            <div class="flex items-center justify-between">
+              <div class="flex items-center">
+                <i class="pi pi-file-image text-blue-500 mr-2"></i>
+                <span class="text-sm font-medium text-gray-700">{{
+                  selectedSecondImage.name
+                }}</span>
+              </div>
+              <button
+                type="button"
+                (click)="removeSecondImage()"
+                [disabled]="isSubmitting"
+                class="text-red-500 hover:text-red-700 p-1"
+              >
+                <i class="pi pi-times"></i>
+              </button>
+            </div>
+            <div class="text-xs text-gray-500 mt-1">
+              {{ (selectedSecondImage.size / 1024 / 1024).toFixed(2) }} MB
+            </div>
+          </div>
+          } @if (policyForm.get('jop_second_id')?.invalid &&
+          (policyForm.get('jop_second_id')?.dirty ||
+          policyForm.get('jop_second_id')?.touched)) {
+          <small class="text-red-500 form-error mt-1 block"
+            >Second ID Image is required.</small
+          >
+          }
+        </div>
+      </div>
+    </div>
+
+    <!-- Active Status Row -->
+    <div class="flex flex-col sm:flex-row sm:justify-between gap-4 mb-3">
+      <div class="form-control-container flex-1">
+        <label
+          for="active_status"
+          class="flex items-center gap-1 mx-2 mb-2 font-semibold"
+          >Active Status</label
+        >
+        <div class="h-20">
+          <p-dropdown
+            id="active_status"
+            [ngClass]="{ 'cursor-disabled-drop': isSubmitting }"
+            [formControlName]="'active_status'"
+            [options]="activeStatuses"
+            optionLabel="label"
+            optionValue="value"
+            [placeholder]="'Select Active Status'"
+            [disabled]="isSubmitting"
+            [class.ng-dirty]="
+              policyForm.get('active_status')?.dirty ||
+              policyForm.get('active_status')?.touched
+            "
+            [class.ng-invalid]="
+              policyForm.get('active_status')?.invalid &&
+              (policyForm.get('active_status')?.dirty ||
+                policyForm.get('active_status')?.touched)
+            "
+            class="w-full"
+          ></p-dropdown>
+          @if (policyForm.get('active_status')?.invalid &&
+          (policyForm.get('active_status')?.dirty ||
+          policyForm.get('active_status')?.touched)) {
+          <small class="text-red-500 form-error"
+            >Active Status is required.</small
+          >
+          }
+        </div>
+      </div>
+      <div class="form-control-container flex-1">
+        <!-- Empty space for alignment -->
+      </div>
+    </div>
+<div class="flex flex-col sm:flex-row sm:justify-between gap-4 mb-3">
+      <div class="form-control-container flex-1">
+        <label for="start_date" class="flex items-center gap-1 mx-2 mb-2 font-semibold">Start Date</label>
+        <div class="h-20">
+          <p-calendar
+            id="start_date"
+            [ngClass]="{'cursor-disabled-drop': isSubmitting}"
+            [formControlName]="'start_date'"
+            [dateFormat]="'dd-mm-yy'"
+            [placeholder]="'Start Date'"
+            inputId="icon"
+            [disabled]="isSubmitting"
+            [class.ng-dirty]="policyForm.get('start_date')?.dirty || policyForm.get('start_date')?.touched"
+            [class.ng-invalid]="policyForm.get('start_date')?.invalid && (policyForm.get('start_date')?.dirty || policyForm.get('start_date')?.touched)"
+            class="w-full"
+          ></p-calendar>
+          @if (policyForm.get('start_date')?.invalid && (policyForm.get('start_date')?.dirty || policyForm.get('start_date')?.touched)) {
+            <small class="text-red-500 form-error">Start Date is required.</small>
+          }
+        </div>
+      </div>
+      <div class="form-control-container flex-1">
+        <label for="duration" class="flex items-center gap-1 mx-2 mb-2 font-semibold">Duration (Years)</label>
+        <div class="h-20">
+          <p-dropdown
+            id="duration"
+            [ngClass]="{'cursor-disabled-drop': isSubmitting}"
+            [formControlName]="'duration'"
+            [options]="durations"
+            optionLabel="label"
+            optionValue="value"
+            [placeholder]="'Select Duration (Years)'"
+            [disabled]="isSubmitting"
+            [class.ng-dirty]="policyForm.get('duration')?.dirty || policyForm.get('duration')?.touched"
+            [class.ng-invalid]="policyForm.get('duration')?.invalid && (policyForm.get('duration')?.dirty || policyForm.get('duration')?.touched)"
+            class="w-full"
+          ></p-dropdown>
+          @if (policyForm.get('duration')?.invalid && (policyForm.get('duration')?.dirty || policyForm.get('duration')?.touched)) {
+            <small class="text-red-500 form-error">Duration is required.</small>
+          }
+        </div>
+      </div>
+    </div>
+
+    <div class="flex flex-col sm:flex-row sm:justify-between gap-4 mb-3">
+      <div class="form-control-container flex-1">
+        <label for="end_date" class="flex items-center gap-1 mx-2 mb-2 font-semibold">
+          End Date
+          <small class="text-gray-500 italic mt-1 flex items-center">
+            (Calculated automatically)
+          </small>
+        </label>
+        <div class="h-20">
+          <p-calendar
+            id="end_date"
+            [ngClass]="{'cursor-disabled-drop': true}"
+            [formControlName]="'end_date'"
+            [dateFormat]="'dd-mm-yy'"
+            [placeholder]="'End Date'"
+            inputId="icon"
+            [readonlyInput]="true"
+            [disabled]="true"
+            [class.ng-dirty]="policyForm.get('end_date')?.dirty || policyForm.get('end_date')?.touched"
+            [class.ng-invalid]="policyForm.get('end_date')?.invalid && (policyForm.get('end_date')?.dirty || policyForm.get('end_date')?.touched)"
+            class="w-full cursor-not-allowed"
+          ></p-calendar>
+          @if (policyForm.get('end_date')?.invalid && (policyForm.get('end_date')?.dirty || policyForm.get('end_date')?.touched)) {
+            <small class="text-red-500 form-error">End Date is required.</small>
+          }
+        </div>
+      </div>
+      <div class="form-control-container flex-1"></div>
+    </div>
+    <!-- Submit Button -->
+    <div class="flex justify-end mt-4">
+      <p-button
+        type="submit"
+        icon="pi pi-check"
+        [label]="isSubmitting ? 'Loading...' : 'Create Professional Policy'"
+        [disabled]="policyForm.invalid || isSubmitting"
+        styleClass="text-white bg-blue-400 hover:bg-blue-500 px-y py-2"
+      ></p-button>
+    </div>
+  </div>
+</form>

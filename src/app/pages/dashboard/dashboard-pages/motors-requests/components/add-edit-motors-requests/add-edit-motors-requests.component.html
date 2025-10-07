@@ -1,0 +1,11 @@
+<app-generic-form
+  [fields]="formFields"
+  [entityType]="'motor-requests'"
+  [title]="isEditMode ? 'Edit Motor Request' : 'Add Motor Request'"
+  [redirectRoute]="'/dashboard/menu/motor-requests'"
+  [isEdit]="isEditMode"
+  [editData]="editData"
+  [extraFormData]="extraFormData"
+  [category]="'motor'"
+  [changeStatus]="true"
+></app-generic-form>

@@ -1,0 +1,9 @@
+<app-generic-form
+  [fields]="formFields"
+  [entityType]="'build-countries'"
+  [title]="isEditMode ? 'Edit Build Country' : 'Add Build Country'"
+  [redirectRoute]="'/dashboard/menu/build-countries'"
+  [isEdit]="isEditMode"
+  [editData]="editData"
+  [extraFormData]="extraFormData"
+></app-generic-form>

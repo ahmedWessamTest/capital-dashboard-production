@@ -1,0 +1,18 @@
+
+@if (!isLoading) {
+<app-generic-table
+  [data]="motorInsuranceChoices"
+  [columns]="columns"
+  [title]="'Motor Insurance Choices'"
+  entityType="motor-insurance-choices"
+  [viewRoute]="'/dashboard/menu/motor-insurances/choices/' + motorInsuranceId + '/view'"
+  [rowsPerPage]="10"
+  [needCall]="false"
+  [ToggelStatus]="true"
+  [addRoute]="'/dashboard/menu/motor-insurances/choices/' + motorInsuranceId + '/add/' + motorInsuranceId"
+  [editRoute]="'/dashboard/menu/motor-insurances/choices/' + motorInsuranceId + '/edit'"
+>
+</app-generic-table>
+} @else {
+  <app-loading-data-banner></app-loading-data-banner>
+}

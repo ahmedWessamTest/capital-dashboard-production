@@ -1,0 +1,378 @@
+<p-toast position="top-right" [baseZIndex]="5000"></p-toast>
+
+<div class="about-us-control p-4 w-full">
+  @if (aboutForm) {
+    <h2 class="mb-4">About Us Information</h2>
+    <form [formGroup]="aboutForm" (ngSubmit)="onSubmit()" class="w-full">
+      <div class="about-us-items w-full">
+        <!-- Main Title Section -->
+        <h3 class="mt-4 mb-3">Main Title</h3>
+        <div class="about-us-item w-full">
+          <label for="en_main_title" class="font-medium">English Main Title</label>
+          <div class="input-container w-full">
+            <input id="en_main_title" type="text" pInputText formControlName="en_main_title" placeholder="Enter English Main Title" class="w-full" />
+          </div>
+          <div class="error-container">
+            @if (aboutForm.get('en_main_title')?.invalid && aboutForm.get('en_main_title')?.touched) {
+              <small class="error-message">English Main Title is required</small>
+            }
+          </div>
+        </div>
+        <div class="about-us-item w-full">
+          <label for="ar_main_title" class="font-medium">Arabic Main Title</label>
+          <div class="input-container w-full">
+            <input id="ar_main_title" type="text" pInputText formControlName="ar_main_title" placeholder="Enter Arabic Main Title" class="w-full" />
+          </div>
+          <div class="error-container">
+            @if (aboutForm.get('ar_main_title')?.invalid && aboutForm.get('ar_main_title')?.touched) {
+              <small class="error-message">Arabic Main Title is required</small>
+            }
+          </div>
+        </div>
+
+        <!-- Primary Image Section -->
+        <h3 class="mt-4 mb-3">Primary Image</h3>
+        <div class="about-us-item w-full">
+          <app-image-upload
+            [initialImages]="primaryImages"
+            [singleImageMode]="true"
+            id="primary-image"
+            (imagesChanged)="onPrimaryImagesChanged($event)">
+          </app-image-upload>
+        </div>
+
+        <!-- Main Content Section -->
+        <h3 class="mt-4 mb-3">Main Content</h3>
+        <div class="about-us-item w-full">
+          <label for="en_main_content" class="font-medium">English Main Content</label>
+          <div class="input-container w-full">
+            <ngx-jodit
+              id="en_main_content"
+              formControlName="en_main_content"
+              placeholder="Enter English Main Content"
+              [options]="{ language: 'en', direction: 'ltr', height: 400 }"
+              class="w-full rich-text-content"
+              [ngClass]="{'p-invalid': aboutForm.get('en_main_content')?.touched && aboutForm.get('en_main_content')?.invalid}"
+              [attr.disabled]="isLoading ? true : null"
+            ></ngx-jodit>
+          </div>
+          <div class="error-container">
+            @if (aboutForm.get('en_main_content')?.invalid && aboutForm.get('en_main_content')?.touched) {
+              @if (aboutForm.get('en_main_content')?.errors?.['required']) {
+                <small class="error-message">English Main Content is required</small>
+              }
+              @if (aboutForm.get('en_main_content')?.errors?.['minlength']) {
+                <small class="error-message">English Main Content must be at least 5 characters</small>
+              }
+            }
+          </div>
+        </div>
+        <div class="about-us-item w-full">
+          <label for="ar_main_content" class="font-medium">Arabic Main Content</label>
+          <div class="input-container w-full">
+            <ngx-jodit
+              id="ar_main_content"
+              formControlName="ar_main_content"
+              placeholder="Enter Arabic Main Content"
+              [options]="{ language: 'ar', direction: 'rtl', height: 400 }"
+              class="w-full rich-text-content"
+              [ngClass]="{'p-invalid': aboutForm.get('ar_main_content')?.touched && aboutForm.get('ar_main_content')?.invalid}"
+              [attr.disabled]="isLoading ? true : null"
+            ></ngx-jodit>
+          </div>
+          <div class="error-container">
+            @if (aboutForm.get('ar_main_content')?.invalid && aboutForm.get('ar_main_content')?.touched) {
+              @if (aboutForm.get('ar_main_content')?.errors?.['required']) {
+                <small class="error-message">Arabic Main Content is required</small>
+              }
+              @if (aboutForm.get('ar_main_content')?.errors?.['minlength']) {
+                <small class="error-message">Arabic Main Content must be at least 5 characters</small>
+              }
+            }
+          </div>
+        </div>
+
+        <!-- Mission Section -->
+        <h3 class="mt-4 mb-3">Mission</h3>
+        <div class="about-us-item w-full">
+          <label for="en_mission" class="font-medium">English Mission</label>
+          <div class="input-container w-full">
+            <input id="en_mission" type="text" pInputText formControlName="en_mission" placeholder="Enter English Mission" class="w-full" />
+          </div>
+          <div class="error-container">
+            @if (aboutForm.get('en_mission')?.invalid && aboutForm.get('en_mission')?.touched) {
+              <small class="error-message">English Mission is required</small>
+            }
+          </div>
+        </div>
+        <div class="about-us-item w-full">
+          <label for="ar_mission" class="font-medium">Arabic Mission</label>
+          <div class="input-container w-full">
+            <input id="ar_mission" type="text" pInputText formControlName="ar_mission" placeholder="Enter Arabic Mission" class="w-full" />
+          </div>
+          <div class="error-container">
+            @if (aboutForm.get('ar_mission')?.invalid && aboutForm.get('ar_mission')?.touched) {
+              <small class="error-message">Arabic Mission is required</small>
+            }
+          </div>
+        </div>
+
+        <!-- Vision Section -->
+        <h3 class="mt-4 mb-3">Vision</h3>
+        <div class="about-us-item w-full">
+          <label for="en_vision" class="font-medium">English Vision</label>
+          <div class="input-container w-full">
+            <input id="en_vision" type="text" pInputText formControlName="en_vision" placeholder="Enter English Vision" class="w-full" />
+          </div>
+          <div class="error-container">
+            @if (aboutForm.get('en_vision')?.invalid && aboutForm.get('en_vision')?.touched) {
+              <small class="error-message">English Vision is required</small>
+            }
+          </div>
+        </div>
+        <div class="about-us-item w-full">
+          <label for="ar_vision" class="font-medium">Arabic Vision</label>
+          <div class="input-container w-full">
+            <input id="ar_vision" type="text" pInputText formControlName="ar_vision" placeholder="Enter Arabic Vision" class="w-full" />
+          </div>
+          <div class="error-container">
+            @if (aboutForm.get('ar_vision')?.invalid && aboutForm.get('ar_vision')?.touched) {
+              <small class="error-message">Arabic Vision is required</small>
+            }
+          </div>
+        </div>
+
+        <!-- History Section -->
+        <h3 class="mt-4 mb-3">History</h3>
+        <div class="about-us-item w-full">
+          <label for="en_history_title" class="font-medium">English History Title</label>
+          <div class="input-container w-full">
+            <input id="en_history_title" type="text" pInputText formControlName="en_history_title" placeholder="Enter English History Title" class="w-full" />
+          </div>
+          <div class="error-container">
+            @if (aboutForm.get('en_history_title')?.invalid && aboutForm.get('en_history_title')?.touched) {
+              <small class="error-message">English History Title is required</small>
+            }
+          </div>
+        </div>
+        <div class="about-us-item w-full">
+          <label for="ar_history_title" class="font-medium">Arabic History Title</label>
+          <div class="input-container w-full">
+            <input id="ar_history_title" type="text" pInputText formControlName="ar_history_title" placeholder="Enter Arabic History Title" class="w-full" />
+          </div>
+          <div class="error-container">
+            @if (aboutForm.get('ar_history_title')?.invalid && aboutForm.get('ar_history_title')?.touched) {
+              <small class="error-message">Arabic History Title is required</small>
+            }
+          </div>
+        </div>
+        <div class="about-us-item w-full">
+          <label for="en_history_text" class="font-medium">English History Text</label>
+          <div class="input-container w-full">
+            <ngx-jodit
+              id="en_history_text"
+              formControlName="en_history_text"
+              placeholder="Enter English History Text"
+              [options]="{ language: 'en', direction: 'ltr', height: 400 }"
+              class="w-full rich-text-content"
+              [ngClass]="{'p-invalid': aboutForm.get('en_history_text')?.touched && aboutForm.get('en_history_text')?.invalid}"
+              [attr.disabled]="isLoading ? true : null"
+            ></ngx-jodit>
+          </div>
+          <div class="error-container">
+            @if (aboutForm.get('en_history_text')?.invalid && aboutForm.get('en_history_text')?.touched) {
+              @if (aboutForm.get('en_history_text')?.errors?.['required']) {
+                <small class="error-message">English History Text is required</small>
+              }
+              @if (aboutForm.get('en_history_text')?.errors?.['minlength']) {
+                <small class="error-message">English History Text must be at least 5 characters</small>
+              }
+            }
+          </div>
+        </div>
+        <div class="about-us-item w-full">
+          <label for="ar_history_text" class="font-medium">Arabic History Text</label>
+          <div class="input-container w-full">
+            <ngx-jodit
+              id="ar_history_text"
+              formControlName="ar_history_text"
+              placeholder="Enter Arabic History Text"
+              [options]="{ language: 'ar', direction: 'rtl', height: 400 }"
+              class="w-full rich-text-content"
+              [ngClass]="{'p-invalid': aboutForm.get('ar_history_text')?.touched && aboutForm.get('ar_history_text')?.invalid}"
+              [attr.disabled]="isLoading ? true : null"
+            ></ngx-jodit>
+          </div>
+          <div class="error-container">
+            @if (aboutForm.get('ar_history_text')?.invalid && aboutForm.get('ar_history_text')?.touched) {
+              @if (aboutForm.get('ar_history_text')?.errors?.['required']) {
+                <small class="error-message">Arabic History Text is required</small>
+              }
+              @if (aboutForm.get('ar_history_text')?.errors?.['minlength']) {
+                <small class="error-message">Arabic History Text must be at least 5 characters</small>
+              }
+            }
+          </div>
+        </div>
+
+        <!-- Secondary Image Section -->
+        <h3 class="mt-4 mb-3">Secondary Image</h3>
+        <div class="about-us-item w-full">
+          <app-image-upload
+            [initialImages]="secondaryImages"
+            [singleImageMode]="true"
+            id="secondary-image"
+            (imagesChanged)="onSecondaryImagesChanged($event)">
+          </app-image-upload>
+        </div>
+
+        <!-- Features Section -->
+        <h3 class="mt-4 mb-3">Primary Feature</h3>
+        <div class="about-us-item w-full">
+          <label for="en_about_first_feature_title" class="font-medium">English Primary Feature Title</label>
+          <div class="input-container w-full">
+            <input id="en_about_first_feature_title" type="text" pInputText formControlName="en_about_first_feature_title" placeholder="Enter English Primary Feature Title" class="w-full" />
+          </div>
+        </div>
+        <div class="about-us-item w-full">
+          <label for="ar_about_first_feature_title" class="font-medium">Arabic Primary Feature Title</label>
+          <div class="input-container w-full">
+            <input id="ar_about_first_feature_title" type="text" pInputText formControlName="ar_about_first_feature_title" placeholder="Enter Arabic Primary Feature Title" class="w-full" />
+          </div>
+        </div>
+        <div class="about-us-item w-full">
+          <label for="en_about_first_feature_text" class="font-medium">English Primary Feature Text</label>
+          <div class="input-container w-full">
+            <textarea
+              id="en_about_first_feature_text"
+              formControlName="en_about_first_feature_text"
+              placeholder="Enter English Primary Feature Text"
+              class="w-full rich-text-content"
+              [attr.disabled]="isLoading ? true : null"
+            ></textarea>
+          </div>
+        </div>
+        <div class="about-us-item w-full">
+          <label for="ar_about_first_feature_text" class="font-medium">Arabic Primary Feature Text</label>
+          <div class="input-container w-full">
+            <textarea
+              id="ar_about_first_feature_text"
+              formControlName="ar_about_first_feature_text"
+              placeholder="Enter Arabic Primary Feature Text"
+              class="w-full rich-text-content"
+              [attr.disabled]="isLoading ? true : null"
+            ></textarea>
+          </div>
+        </div>
+
+        <h3 class="mt-4 mb-3">Secondary Feature</h3>
+        <div class="about-us-item w-full">
+          <label for="en_about_second_feature_title" class="font-medium">English Secondary Feature Title</label>
+          <div class="input-container w-full">
+            <input id="en_about_second_feature_title" type="text" pInputText formControlName="en_about_second_feature_title" placeholder="Enter English Secondary Feature Title" class="w-full" />
+          </div>
+        </div>
+        <div class="about-us-item w-full">
+          <label for="ar_about_second_feature_title" class="font-medium">Arabic Secondary Feature Title</label>
+          <div class="input-container w-full">
+            <input id="ar_about_second_feature_title" type="text" pInputText formControlName="ar_about_second_feature_title" placeholder="Enter Arabic Secondary Feature Title" class="w-full" />
+          </div>
+        </div>
+        <div class="about-us-item w-full">
+          <label for="en_about_second_feature_text" class="font-medium">English Secondary Feature Text</label>
+          <div class="input-container w-full">
+            <textarea
+              id="en_about_second_feature_text"
+              formControlName="en_about_second_feature_text"
+              placeholder="Enter English Secondary Feature Text"
+              class="w-full rich-text-content"
+              [attr.disabled]="isLoading ? true : null"
+            ></textarea>
+          </div>
+        </div>
+        <div class="about-us-item w-full">
+          <label for="ar_about_second_feature_text" class="font-medium">Arabic Secondary Feature Text</label>
+          <div class="input-container w-full">
+            <textarea
+              id="ar_about_second_feature_text"
+              formControlName="ar_about_second_feature_text"
+              placeholder="Enter Arabic Secondary Feature Text"
+              class="w-full rich-text-content"
+              [attr.disabled]="isLoading ? true : null"
+            ></textarea>
+          </div>
+        </div>
+
+        <!-- Meta Data Section -->
+        <h3 class="mt-4 mb-3">Meta Data</h3>
+        <div class="about-us-item w-full">
+          <label for="en_meta_title" class="font-medium">English Meta Title</label>
+          <div class="input-container w-full">
+            <input id="en_meta_title" type="text" pInputText formControlName="en_meta_title" placeholder="Enter English Meta Title" class="w-full" />
+          </div>
+          <div class="error-container">
+            @if (aboutForm.get('en_meta_title')?.invalid && aboutForm.get('en_meta_title')?.touched) {
+              <small class="error-message">English Meta Title is required</small>
+            }
+          </div>
+        </div>
+        <div class="about-us-item w-full">
+          <label for="ar_meta_title" class="font-medium">Arabic Meta Title</label>
+          <div class="input-container w-full">
+            <input id="ar_meta_title" type="text" pInputText formControlName="ar_meta_title" placeholder="Enter Arabic Meta Title" class="w-full" />
+          </div>
+          <div class="error-container">
+            @if (aboutForm.get('ar_meta_title')?.invalid && aboutForm.get('ar_meta_title')?.touched) {
+              <small class="error-message">Arabic Meta Title is required</small>
+            }
+          </div>
+        </div>
+        <div class="about-us-item w-full">
+          <label for="en_meta_description" class="font-medium">English Meta Description</label>
+          <div class="input-container w-full">
+            <textarea id="en_meta_description" pInputTextarea formControlName="en_meta_description" placeholder="Enter English Meta Description" class="w-full"></textarea>
+          </div>
+          <div class="error-container">
+            @if (aboutForm.get('en_meta_description')?.invalid && aboutForm.get('en_meta_description')?.touched) {
+              @if (aboutForm.get('en_meta_description')?.errors?.['required']) {
+                <small class="error-message">English Meta Description is required</small>
+              }
+              @if (aboutForm.get('en_meta_description')?.errors?.['minlength']) {
+                <small class="error-message">English Meta Description must be at least 5 characters</small>
+              }
+            }
+          </div>
+        </div>
+        <div class="about-us-item w-full">
+          <label for="ar_meta_description" class="font-medium">Arabic Meta Description</label>
+          <div class="input-container w-full">
+            <textarea id="ar_meta_description" pInputTextarea formControlName="ar_meta_description" placeholder="Enter Arabic Meta Description" class="w-full"></textarea>
+          </div>
+          <div class="error-container">
+            @if (aboutForm.get('ar_meta_description')?.invalid && aboutForm.get('ar_meta_description')?.touched) {
+              @if (aboutForm.get('ar_meta_description')?.errors?.['required']) {
+                <small class="error-message">Arabic Meta Description is required</small>
+              }
+              @if (aboutForm.get('ar_meta_description')?.errors?.['minlength']) {
+                <small class="error-message">Arabic Meta Description must be at least 5 characters</small>
+              }
+            }
+          </div>
+        </div>
+      </div>
+
+      <div class="mt-4 w-full">
+        <button 
+          pButton 
+          type="submit" 
+          class="btn-main px-3 w-full"
+          [disabled]="aboutForm.invalid || isLoading"
+          [icon]="isLoading ? 'pi pi-spin pi-spinner mx-2' : ''"
+          label="Save Changes">
+        </button>
+      </div>
+    </form>
+  } @else {
+    <app-loading-data-banner class="w-full"></app-loading-data-banner>
+  }
+</div>

@@ -1,0 +1,179 @@
+<p-toast position="top-right" [baseZIndex]="5000"></p-toast>
+
+<ngx-spinner
+  name="actionsLoader"
+  bdColor="rgba(0, 0, 0, 0.8)"
+  size="medium"
+  color="#fff"
+  type="square-spin"
+  [fullScreen]="true">
+  <p class="text-white">Loading...</p>
+</ngx-spinner>
+
+@if (isLoading) {
+  <app-loading-data-banner></app-loading-data-banner>
+} 
+@else if (motorRequest) {
+  <div class="card" [class.loading]="isLoading">
+    <div class="card-header">
+      <h2 class="card-title">Motor Request Details</h2>
+    </div>
+
+    <div class="detail-section">
+      @for (row of motorRequestData; track row.field) {
+        <div class="detail-row">
+          <div class="detail-label font-bold">{{ row.header }}</div>
+          <div class="detail-value">
+            @switch (row.type) {
+              @case ('image') {
+                <div class="image-container">
+                  <img
+                    [src]="getImageUrl(row.value)"
+                    [alt]="row.header"
+                    class="category-image"
+                    [class.loaded]="imageLoaded"
+                    (load)="onImageLoad()" />
+                  @if (!imageLoaded) {
+                    <div class="image-placeholder"></div>
+                  }
+                </div>
+              }
+              @case ('link') {
+                <a [href]="row.value" target="_blank" class="link hover:underline text-primary-600">
+                  {{ row.value }}
+                </a>
+              }
+              @case ('boolean') {
+                <span
+                  [ngClass]="{
+                    'text-green-600 font-semibold': row.value,
+                    'text-red-500 italic': !row.value
+                  }">
+                  {{ row.value ? 'Active' : 'Not Active' }}
+                </span>
+              }
+              @default {
+                {{ row.value }}
+              }
+            }
+          </div>
+        </div>
+      }
+    </div>
+
+    <div class="action-buttons flex gap-2 justify-end">
+      <a href="/dashboard/menu/motor-requests">
+        <p-button label="Back" styleClass="p-button-text"></p-button>
+      </a>
+      @if (motorRequest.id) {
+        <a href="/dashboard/menu/motor-requests/edit/{{motorRequest.id}}">
+          <p-button label="Edit" styleClass="p-button-outlined"></p-button>
+        </a>
+      }
+    </div>
+  </div>
+
+  @if (motorRequest.user) {
+    <div class="card mt-4" [class.loading]="isLoading">
+      <div class="card-header">
+        <h2 class="card-title">User Details</h2>
+      </div>
+
+      <div class="detail-section">
+        @for (row of userData; track row.field) {
+          <div class="detail-row">
+            <div class="detail-label font-bold">{{ row.header }}</div>
+            <div class="detail-value">
+              @if (row.type === 'boolean') {
+                <span
+                  [ngClass]="{
+                    'text-green-600 font-semibold': row.value,
+                    'text-red-500 italic': !row.value
+                  }">
+                  {{ row.value ? 'Active' : 'Not Active' }}
+                </span>
+              } @else {
+                {{ row.value }}
+              }
+            </div>
+          </div>
+        }
+      </div>
+    </div>
+  }
+
+  @if (category) {
+    <div class="card mt-4" [class.loading]="isLoading">
+      <div class="card-header">
+        <h2 class="card-title">Category Details</h2>
+      </div>
+
+      <div class="detail-section">
+        @for (row of categoryData; track row.field) {
+          <div class="detail-row">
+            <div class="detail-label font-bold">{{ row.header }}</div>
+            <div class="detail-value">
+              @if (row.type === 'link') {
+                <a [href]="row.value" target="_blank" class="link hover:underline text-primary-600">
+                  Link
+                </a>
+              } @else if (row.type === 'boolean') {
+                <span
+                  [ngClass]="{
+                    'text-green-600 font-semibold': row.value,
+                    'text-red-500 italic': !row.value
+                  }">
+                  {{ row.value ? 'Active' : 'Not Active' }}
+                </span>
+              } @else {
+                {{ row.value }}
+              }
+            </div>
+          </div>
+        }
+      </div>
+    </div>
+  }
+
+  @if (motorInsurance) {
+    <div class="card mt-4" [class.loading]="isLoading">
+      <div class="card-header">
+        <h2 class="card-title">Motor Insurance Details</h2>
+      </div>
+
+      <div class="detail-section">
+        @for (row of motorInsuranceData; track row.field) {
+          <div class="detail-row">
+            <div class="detail-label font-bold">{{ row.header }}</div>
+            <div class="detail-value">
+              @if (row.type === 'boolean') {
+                <span
+                  [ngClass]="{
+                    'text-green-600 font-semibold': row.value,
+                    'text-red-500 italic': !row.value
+                  }">
+                  {{ row.value ? 'Active' : 'Not Active' }}
+                </span>
+              } @else {
+                {{ row.value }}
+              }
+            </div>
+          </div>
+        }
+      </div>
+    </div>
+  }
+} 
+@else {
+  <div class="card no-data-card">
+    <div class="no-data-message flex flex-col items-center justify-center p-8 text-center">
+      <i issuclass="pi pi-exclamation-circle text-4xl text-yellow-500 mb-4"></i>
+      <p class="text-lg font-medium">No motor request data found</p>
+    </div>
+    <div class="action-buttons flex justify-center pb-4">
+      <a href="/dashboard/menu/motor-requests">
+        <p-button label="Back to Motor Requests" styleClass="p-button-text"></p-button>
+      </a>
+    </div>
+  </div>
+}
