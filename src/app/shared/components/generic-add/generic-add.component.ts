@@ -168,7 +168,6 @@ export interface FormField {
                     dataForm.get(formField.name)?.touched)
                 "
                 class="w-full"
-                [maxDate]="formField.name !== 'end_date' ? today : null"
               ></p-calendar>
               @if (dataForm.get(formField.name)?.invalid &&
               (dataForm.get(formField.name)?.dirty ||
@@ -301,7 +300,6 @@ export class GenericFormComponent implements OnInit, OnDestroy {
   initialImageForEdit: ProductImage[] = [];
   private dataRefreshService = inject(DataRefreshService);
   private destroy$ = new Subject<void>();
-  today = new Date();
 
   @Input() extraFormData: { [key: string]: string | number } = {};
   @Input() fields: FormField[] = [];
