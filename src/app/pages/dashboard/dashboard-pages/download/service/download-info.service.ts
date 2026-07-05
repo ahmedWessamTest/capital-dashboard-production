@@ -42,10 +42,10 @@ export class AboutDownloadService {
   private http = inject(HttpClient);
 
   getAboutDownload(): Observable<AboutDownloadResponse> {
-    return this.http.get<AboutDownloadResponse>(`https://digitalbondmena.com/insurance/api/about-download`);
+    return this.http.get<AboutDownloadResponse>(`${WEB_SITE_BASE_URL}about-download`);
   }
 
   updateAboutDownload(data: AboutDownloadUpdate): Observable<{ success: string, message: string, data: AboutDownload }> {
-    return this.http.post<{ success: string, message: string, data: AboutDownload }>(`https://digitalbondmena.com/insurance/api/about-download/1`, data);
+    return this.http.post<{ success: string, message: string, data: AboutDownload }>(`${WEB_SITE_BASE_URL}about-download/1`, data);
   }
 }

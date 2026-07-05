@@ -1,6 +1,6 @@
 {
   "/api": {
-    "target": "https://digitalbondmena.com/insurance/api/",
+    "target": "https://api.cairohere.com/api/",
     "secure": true,
     "changeOrigin": true,
     "logLevel": "debug"

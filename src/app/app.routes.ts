@@ -1,4 +1,3 @@
-import { ExpireNotificationComponent } from './pages/dashboard/dashboard-pages/expire-notification/expire-notification/expire-notification.component';
 import { MedicalRequestCommentsResolver } from './core/guards/medical-request-comments.resolver';
 import { MedicalRequestsResolver } from './core/guards/medical-requests.resolver';
 import { motorCategoriesInsuranceResolver } from './core/guards/motors-categories-insurance.resolver';

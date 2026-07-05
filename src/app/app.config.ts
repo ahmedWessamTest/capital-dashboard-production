@@ -23,7 +23,6 @@ import {
 
 import { IMAGE_CONFIG } from "@angular/common";
 import { provideHttpClient, withFetch, withInterceptors } from "@angular/common/http";
-import { provideClientHydration } from "@angular/platform-browser";
 import { provideAnimations } from "@angular/platform-browser/animations";
 import { provideShareButtonsOptions, SharerMethods, withConfig } from "ngx-sharebuttons";
 import { shareIcons } from "ngx-sharebuttons/icons";
@@ -58,9 +57,6 @@ export const appConfig: ApplicationConfig = {
     MessageService,
     // Router configuration with in-memory scrolling and view transitions
     // provideRouter(routes, inMemoryScrollingFeature, withViewTransitions()),
-
-    // Enables Server-Side Rendering (SSR) hydration
-    provideClientHydration(),
 
     // Enables Angular animations
     provideAnimations(),

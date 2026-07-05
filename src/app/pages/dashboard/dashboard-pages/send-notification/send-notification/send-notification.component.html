@@ -23,7 +23,7 @@
         </div>
         <div class="error-container">
           @if (notificationForm.get('titlemessage')?.invalid &&
-          notificationForm.get('titlemessage')?.touched) {
+          (notificationForm.get('titlemessage')?.touched || notificationForm.get('titlemessage')?.dirty)) {
           <small class="error-message">English Title is required</small>
           }
         </div>
@@ -43,7 +43,7 @@
         </div>
         <div class="error-container">
           @if (notificationForm.get('artitlemessage')?.invalid &&
-          notificationForm.get('artitlemessage')?.touched) {
+          (notificationForm.get('artitlemessage')?.touched || notificationForm.get('artitlemessage')?.dirty)) {
           <small class="error-message">Arabic title is required</small>
           }
         </div>
@@ -52,7 +52,7 @@
       <!-- Text Message -->
       <div class="notification-item w-full mb-6 mt-4">
         <label for="textmessage" class="font-medium">English Message</label>
-        <div class="input-container w-full">
+        <div class="input-container textarea-container w-full">
           <i class="pi pi-comment text-gray-600 input-icon"></i>
           <textarea
             id="textmessage"
@@ -65,7 +65,7 @@
         </div>
         <div class="error-container">
           @if (notificationForm.get('textmessage')?.invalid &&
-          notificationForm.get('textmessage')?.touched) { @if
+          (notificationForm.get('textmessage')?.touched || notificationForm.get('textmessage')?.dirty)) { @if
           (notificationForm.get('textmessage')?.errors?.['required']) {
           <small class="error-message">English message is required</small>
           } @if (notificationForm.get('textmessage')?.errors?.['minlength']) {
@@ -77,7 +77,7 @@
       </div>
       <div class="notification-item w-full mb-6 mt-4">
         <label for="artextmessage" class="font-medium">Arabic Message</label>
-        <div class="input-container w-full">
+        <div class="input-container textarea-container w-full">
           <i class="pi pi-comment text-gray-600 input-icon"></i>
           <textarea
             id="artextmessage"
@@ -90,7 +90,7 @@
         </div>
         <div class="error-container">
           @if (notificationForm.get('artextmessage')?.invalid &&
-          notificationForm.get('artextmessage')?.touched) { @if
+          (notificationForm.get('artextmessage')?.touched || notificationForm.get('artextmessage')?.dirty)) { @if
           (notificationForm.get('artextmessage')?.errors?.['required']) {
           <small class="error-message">Message is required</small>
           } @if (notificationForm.get('artextmessage')?.errors?.['minlength']) {

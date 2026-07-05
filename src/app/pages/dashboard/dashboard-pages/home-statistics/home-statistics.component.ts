@@ -4,6 +4,7 @@ import { ChartModule } from 'primeng/chart';
 import { NgxSpinnerModule, NgxSpinnerService } from 'ngx-spinner';
 import { CommonModule } from '@angular/common';
 import { Subject, takeUntil } from 'rxjs';
+import { WEB_SITE_BASE_URL } from '../../../../core/constants/WEB_SITE_BASE_UTL';
 
 interface StatisticsData {
   users: number
@@ -69,7 +70,7 @@ console.log(this.usersData);
   }
 
   getStatisticsData() {
-    this.httpClient.get<StatisticsData>('https://digitalbondmena.com/insurance/api/dashboard-home/stathome').pipe(takeUntil(this.destroy$)).subscribe({
+    this.httpClient.get<StatisticsData>(`${WEB_SITE_BASE_URL}dashboard-home/stathome`).pipe(takeUntil(this.destroy$)).subscribe({
       next: (res) => {
         this.statisticsData = res;
         console.log(res);

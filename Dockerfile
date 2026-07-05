@@ -12,4 +12,4 @@ COPY dist ./dist
 
 
 # Start the application
-CMD ["node", "dist/server/server.mjs"] 
+CMD ["npx", "http-server", "dist/mesoestetic-db/browser", "-p", "4000", "--spa"]
