@@ -17,33 +17,6 @@
         </p-button>
       </a>
       } }
-      <!-- @if(entityType === "medical-insurances"){
-          <a [routerLink]="['/dashboard/menu/medical/add-medical-choice']" class="w-full md:w-auto">
-            <p-button
-              label="Add {{ title }} Choice"
-              icon="pi pi-plus"
-              class="btn-main mt-4 md:mt-0 text-white w-full md:w-auto">
-            </p-button>
-          </a>
-        }
-        @else if(entityType === "motor-insurances"){
-          <a [routerLink]="['/dashboard/menu/motor/add-motor-choice']" class="w-full md:w-auto">
-            <p-button
-              label="Add {{ title }} Choice"
-              icon="pi pi-plus"
-              class="btn-main mt-4 md:mt-0 text-white w-full md:w-auto">
-            </p-button>
-          </a>
-        }
-        @else if(entityType === "building-insurances"){
-          <a [routerLink]="['/dashboard/menu/building/add-building-choice']" class="w-full md:w-auto">
-            <p-button
-              label="Add {{ title }} Choice"
-              icon="pi pi-plus"
-              class="btn-main mt-4 md:mt-0 text-white w-full md:w-auto">
-            </p-button>
-          </a>
-        } -->
     </div>
   </div>
 
@@ -58,24 +31,11 @@
     </span>
   </div>
 
-  <!-- <p-table
-  #dt
-  [paginator]="data.length >= 10"
-  [rows]="rowsPerPage"
-  [totalRecords]="totalRecords"
-  [rowsPerPageOptions]="getPagination()"
-  [showCurrentPageReport]="true"
-  [value]="filteredData"
-  (onSort)="onSort($event)"
-  (onPage)="onPageChange($event)"
-  [tableStyle]="{'min-width': '700px'}"
-  responsiveLayout="scroll"
-> -->
   <p-table #dt [paginator]="true" [rows]="rowsPerPage" [totalRecords]="totalRecords"
     [rowsPerPageOptions]="getPagination()" [showCurrentPageReport]="true"
     currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries" [value]="filteredData"
     responsiveLayout="scroll" [scrollable]="true" scrollDirection="both" (onPage)="onPageChange($event)"
-    [tableStyle]="{ 'min-width': '700px' }">
+    [tableStyle]="{ 'min-width': '700px' }" dropdownAppendTo="body">
     <ng-template pTemplate="header">
       <tr class="text-center">
         @for (col of columns; track col.field) { @if (col.sortable) {

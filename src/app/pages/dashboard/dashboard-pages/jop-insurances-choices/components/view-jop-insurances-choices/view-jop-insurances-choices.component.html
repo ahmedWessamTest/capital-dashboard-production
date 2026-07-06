@@ -1,7 +1,7 @@
-<app-generic-view
-  [data]="jopInsuranceChoice"
-  [columns]="columns"
-  [title]="'Professional Insurance Choice'"
-  [backRoute]="'/dashboard/menu/jop-insurances'"
->
+<app-generic-view [data]="jopInsuranceChoice" [columns]="columns" [title]="'Professional Insurance Choice'" [backRoute]="
+  '/dashboard/menu/jop-insurances/' +
+  (jopInsuranceChoice?.jop_insurance_id
+    ? 'choices/' + jopInsuranceChoice?.jop_insurance_id 
+    : '')
+">
 </app-generic-view>

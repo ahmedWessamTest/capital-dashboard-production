@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { ChangeDetectionStrategy, Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { NgxSpinnerService } from 'ngx-spinner';
 import { GenericViewComponent } from '../../../../../../core/components/far-generic-view/far-generic-view/far-generic-view.component';
@@ -10,7 +10,7 @@ import { JopInsuranceChoice } from '../../services/jop-insurances-choices.servic
   standalone: true,
   imports: [GenericViewComponent],
   templateUrl: './view-jop-insurances-choices.component.html',
-  styleUrls: ['./view-jop-insurances-choices.component.scss'],
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class ViewJopInsurancesChoicesComponent implements OnInit {
   jopInsuranceChoice: JopInsuranceChoice | null = null;
@@ -33,7 +33,7 @@ export class ViewJopInsurancesChoicesComponent implements OnInit {
   constructor(
     private route: ActivatedRoute,
     private ngxSpinnerService: NgxSpinnerService
-  ) {}
+  ) { }
 
   ngOnInit(): void {
     this.route.data.subscribe({

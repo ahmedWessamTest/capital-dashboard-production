@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { ChangeDetectionStrategy, Component } from '@angular/core';
 import { GenericViewComponent } from '../../../../../../core/components/far-generic-view/far-generic-view/far-generic-view.component';
 import { Column } from '../../../../../../shared/service/genereic-table.service';
 import { ActivatedRoute } from '@angular/router';
@@ -10,7 +10,7 @@ import { MedicalInsuranceChoice } from '../../services/medical-insurances-choice
   standalone: true,
   imports: [GenericViewComponent],
   templateUrl: './view-medical-insurances-choices.component.html',
-  styleUrl: './view-medical-insurances-choices.component.scss'
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class ViewMedicalInsurancesChoicesComponent {
   medicalInsuranceChoice: MedicalInsuranceChoice | null = null;

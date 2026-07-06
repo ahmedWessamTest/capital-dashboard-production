@@ -1,10 +1,7 @@
-import { Component, OnDestroy, OnInit } from '@angular/core';
-import { NgxSpinnerService } from 'ngx-spinner';
+import { Component, OnDestroy, OnInit, signal } from '@angular/core';
 import { NormalizeActiveStatusService } from '../../../../../../core/normalize-active-status/normalize-active-status.service';
-import { Router } from '@angular/router';
 import { GenericTableComponent } from '../../../../../../shared/components/generic-table/generic-table.component';
 import { MedicalInsurance, MedicalInsurancesService, MedicalInsurancesListResponse } from '../../services/medical-insurances.service';
-import { DataRefreshService } from '../../../../../../core/services/refresh/data-refresh.service';
 import { finalize, map, Subject, takeUntil } from 'rxjs';
 import { Column } from '../../../../../../shared/service/genereic-table.service';
 import { LoadingDataBannerComponent } from "../../../../../../shared/components/loading-data-banner/loading-data-banner.component";
@@ -14,12 +11,11 @@ import { LoadingDataBannerComponent } from "../../../../../../shared/components/
   standalone: true,
   imports: [GenericTableComponent, LoadingDataBannerComponent],
   templateUrl: './all-medical-insurances.component.html',
-  styleUrl: './all-medical-insurances.component.scss'
 })
 export class AllMedicalInsurancesComponent implements OnInit, OnDestroy {
   private readonly destroy$ = new Subject<void>();
-  medicalInsurances: MedicalInsurance[] = [];
-  isLoading: boolean = true;
+  medicalInsurances = signal<MedicalInsurance[]>([])
+  isLoading = signal(true)
   columns: Column[] = [
     { field: 'id', header: 'ID', sortable: true },
     {
@@ -48,11 +44,8 @@ export class AllMedicalInsurancesComponent implements OnInit, OnDestroy {
   ];
 
   constructor(
-    private ngxSpinnerService: NgxSpinnerService,
     private medicalInsurancesService: MedicalInsurancesService,
     private normalizeActiveStatusService: NormalizeActiveStatusService,
-    private dataRefreshService: DataRefreshService,
-    private router: Router,
   ) { }
 
   ngOnInit(): void {
@@ -64,20 +57,20 @@ export class AllMedicalInsurancesComponent implements OnInit, OnDestroy {
 
 
   private loadData(): void {
-    this.isLoading = true,
+    this.isLoading.set(true),
       // this.ngxSpinnerService.show('actionsLoader');
       this.medicalInsurancesService.getAll().pipe(
         map((response: MedicalInsurancesListResponse) => this.normalizeInsurances(response)),
-        finalize(() => this.isLoading = false)
+        finalize(() => this.isLoading.set(false))
       ).pipe(takeUntil(this.destroy$)).subscribe({
         next: (response) => {
-          this.medicalInsurances = response.data;
-          this.isLoading = false;
+          this.medicalInsurances.set(response.data);
+          this.isLoading.set(false);
 
         },
         error: (err) => {
           console.error('Failed to load medical insurances', err);
-          this.isLoading = false;
+          this.isLoading.set(false);
 
         }
       });

@@ -1,4 +1,4 @@
-import { Component, Input, ViewChild, ChangeDetectorRef, inject, SimpleChanges, OnChanges, OnInit } from '@angular/core';
+import { Component, Input, ViewChild, ChangeDetectorRef, inject, SimpleChanges, OnChanges, OnInit, OnDestroy } from '@angular/core';
 import { RouterLink } from '@angular/router';
 import { NgxSpinnerModule, NgxSpinnerService } from 'ngx-spinner';
 import { MessageService } from 'primeng/api';
@@ -14,6 +14,7 @@ import { NoDataFoundBannerComponent } from '../no-data-found-banner/no-data-foun
 import { GenericDataService, Column } from '../../service/genereic-table.service';
 import { IMAGE_BASE_URL } from '../../../core/constants/WEB_SITE_BASE_UTL';
 import { ImageLoaderDirective } from '../../../core/directives/image-loading.directive';
+import { Subject, takeUntil } from 'rxjs';
 interface SelectOption {
   label: string;
   value: string; // Changed to string to match dropdown values
@@ -41,13 +42,14 @@ interface BaseEntity {
     FormsModule,
     NgxSpinnerModule,
     ImageLoaderDirective
-    
-    
+
+
   ],
   templateUrl: './generic-table.component.html',
   providers: [MessageService]
 })
-export class GenericTableComponent<T extends BaseEntity> implements OnChanges ,OnInit{
+export class GenericTableComponent<T extends BaseEntity> implements OnChanges, OnInit, OnDestroy {
+  private destroy$ = new Subject<void>();
   private ngxSpinnerService = inject(NgxSpinnerService);
   private messageService = inject(MessageService);
   private genericDataService = inject(GenericDataService);
@@ -71,7 +73,7 @@ export class GenericTableComponent<T extends BaseEntity> implements OnChanges ,O
   @Input() ToggelStatus: boolean = true;
   @Input() getData: boolean = false;
   @Input() needCall: boolean = false;
-  
+
   // Filter and display properties
   filteredData: T[] = [];
   totalRecords: number = 0;
@@ -79,13 +81,13 @@ export class GenericTableComponent<T extends BaseEntity> implements OnChanges ,O
   selectedStatus: string | null = null;
   selectedNeedCall: string | null = null;
   selectedCategory: string | null = null;
-  
+
   // Dropdown options
   selectOptions: SelectOption[] = [
     { label: 'Active', value: '1' },
     { label: 'Inactive', value: '0' }
   ];
-  
+
   needCallOptions: SelectOption[] = [
     { label: 'Yes', value: 'yes' },
     { label: 'No', value: 'no' }
@@ -96,7 +98,7 @@ export class GenericTableComponent<T extends BaseEntity> implements OnChanges ,O
   sortOrder: number = 1;
   currentPage: number = 1;
   searchValue: string = '';
-  
+
   @ViewChild('dt') dt!: Table;
 
   ngOnInit() {
@@ -112,7 +114,7 @@ export class GenericTableComponent<T extends BaseEntity> implements OnChanges ,O
   fetchData() {
     this.isLoading = true;
     if (this.getData) {
-      this.genericDataService.getAll<T>(this.entityType).subscribe({
+      this.genericDataService.getAll<T>(this.entityType).pipe(takeUntil(this.destroy$)).subscribe({
         next: (response) => {
           this.data = response.data.map(item => ({
             ...item,
@@ -143,25 +145,25 @@ export class GenericTableComponent<T extends BaseEntity> implements OnChanges ,O
 
   applyFilters(): void {
     let filtered = [...this.data];
-    
+
     // Category filter
     if (this.selectedCategory) {
       const categoryId = this.selectedCategory;
-     if(this.entityType === 'build-countries'){
-      filtered = filtered.filter(item => 
-        item['build_type_id']?.toString() === categoryId || 
-        (item['build_type'] && item['build_type']['id']?.toString() === categoryId)
-      );
-       
+      if (this.entityType === 'build-countries') {
+        filtered = filtered.filter(item =>
+          item['build_type_id']?.toString() === categoryId ||
+          (item['build_type'] && item['build_type']['id']?.toString() === categoryId)
+        );
+
       }
-      else{
-        filtered = filtered.filter(item => 
-          item['category_id']?.toString() === categoryId || 
+      else {
+        filtered = filtered.filter(item =>
+          item['category_id']?.toString() === categoryId ||
           (item['category'] && item['category']['id']?.toString() === categoryId)
         );
       }
-     
-     
+
+
     }
 
     // Status filter
@@ -169,20 +171,20 @@ export class GenericTableComponent<T extends BaseEntity> implements OnChanges ,O
       const statusBoolean = this.selectedStatus === '1';
       filtered = filtered.filter(item => item.active_status === statusBoolean);
     }
-    
+
     // Need Call filter
     if (this.selectedNeedCall !== null && this.selectedNeedCall !== '') {
       filtered = filtered.filter(item => {
         const itemValue = item['need_call'];
         const searchValue = this.selectedNeedCall?.toLowerCase();
-        
+
         if (typeof itemValue === 'boolean') {
           return searchValue === 'yes' ? itemValue : !itemValue;
         }
         return itemValue?.toString().toLowerCase() === searchValue;
       });
     }
-    
+
     // Search filter
     if (this.searchValue) {
       const searchTerm = this.searchValue.toLowerCase();
@@ -190,33 +192,33 @@ export class GenericTableComponent<T extends BaseEntity> implements OnChanges ,O
         const columnMatch = this.columns.some(col =>
           (item[col.field]?.toString().toLowerCase() || '').includes(searchTerm)
         );
-        
-        const categoryMatch = item['category'] && 
+
+        const categoryMatch = item['category'] &&
           (item['category']['en_title']?.toLowerCase().includes(searchTerm) ||
-          item['category']['ar_title']?.toLowerCase().includes(searchTerm));
-        
+            item['category']['ar_title']?.toLowerCase().includes(searchTerm));
+
         return columnMatch || categoryMatch;
       });
     }
-    
+
     // Sorting
     if (this.sortField) {
       filtered.sort((a, b) => this.compareValues(a, b, this.sortField!, this.sortOrder));
     }
-    
+
     this.filteredData = filtered;
     this.totalRecords = filtered.length;
     this.cdRef.detectChanges();
   }
 
   onGlobalFilter(dt: Table, event: any) {
-    this.searchValue = event.target.value; 
-    this.applyFilters(); 
+    this.searchValue = event.target.value;
+    this.applyFilters();
   }
 
   onFilterChange(value: string | null): void {
     this.selectedStatus = value;
-    this.applyFilters(); 
+    this.applyFilters();
   }
 
   compareValues(a: T, b: T, field: string, order: number): number {
@@ -280,8 +282,8 @@ export class GenericTableComponent<T extends BaseEntity> implements OnChanges ,O
       next: (response) => {
         const index = this.data.findIndex(d => d.id === item.id);
         if (index !== -1) {
-          this.data[index] = { 
-            ...this.data[index], 
+          this.data[index] = {
+            ...this.data[index],
             active_status: this.normalizeActiveStatus(response.data.active_status)
           };
         }
@@ -307,8 +309,7 @@ export class GenericTableComponent<T extends BaseEntity> implements OnChanges ,O
   }
 
   getPagination(): number[] {
-    const dataLength = this.data.length;
-    return [10, 25, 50, 100,dataLength].filter(opt => opt <= dataLength);
+    return [10, 25, 50, 100];
   }
 
   runSpinner() {
@@ -319,7 +320,7 @@ export class GenericTableComponent<T extends BaseEntity> implements OnChanges ,O
     return text?.length > maxLength ? text.substring(0, maxLength) + '...' : text;
   }
 
- formatDate(dateString: string | null): string {
+  formatDate(dateString: string | null): string {
     if (!dateString) return 'N/A';
     return new Date(dateString).toLocaleDateString('en-US', {
       year: 'numeric',
@@ -333,14 +334,18 @@ export class GenericTableComponent<T extends BaseEntity> implements OnChanges ,O
   getImageUrl(image: string): string {
     return `${IMAGE_BASE_URL}${image}`;
   }
-onCategoryFilterChange(id: string | null ) {
- 
+  onCategoryFilterChange(id: string | null) {
+
     this.selectedCategory = id;
-    this.applyFilters(); 
-  
-}
-onNeedCallFilterChange(value: string | null): void {
+    this.applyFilters();
+
+  }
+  onNeedCallFilterChange(value: string | null): void {
     this.selectedNeedCall = value;
-    this.applyFilters(); 
+    this.applyFilters();
+  }
+  ngOnDestroy() {
+    this.destroy$.next();
+    this.destroy$.complete();
   }
 }

@@ -1,7 +1,7 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit, signal } from '@angular/core';
 import { NormalizeActiveStatusService } from '../../../../../../core/normalize-active-status/normalize-active-status.service';
 import { GenericTableComponent } from '../../../../../../shared/components/generic-table/generic-table.component';
-import { finalize, map } from 'rxjs';
+import { finalize, map, Subject, takeUntil } from 'rxjs';
 import { Column } from '../../../../../../shared/service/genereic-table.service';
 import { LoadingDataBannerComponent } from '../../../../../../shared/components/loading-data-banner/loading-data-banner.component';
 import { BuildingInsurance, BuildingInsurancesService, BuildingInsurancesListResponse } from '../../services/property-insurance.service';
@@ -11,11 +11,11 @@ import { BuildingInsurance, BuildingInsurancesService, BuildingInsurancesListRes
   standalone: true,
   imports: [GenericTableComponent, LoadingDataBannerComponent],
   templateUrl: './all-property-insurance.component.html',
-  styleUrls: ['./all-property-insurance.component.scss']
 })
-export class AllPropertyInsuranceComponent implements OnInit {
-  buildingInsurances: BuildingInsurance[] = [];
-  isLoading: boolean = true;
+export class AllPropertyInsuranceComponent implements OnInit, OnDestroy {
+  private destroy$ = new Subject<void>();
+  buildingInsurances = signal<BuildingInsurance[]>([]);
+  isLoading = signal<boolean>(true);
   columns: Column[] = [
     { field: 'id', header: 'ID', sortable: true },
     {
@@ -50,18 +50,19 @@ export class AllPropertyInsuranceComponent implements OnInit {
   }
 
   private loadData(): void {
-    this.isLoading = true;
+    this.isLoading.set(true);
     this.buildingInsurancesService.getAll().pipe(
+      takeUntil(this.destroy$),
       map((response: BuildingInsurancesListResponse) => this.normalizeInsurances(response)),
-      finalize(() => this.isLoading = false)
+      finalize(() => this.isLoading.set(false))
     ).subscribe({
       next: (response) => {
-        this.buildingInsurances = response.data;
-        this.isLoading = false;
+        this.buildingInsurances.set(response.data);
+        this.isLoading.set(false);
       },
       error: (err) => {
         console.error('Failed to load building insurances', err);
-        this.isLoading = false;
+        this.isLoading.set(false);
       }
     });
   }
@@ -73,5 +74,9 @@ export class AllPropertyInsuranceComponent implements OnInit {
       });
     }
     return response;
+  }
+  ngOnDestroy(): void {
+    this.destroy$.next();
+    this.destroy$.complete();
   }
 }

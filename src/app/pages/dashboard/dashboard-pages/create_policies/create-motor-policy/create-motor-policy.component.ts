@@ -20,7 +20,6 @@ import {
   MotorPolicyData,
 } from '../../../../../core/services/policies/motors-policy.service';
 import {
-  UserService,
   UsersResponse,
 } from '../../../../../core/services/users/users.service';
 import { User } from '../../motors-requests/services/motors-requests.service';
@@ -75,7 +74,6 @@ export class CreateMotorPolicyComponent implements OnInit {
   private ngxSpinnerService = inject(NgxSpinnerService);
   private messageService = inject(MessageService);
   private motorInsuranceService = inject(MotorInsuranceService);
-  private userService = inject(UserService);
 
   constructor() {
     this.policyForm = this.fb.group({
@@ -181,6 +179,11 @@ export class CreateMotorPolicyComponent implements OnInit {
       ?.setValue(input.value, { emitEvent: false });
   }
 
+  get isOtherBrandSelected(): boolean {
+    const brand = this.policyForm.get('car_brand')?.value;
+    return brand && brand.en_title?.toLowerCase() === 'other';
+  }
+
   onSubmit() {
     if (this.policyForm.invalid) {
       this.policyForm.markAllAsTouched();
@@ -197,6 +200,10 @@ export class CreateMotorPolicyComponent implements OnInit {
       return `${day}-${month}-${year}`;
     };
 
+    const selectedBrand = this.policyForm.get('car_brand')?.value;
+    const selectedModel = this.policyForm.get('car_model')?.value;
+    const isOtherBrand = this.isOtherBrandSelected;
+
     const policyData: MotorPolicyData = {
       category_id: '2',
       user_id: this.policyForm.get('user')?.value.id,
@@ -207,10 +214,10 @@ export class CreateMotorPolicyComponent implements OnInit {
       phone: this.policyForm.get('phone')?.value,
       car_type_id: this.policyForm.get('car_type')?.value.id,
       car_type: this.policyForm.get('car_type')?.value.en_title,
-      car_brand_id: this.policyForm.get('car_brand')?.value.id,
-      car_brand: this.policyForm.get('car_brand')?.value.en_title,
-      car_model_id: this.policyForm.get('car_model')?.value.id,
-      car_model: this.policyForm.get('car_model')?.value.en_title,
+      car_brand_id: selectedBrand?.id,
+      car_brand: selectedBrand?.en_title,
+      car_model_id: isOtherBrand ? null : selectedModel?.id,
+      car_model: isOtherBrand ? selectedModel : selectedModel?.en_title,
       admin_motor_insurance_number: this.policyForm.get(
         'admin_motor_insurance_number'
       )?.value,

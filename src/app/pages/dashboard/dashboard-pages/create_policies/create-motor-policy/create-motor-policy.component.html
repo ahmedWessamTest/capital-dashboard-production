@@ -167,20 +167,34 @@
       <div class="form-control-container flex-1">
         <label for="car_model" class="flex items-center gap-1 mx-2 mb-2 font-semibold">Car Model</label>
         <div class="h-20">
-          <p-dropdown
-            id="car_model"
-            [ngClass]="{'cursor-disabled-drop': isSubmitting}"
-            [formControlName]="'car_model'"
-            [options]="models"
-            optionLabel="en_title"
-            [placeholder]="'Select Car Model'"
-            [filter]="true"
-            filterBy="en_title"
-            [disabled]="isSubmitting"
-            [class.ng-dirty]="policyForm.get('car_model')?.dirty || policyForm.get('car_model')?.touched"
-            [class.ng-invalid]="policyForm.get('car_model')?.invalid && (policyForm.get('car_model')?.dirty || policyForm.get('car_model')?.touched)"
-            class="w-full"
-          ></p-dropdown>
+          @if (isOtherBrandSelected) {
+            <input
+              type="text"
+              id="car_model"
+              [formControlName]="'car_model'"
+              placeholder="Enter Car Model"
+              [disabled]="isSubmitting"
+              [ngClass]="{'cursor-disabled': isSubmitting}"
+              class="form-input w-full"
+              [class.ng-dirty]="policyForm.get('car_model')?.dirty || policyForm.get('car_model')?.touched"
+              [class.ng-invalid]="policyForm.get('car_model')?.invalid && (policyForm.get('car_model')?.dirty || policyForm.get('car_model')?.touched)"
+            />
+          } @else {
+            <p-dropdown
+              id="car_model"
+              [ngClass]="{'cursor-disabled-drop': isSubmitting}"
+              [formControlName]="'car_model'"
+              [options]="models"
+              optionLabel="en_title"
+              [placeholder]="'Select Car Model'"
+              [filter]="true"
+              filterBy="en_title"
+              [disabled]="isSubmitting"
+              [class.ng-dirty]="policyForm.get('car_model')?.dirty || policyForm.get('car_model')?.touched"
+              [class.ng-invalid]="policyForm.get('car_model')?.invalid && (policyForm.get('car_model')?.dirty || policyForm.get('car_model')?.touched)"
+              class="w-full"
+            ></p-dropdown>
+          }
           @if (policyForm.get('car_model')?.invalid && (policyForm.get('car_model')?.dirty || policyForm.get('car_model')?.touched)) {
             <small class="text-red-500 form-error">Car Model is required.</small>
           }

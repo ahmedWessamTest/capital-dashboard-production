@@ -1,18 +1,19 @@
-import { Component } from '@angular/core';
+import { Component, OnDestroy } from '@angular/core';
 import { Column } from '../../../../../../shared/service/genereic-table.service';
 import { NgxSpinnerService } from 'ngx-spinner';
 import { ActivatedRoute } from '@angular/router';
 import { GenericTableComponent } from '../../../../../../shared/components/generic-table/generic-table.component';
 import { MedicalInsuranceChoice } from '../../services/medical-insurances-choices.service';
+import { Subject, takeUntil } from 'rxjs';
 
 @Component({
   selector: 'app-all-medical-insurances-choices',
   standalone: true,
   imports: [GenericTableComponent],
   templateUrl: './all-medical-insurances-choices.component.html',
-  styleUrl: './all-medical-insurances-choices.component.scss'
 })
-export class AllMedicalInsurancesChoicesComponent {
+export class AllMedicalInsurancesChoicesComponent implements OnDestroy {
+  private destroy$ = new Subject<void>();
   medicalInsuranceChoices: MedicalInsuranceChoice[] = [];
   medicalInsuranceId: string = '';
   columns: Column[] = [
@@ -39,7 +40,7 @@ export class AllMedicalInsurancesChoicesComponent {
   ngOnInit(): void {
     this.medicalInsuranceId = this.router.snapshot.params['id'];
 
-    this.route.data.subscribe({
+    this.route.data.pipe(takeUntil(this.destroy$)).subscribe({
       next: ({ data }) => {
         this.medicalInsuranceChoices = data.data;
         this.ngxSpinnerService.hide('actionsLoader');
@@ -53,5 +54,9 @@ export class AllMedicalInsurancesChoicesComponent {
         this.ngxSpinnerService.hide('actionsLoader');
       }
     });
+  }
+  ngOnDestroy(): void {
+    this.destroy$.next();
+    this.destroy$.complete();
   }
 }

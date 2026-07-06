@@ -1,7 +1,7 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { NgxSpinnerService } from 'ngx-spinner';
-import { finalize, map } from 'rxjs';
+import { finalize, map, Subject, takeUntil } from 'rxjs';
 import { NormalizeActiveStatusService } from '../../../../../../core/normalize-active-status/normalize-active-status.service';
 import { DataRefreshService } from '../../../../../../core/services/refresh/data-refresh.service';
 import { GenericTableComponent } from '../../../../../../shared/components/generic-table/generic-table.component';
@@ -20,7 +20,8 @@ import { JopInsuranceService } from '../../../a-jop-insurance/jop-insurance.serv
   templateUrl: './all-jop-insurance.component.html',
   styleUrls: ['./all-jop-insurance.component.scss'],
 })
-export class AllJopInsuranceComponent implements OnInit {
+export class AllJopInsuranceComponent implements OnInit, OnDestroy {
+  private destroy$ = new Subject<void>();
   jopInsurances: IJopPolicy[] = [];
   isLoading: boolean = true;
   columns: Column[] = [
@@ -67,6 +68,7 @@ export class AllJopInsuranceComponent implements OnInit {
     this.jopInsuranceService
       .getAll()
       .pipe(
+        takeUntil(this.destroy$),
         map((response: IAllJopPolicy) => this.normalizeInsurances(response)),
         finalize(() => (this.isLoading = false))
       )
@@ -92,5 +94,9 @@ export class AllJopInsuranceComponent implements OnInit {
       });
     }
     return response;
+  }
+  ngOnDestroy(): void {
+    this.destroy$.next();
+    this.destroy$.complete();
   }
 }

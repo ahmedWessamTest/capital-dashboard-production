@@ -2,8 +2,6 @@ import { Component, OnInit } from '@angular/core';
 import { finalize, map } from 'rxjs';
 import { NormalizeActiveStatusService } from '../../core/normalize-active-status/normalize-active-status.service';
 import { DataRefreshService } from '../../core/services/refresh/data-refresh.service';
-import { GenericTableComponent } from '../../shared/components/generic-table/generic-table.component';
-import { LoadingDataBannerComponent } from '../../shared/components/loading-data-banner/loading-data-banner.component';
 import { Column } from '../../shared/service/genereic-table.service';
 import { GetAllJop, IJopInsurance } from '../res/interface/getAllJop';
 import { JopInsurancesService } from '../res/services/jop-insurance.service';
@@ -11,7 +9,6 @@ import { JopInsurancesService } from '../res/services/jop-insurance.service';
 @Component({
   selector: 'app-all-jop-insurances',
   standalone: true,
-  imports: [GenericTableComponent, LoadingDataBannerComponent],
   templateUrl: './all-jop-insurance.component.html',
   styleUrl: './all-jop-insurance.component.scss',
 })

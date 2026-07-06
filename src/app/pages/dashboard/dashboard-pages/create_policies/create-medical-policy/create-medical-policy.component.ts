@@ -1,5 +1,5 @@
 import { CommonModule } from '@angular/common';
-import { Component, OnDestroy, OnInit, inject } from '@angular/core';
+import { ChangeDetectionStrategy, Component, OnDestroy, OnInit, inject } from '@angular/core';
 import {
   FormBuilder,
   FormGroup,
@@ -7,20 +7,18 @@ import {
   Validators,
 } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
-import { NgxSpinnerModule, NgxSpinnerService } from 'ngx-spinner';
+import { NgxSpinnerService } from 'ngx-spinner';
 import { ButtonModule } from 'primeng/button';
 import { CalendarModule } from 'primeng/calendar';
 import { DropdownModule } from 'primeng/dropdown';
 import { InputTextModule } from 'primeng/inputtext';
-import { ToastModule } from 'primeng/toast';
 import {
   MedicalInsuranceService,
   MedicalPolicyData,
 } from '../../../../../core/services/policies/medical-policy.service';
-import { UserService } from '../../../../../core/services/users/users.service';
 import { MedicalInsurance } from '../../medical-requests/services/medical-requests.service';
 import { User } from '../../motors-requests/services/motors-requests.service';
-import { Subject, takeUntil } from 'rxjs';
+import { Subject, takeUntil, timer } from 'rxjs';
 
 @Component({
   selector: 'app-create-medical-policy',
@@ -32,13 +30,10 @@ import { Subject, takeUntil } from 'rxjs';
     InputTextModule,
     DropdownModule,
     CalendarModule,
-    ToastModule,
-    NgxSpinnerModule,
   ],
   templateUrl: './create-medical-policy.component.html',
-  providers: [],
 })
-export class CreateMedicalPolicyComponent implements OnInit,OnDestroy {
+export class CreateMedicalPolicyComponent implements OnInit, OnDestroy {
   private readonly destroy$ = new Subject<void>();
   policyForm: FormGroup;
   isSubmitting = false;
@@ -63,7 +58,6 @@ export class CreateMedicalPolicyComponent implements OnInit,OnDestroy {
   private route = inject(ActivatedRoute);
   private ngxSpinnerService = inject(NgxSpinnerService);
   private medicalInsuranceService = inject(MedicalInsuranceService);
-  private userService = inject(UserService);
 
   constructor() {
     this.policyForm = this.fb.group({
@@ -178,7 +172,7 @@ export class CreateMedicalPolicyComponent implements OnInit,OnDestroy {
     };
 
     this.medicalInsuranceService.submitMedicalPolicy(policyData).pipe(takeUntil(this.destroy$)).subscribe({
-      next: (response) => {
+      next: () => {
         this.message = {
           text: 'Medical Policy created successfully',
           type: 'success',
@@ -201,12 +195,14 @@ export class CreateMedicalPolicyComponent implements OnInit,OnDestroy {
   }
 
   private clearMessageAfterDelay() {
-    setTimeout(() => {
-      this.message = null;
-    }, 5000);
+    timer(5000).pipe(takeUntil(this.destroy$)).subscribe({
+      next: () => {
+        this.message = null;
+      }
+    });
   }
   ngOnDestroy(): void {
-      this.destroy$.next();
-      this.destroy$.complete()
+    this.destroy$.next();
+    this.destroy$.complete()
   }
 }

@@ -24,12 +24,11 @@ import {
 import { IMAGE_CONFIG } from "@angular/common";
 import { provideHttpClient, withFetch, withInterceptors } from "@angular/common/http";
 import { provideAnimations } from "@angular/platform-browser/animations";
-import { provideShareButtonsOptions, SharerMethods, withConfig } from "ngx-sharebuttons";
-import { shareIcons } from "ngx-sharebuttons/icons";
 import { routes } from "./app.routes";
 import { loadingSpinnerInterceptor } from "./core/interceptors/loading-spinner.interceptor";
 import { MessageService } from "primeng/api";
 import { authInterceptor } from "./core/interceptors/auth.interceptor";
+import { cleanBodyInterceptor } from "./core/interceptors/clean-body.interceptor";
 /**
  * @description Configuration for in-memory scrolling behavior
  * @property scrollPositionRestoration - Restores scroll position to "top" when navigating
@@ -56,18 +55,13 @@ export const appConfig: ApplicationConfig = {
     provideHttpClient(
       withInterceptors([
         loadingSpinnerInterceptor,
+        cleanBodyInterceptor,
         authInterceptor
       ]),
       withFetch()
     ),
     provideRouter(routes, withRouterConfig({ onSameUrlNavigation: 'reload' })),
-    provideShareButtonsOptions(
-      shareIcons(),
-      withConfig({
-        debug: true,
-        sharerMethod: SharerMethods.Anchor,
-      })
-    ),
+
     {
       provide: IMAGE_CONFIG,
       useValue: {

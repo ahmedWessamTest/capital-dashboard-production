@@ -15,9 +15,9 @@ module.exports = {
           800: "#16425A",
           900: "#0B212E",  // very dark shade
         },
-        
+
       },
     },
   },
-  plugins: [require("tailwindcss-primeui")],
+
 };

@@ -1,19 +1,11 @@
 /* You can add global styles to this file, and also import other style files */
 
 @import "base";
-// @import "forms";
-// @import "typography";
-// @import "variables";
 @import "utilities";
-// @import "buttons";
-// @import "jodit-config";
-
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
-// @import "flowbite/src/themes/default";
-// @plugin "flowbite/plugin";
-// @source "../node_modules/flowbite";
+
 
 
 
@@ -37,6 +29,7 @@ $gutter: 1rem; //for primeflex grid system
 body {
   overflow-y: hidden;
 }
+
 .layout-main {
   height: 94vh;
   margin-top: 1vh;
@@ -44,13 +37,16 @@ body {
   overflow-x: hidden;
   padding: 10px;
 }
+
 .p-steps .p-steps-item:before {
   border-top: 1px solid gray;
 }
+
 .p-steps .p-steps-item .p-menuitem-link .p-steps-number {
   background-color: gray;
   color: white;
 }
+
 .p-steps .p-steps-item.p-highlight .p-steps-number {
   background: #37a6de;
   color: #37a6de #eff6ff;
@@ -64,6 +60,7 @@ textarea {
   display: block;
   margin-bottom: 10px;
 }
+
 .p-element {
   margin: 0 !important;
 }
@@ -71,10 +68,12 @@ textarea {
 .jodit-wysiwyg {
   min-height: 300px !important;
 }
+
 .p-element.btn-main.col-4.p-button.p-component {
   background-color: #37a6de !important;
-  color : white !important;
+  color: white !important;
 }
+
 .p-inputswitch.p-inputswitch-checked .p-inputswitch-slider {
   background-color: #37a6de !important;
 }
@@ -84,10 +83,14 @@ textarea {
 }
 
 td {
-  white-space: normal; /* Prevent text wrapping */
-  overflow: hidden; /* Hide overflow */
-  text-overflow: ellipsis; /* Show '...' when text is too long */
-  max-width: 250px; /* Adjust max width as needed */
+  white-space: normal;
+  /* Prevent text wrapping */
+  overflow: hidden;
+  /* Hide overflow */
+  text-overflow: ellipsis;
+  /* Show '...' when text is too long */
+  max-width: 250px;
+  /* Adjust max width as needed */
 }
 
 .layout-menu ul a.active-route,
@@ -128,7 +131,7 @@ input[type="number"]::-webkit-outer-spin-button {
 }
 
 
-form > div {
+form>div {
   position: relative;
 }
 
@@ -141,7 +144,8 @@ form > div {
 .p-dropdown-clear-icon.p-icon {
   left: calc(100% + 10px);
 }
-.p-datatable > .p-datatable-wrapper {
+
+.p-datatable>.p-datatable-wrapper {
   overflow: visible;
 }
 
@@ -154,11 +158,11 @@ form > div {
 
 
 
-.table-title-div{
+.table-title-div {
   display: flex;
   justify-content: space-between;
   align-items: center !important;
-  width:100%;
+  width: 100%;
   margin-bottom: 1rem;
 
 }
@@ -166,58 +170,75 @@ form > div {
 
 /* Rich text content styling to override Tailwind base */
 .rich-text-content {
+
   /* Restore list styles */
   ul {
     list-style-type: disc !important;
     padding-left: 2rem !important;
     margin: 1rem 0 !important;
   }
-  
+
   ol {
     list-style-type: decimal !important;
     padding-left: 2rem !important;
     margin: 1rem 0 !important;
   }
-  
+
   li {
     display: list-item !important;
     // margin-bottom: 0.5rem !important;
   }
-  
+
   /* Restore other HTML elements */
   p {
     margin: 1rem 0 !important;
   }
-  
-  h1, h2, h3, h4, h5, h6 {
+
+  h1,
+  h2,
+  h3,
+  h4,
+  h5,
+  h6 {
     font-weight: bold !important;
     margin: 1.5rem 0 1rem 0 !important;
   }
-  
-  h1 { font-size: 2rem !important; }
-  h2 { font-size: 1.75rem !important; }
-  h3 { font-size: 1.5rem !important; }
-  h4 { font-size: 1.25rem !important; }
-  
+
+  h1 {
+    font-size: 2rem !important;
+  }
+
+  h2 {
+    font-size: 1.75rem !important;
+  }
+
+  h3 {
+    font-size: 1.5rem !important;
+  }
+
+  h4 {
+    font-size: 1.25rem !important;
+  }
+
   a {
     color: #3182ce !important;
     text-decoration: underline !important;
   }
-  
+
   blockquote {
     border-left: 4px solid #e2e8f0 !important;
     padding-left: 1rem !important;
     margin: 1rem 0 !important;
     font-style: italic !important;
   }
-  
+
   code {
     background-color: #f7fafc !important;
     padding: 0.2rem 0.4rem !important;
     border-radius: 0.25rem !important;
     font-family: monospace !important;
   }
-  
+
   pre {
     background-color: #f7fafc !important;
     padding: 1rem !important;
@@ -225,7 +246,7 @@ form > div {
     overflow-x: auto !important;
     margin: 1rem 0 !important;
   }
-  
+
   /* Handle line breaks properly */
   white-space: pre-wrap !important;
 }
@@ -247,8 +268,10 @@ form > div {
 .circular-image-container {
   position: relative;
   display: inline-block;
-  width: 80px; /* Default width */
-  height: 80px; /* Default height */
+  width: 80px;
+  /* Default width */
+  height: 80px;
+  /* Default height */
 }
 
 /* Placeholder box during loading */
@@ -258,11 +281,16 @@ form > div {
   left: 0;
   width: 100%;
   height: 100%;
-  border: 2px solid #d1d5db; /* Gray border */
-  border-radius: 50%; /* Circular shape */
-  background-color: #f3f4f6; /* Light gray background */
-  opacity: 0.5; /* Initial opacity */
-  animation: pulse-opacity 4s infinite ease-in-out; /* 4-second opacity animation */
+  border: 2px solid #d1d5db;
+  /* Gray border */
+  border-radius: 50%;
+  /* Circular shape */
+  background-color: #f3f4f6;
+  /* Light gray background */
+  opacity: 0.5;
+  /* Initial opacity */
+  animation: pulse-opacity 4s infinite ease-in-out;
+  /* 4-second opacity animation */
   z-index: 1;
 }
 
@@ -271,26 +299,31 @@ form > div {
   width: 100%;
   height: 100%;
   object-fit: cover;
-  border-radius: 50%; /* Circular shape */
-  opacity: 0; /* Hidden until loaded */
-  transition: opacity 0.5s ease-in-out; /* Smooth opacity transition */
+  border-radius: 50%;
+  /* Circular shape */
+  opacity: 0;
+  /* Hidden until loaded */
+  transition: opacity 0.5s ease-in-out;
+  /* Smooth opacity transition */
   position: relative;
   z-index: 2;
 }
 
 /* Loaded image state */
 .circular-image.loaded {
-  opacity: 1; /* Fully visible when loaded */
+  opacity: 1;
+  /* Fully visible when loaded */
 }
 
 /* Hide placeholder when image is loaded */
-.circular-image.loaded + .circular-image-placeholder {
+.circular-image.loaded+.circular-image-placeholder {
   display: none;
 }
 
 /* Error state for failed image load */
 .circular-image.error {
-  opacity: 1; /* Ensure fallback image is visible */
+  opacity: 1;
+  /* Ensure fallback image is visible */
 }
 
 /* Opacity pulse animation for placeholder */
@@ -298,9 +331,11 @@ form > div {
   0% {
     opacity: 0.5;
   }
+
   50% {
     opacity: 0.8;
   }
+
   100% {
     opacity: 0.5;
   }
@@ -310,14 +345,15 @@ form > div {
 
 
 
-a{
+a {
   text-decoration: none;
-  color:#333 !important;
-  transition: all 0.3s ;
+  color: #333 !important;
+  transition: all 0.3s;
 }
-a:hover{
+
+a:hover {
   text-decoration: none;
-  color:rgb(55, 166, 222) !important;
+  color: rgb(55, 166, 222) !important;
 }
 
 
@@ -398,18 +434,20 @@ input[type=number] {
   font-size: 1.4rem;
   border: none;
   border-radius: 10px;
-  background-color: #37a6de; /* blue */
+  background-color: #37a6de;
+  /* blue */
   color: #fff;
   cursor: pointer;
   transition: all .3s ease-in-out;
   height: 40px;
   width: 140px;
-  font-weight:bold;
+  font-weight: bold;
 
 }
 
 .submit-btn:hover {
-  background-color: #37a6de; /* darker blue */
+  background-color: #37a6de;
+  /* darker blue */
   letter-spacing: 1px;
 
 }
@@ -425,7 +463,8 @@ input[type=number] {
   color: #666;
   cursor: not-allowed;
 }
-tr{
+
+tr {
   width: 100%;
 }
 
@@ -446,48 +485,53 @@ tr{
 //   margin-right: 8px;
 // }
 
-.btn-main{
-background-color: #37a6de;
-padding: .5rem .8rem;
-border-radius: .5rem;
-color: white !important;
-}
-.btn-main:hover{
+.btn-main {
   background-color: #37a6de;
-padding: .5rem .8rem;
-border-radius: .5rem;
-color: white !important;
+  padding: .5rem .8rem;
+  border-radius: .5rem;
+  color: white !important;
 }
-.btn-main:active{
+
+.btn-main:hover {
   background-color: #37a6de;
-padding: .5rem .8rem;
-border-radius: .5rem;
-color: white !important;
+  padding: .5rem .8rem;
+  border-radius: .5rem;
+  color: white !important;
 }
-.btn-main:disabled{
+
+.btn-main:active {
+  background-color: #37a6de;
+  padding: .5rem .8rem;
+  border-radius: .5rem;
+  color: white !important;
+}
+
+.btn-main:disabled {
   background-color: #98bbcd;
-padding: .5rem .8rem;
-border-radius: .5rem;
-color: white !important;
-cursor: not-allowed;
+  padding: .5rem .8rem;
+  border-radius: .5rem;
+  color: white !important;
+  cursor: not-allowed;
 }
-.test{
+
+.test {
   height: webkit-fill-available !important;
 }
 
-tr td{
+tr td {
   text-align: center;
 }
 
-.p-dropdown.p-component.p-inputwrapper{
-  border:1px solid #D8D8D8 !important;
+.p-dropdown.p-component.p-inputwrapper {
+  border: 1px solid #D8D8D8 !important;
 }
 
-.cursor-disabled{
+.cursor-disabled {
   cursor: not-allowed !important;
   opacity: .4 !important;
 }
-.cursor-disabled-drop{
+
+.cursor-disabled-drop {
   cursor: not-allowed !important;
 }
 
@@ -502,7 +546,7 @@ tr td{
     color: #1f2937;
     transition: all 0.2s ease;
     border: 1px solid rgba(0, 0, 0, 0.285);
-    
+
     .p-dropdown-label {
       font-size: 16px;
       color: #6b7280;
@@ -512,7 +556,7 @@ tr td{
 
   .p-calendar {
     width: 100%;
-    
+
     .p-inputtext {
       width: 100%;
       height: 50px;
@@ -523,12 +567,12 @@ tr td{
       transition: all 0.2s ease;
       border: 1px solid rgba(0, 0, 0, 0.285);
       font-size: 16px;
-      
+
       &::placeholder {
         color: #6b7280;
       }
     }
-    
+
     .p-datepicker-trigger {
       background: transparent;
       border: none;
@@ -543,7 +587,7 @@ tr td{
 
 .p-calendar {
   width: 100%;
-  
+
   .p-inputtext {
     width: 100%;
     height: 50px;
@@ -554,12 +598,12 @@ tr td{
     transition: all 0.2s ease;
     border: 1px solid rgba(0, 0, 0, 0.285);
     font-size: 16px;
-    
+
     &::placeholder {
       color: #6b7280;
     }
   }
-  
+
   .p-datepicker-trigger {
     background: transparent;
     border: none;
@@ -572,8 +616,8 @@ tr td{
 }
 
 
-.passs{
-  .p-element.p-icon-wrapper{
+.passs {
+  .p-element.p-icon-wrapper {
     margin-top: -.4rem !important;
   }
 }
