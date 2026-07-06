@@ -75,6 +75,10 @@ interface FilterOption {
           [showCurrentPageReport]="true" 
           [value]="filteredUsers" 
           responsiveLayout="scroll"
+          [scrollable]="true"
+          scrollDirection="both"
+          dropdownAppendTo="body"
+          [tableStyle]="{ 'min-width': '70rem' }"
           (onSort)="onSort($event)">
           
           <ng-template pTemplate="header">
@@ -115,16 +119,16 @@ interface FilterOption {
               <th class="text-center">Actions</th>
             </tr>
           </ng-template>
-
+ 
           <ng-template pTemplate="body" let-user>
             <tr>
-              <td class="text-center">{{ user.id }}</td>
-              <td class="text-center">{{ user.name }}</td>
-              <td class="text-center">{{ user.email }}</td>
-              <!-- <td class="text-center">{{ user.role }}</td> -->
+              <td class="text-center">{{ user.id || 'N/A' }}</td>
+              <td class="text-center">{{ user.name || 'N/A' }}</td>
+              <td class="text-center">{{ user.email || 'N/A' }}</td>
+              <!-- <td class="text-center">{{ user.role || 'N/A' }}</td> -->
               <td class="text-center">
                 <p-inputSwitch 
-                  [ngModel]="user.is_active"
+                  [(ngModel)]="user.is_active"
                   (onChange)="toggleStatus(user)">
                 </p-inputSwitch>
               </td>
@@ -240,13 +244,15 @@ export class AllUsersComponent implements OnDestroy, OnInit {
   private matchesSearch(user: any): boolean {
     if (!this.searchTerm) return true;
     const searchFields = [
-      user.id.toString(),
-      user.name,
-      user.email || '',
-      user.role,
+      user.id ? user.id.toString() : '',
+      user.name ? user.name.toString() : '',
+      user.email ? user.email.toString() : '',
+      user.role ? user.role.toString() : '',
       user.is_active ? 'active' : 'deleted',
     ];
-    return searchFields.some((field) => field.toLowerCase().includes(this.searchTerm.toLowerCase()));
+    return searchFields.some((field) =>
+      field && field.toLowerCase().includes(this.searchTerm.toLowerCase())
+    );
   }
 
   onGlobalFilter(event: Event): void {
@@ -261,16 +267,19 @@ export class AllUsersComponent implements OnDestroy, OnInit {
 
   toggleStatus(user: any): void {
     this.spinner.show('actionsLoader');
-    const newStatus = user.is_active ? 1 : 0; // Inverse for API (0 = active, 1 = deleted)
+    // Two-way bound user.is_active is already true/false matching the new toggled state.
+    // API expects 1 to delete/deactivate, and 0 to activate.
+    const newStatus = user.is_active ? 0 : 1;
     const action$ = newStatus ? this.userService.delete(user.id) : this.userService.activate(user.id);
     action$.subscribe({
       next: () => {
-        user.is_active = newStatus ? 0 : 1;
         this.applyFilters();
-        this.showSuccess(`User ${user.is_active ? 'activated' : 'deleted'} successfully`);
+        this.showSuccess(`User ${user.is_active ? 'activated' : 'deactivated'} successfully`);
         this.spinner.hide('actionsLoader');
       },
       error: () => {
+        // Rollback state in case of API failure
+        user.is_active = !user.is_active;
         this.showError('Failed to update user status');
         this.spinner.hide('actionsLoader');
       },
@@ -286,8 +295,7 @@ export class AllUsersComponent implements OnDestroy, OnInit {
   }
 
   getPagination(): number[] {
-    const dataLength = this.filteredUsers.length;
-    return [10, 25, 50, 100, dataLength].filter(opt => opt <= dataLength);
+    return [10, 25, 50, 100];
   }
 
   onSort(event: { field: string; order: number }): void {

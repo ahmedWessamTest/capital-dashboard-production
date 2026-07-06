@@ -15,7 +15,8 @@ import {
   MotorClaimResponse,
   CreateCommentRequest,
 } from '../../../../../../core/services/claims/motor-claim.service';
-import { Subscription } from 'rxjs';
+import { Subscription, Subject, interval, of } from 'rxjs';
+import { takeUntil, switchMap, catchError } from 'rxjs/operators';
 
 @Component({
   selector: 'app-motor-claim-comments',
@@ -52,11 +53,13 @@ export class AllMotorClaimsCommentsComponent implements OnInit, OnDestroy {
   IMAGE_BASE_URL = IMAGE_BASE_URL;
   claimData!: MotorClaimResponse;
   claimStatus: string = '';
+  private destroy$ = new Subject<void>();
 
   ngOnInit() {
     this.claimId = +this.route.snapshot.paramMap.get('id')!;
     this.loadUserData();
     this.loadData();
+    this.startPolling();
   }
 
   loadUserData() {
@@ -137,6 +140,8 @@ export class AllMotorClaimsCommentsComponent implements OnInit, OnDestroy {
   }
 
   ngOnDestroy() {
+    this.destroy$.next();
+    this.destroy$.complete();
     if (this.selectedFile && this.selectedFile.type.startsWith('image/')) {
       URL.revokeObjectURL(this.getFilePreview(this.selectedFile));
     }
@@ -259,5 +264,26 @@ export class AllMotorClaimsCommentsComponent implements OnInit, OnDestroy {
       default:
         return 'bg-gray-100 text-gray-800 px-2.5 py-0.5 rounded font-medium';
     }
+  }
+
+  private startPolling() {
+    interval(30000)
+      .pipe(
+        switchMap(() => this.claimsService.getClaimComments(this.claimId).pipe(
+          catchError((error) => {
+            console.error('Error fetching comments:', error);
+            return of(null);
+          })
+        )),
+        takeUntil(this.destroy$)
+      )
+      .subscribe({
+        next: (response) => {
+          if (response) {
+            this.comments = (response.data || []).reverse(); // Silent update, maintaining reverse order
+            this.scrollToBottom();
+          }
+        }
+      });
   }
 }

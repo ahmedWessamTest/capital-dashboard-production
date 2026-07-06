@@ -17,7 +17,8 @@
   <div class="overflow-x-auto">
     <p-table #dt [paginator]="true" [rows]="rowsPerPage" [totalRecords]="totalRecords"
       [rowsPerPageOptions]="getPagination()" [showCurrentPageReport]="true" [value]="filteredClaims"
-      responsiveLayout="scroll" [scrollable]="true" scrollDirection="both"
+      responsiveLayout="scroll" [scrollable]="true" scrollDirection="both" dropdownAppendTo="body" dropdown
+      [tableStyle]="{ 'min-width': '70rem' }"
       currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries" [sortMode]="'multiple'"
       (onSort)="onSort($event)" (onPage)="onPageChange($event)">
       <ng-template pTemplate="header">

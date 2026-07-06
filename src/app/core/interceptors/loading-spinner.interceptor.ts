@@ -11,7 +11,8 @@ export const loadingSpinnerInterceptor: HttpInterceptorFn = (req, next) => {
   const messageService = inject(MessageService);
   const spinnerName = 'actionsLoader';
 
-  const shouldShowSpinner = !req.url.includes('admincommecnts');
+  const isCommentRequest = req.url.toLowerCase().includes('comment') || req.url.toLowerCase().includes('commecnt');
+  const shouldShowSpinner = !isCommentRequest;
 
   if (shouldShowSpinner) {
     if (activeRequests === 0) {

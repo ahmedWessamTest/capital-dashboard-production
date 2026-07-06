@@ -14,6 +14,8 @@ import {
 import { ClaimComment } from '../../../../../../core/services/claims/medical-claim.service';
 import { LoadingDataBannerComponent } from '../../../../../../shared/components/loading-data-banner/loading-data-banner.component';
 import { NoDataFoundBannerComponent } from '../../../../../../shared/components/no-data-found-banner/no-data-found-banner.component';
+import { Subject, interval, of } from 'rxjs';
+import { takeUntil, switchMap, catchError } from 'rxjs/operators';
 
 @Component({
   selector: 'app-all-jop-claims-comments',
@@ -49,7 +51,7 @@ export class AllJopClaimsCommentsComponent implements OnInit, OnDestroy {
   IMAGE_BASE_URL = IMAGE_BASE_URL;
   claimData!: JobClaimResponse;
   claimStatus: string = '';
-  private pollingInterval: any;
+  private destroy$ = new Subject<void>();
 
   ngOnInit() {
     this.claimId = +this.route.snapshot.paramMap.get('id')!;
@@ -133,7 +135,8 @@ export class AllJopClaimsCommentsComponent implements OnInit, OnDestroy {
   }
 
   ngOnDestroy() {
-    this.stopPolling();
+    this.destroy$.next();
+    this.destroy$.complete();
     if (this.selectedFile && this.selectedFile.type.startsWith('image/')) {
       URL.revokeObjectURL(this.getFilePreview(this.selectedFile));
     }
@@ -260,22 +263,23 @@ export class AllJopClaimsCommentsComponent implements OnInit, OnDestroy {
   }
 
   private startPolling() {
-    this.pollingInterval = setInterval(() => {
-      this.claimsService.getClaimComments(this.claimId).subscribe({
+    interval(30000)
+      .pipe(
+        switchMap(() => this.claimsService.getClaimComments(this.claimId).pipe(
+          catchError((error) => {
+            console.error('Error fetching comments:', error);
+            return of(null);
+          })
+        )),
+        takeUntil(this.destroy$)
+      )
+      .subscribe({
         next: (response) => {
-          this.comments = response.data;
-          this.scrollToBottom();
-        },
-        error: (error) => {
-          console.error('Error fetching comments:', error);
-        },
+          if (response) {
+            this.comments = response.data;
+            this.scrollToBottom();
+          }
+        }
       });
-    }, 30000);
-  }
-
-  private stopPolling() {
-    if (this.pollingInterval) {
-      clearInterval(this.pollingInterval);
-    }
   }
 }

@@ -11,7 +11,8 @@ import { LoadingDataBannerComponent } from '../../../../../../shared/components/
 import { NoDataFoundBannerComponent } from '../../../../../../shared/components/no-data-found-banner/no-data-found-banner.component';
 import { IMAGE_BASE_URL } from '../../../../../../core/constants/WEB_SITE_BASE_UTL';
 import { MedicalClaimsService, ClaimComment, MedicalClaimResponse, CreateCommentRequest } from '../../../../../../core/services/claims/medical-claim.service';
-import { Subscription } from 'rxjs';
+import { Subscription, Subject, interval, of } from 'rxjs';
+import { takeUntil, switchMap, catchError } from 'rxjs/operators';
 
 @Component({
   selector: 'app-medical-claim-comments',
@@ -47,7 +48,7 @@ export class AllMedicalClaimsCommentsComponent implements OnInit, OnDestroy {
   IMAGE_BASE_URL = IMAGE_BASE_URL;
   claimData!: MedicalClaimResponse;
   claimStatus: string = '';
-  private pollingInterval: any; // Added for polling
+  private destroy$ = new Subject<void>();
 
   ngOnInit() {
     this.claimId = +this.route.snapshot.paramMap.get('id')!;
@@ -138,7 +139,8 @@ export class AllMedicalClaimsCommentsComponent implements OnInit, OnDestroy {
   }
 
   ngOnDestroy() {
-    this.stopPolling(); // Clean up polling
+    this.destroy$.next();
+    this.destroy$.complete();
     if (this.selectedFile && this.selectedFile.type.startsWith('image/')) {
       URL.revokeObjectURL(this.getFilePreview(this.selectedFile));
     }
@@ -258,24 +260,25 @@ export class AllMedicalClaimsCommentsComponent implements OnInit, OnDestroy {
     }
   }
 
-  // Added polling methods
+  // Added polling methods using RxJS
   private startPolling() {
-    this.pollingInterval = setInterval(() => {
-      this.claimsService.getClaimComments(this.claimId).subscribe({
+    interval(30000)
+      .pipe(
+        switchMap(() => this.claimsService.getClaimComments(this.claimId).pipe(
+          catchError((error) => {
+            console.error('Error fetching comments:', error);
+            return of(null);
+          })
+        )),
+        takeUntil(this.destroy$)
+      )
+      .subscribe({
         next: (response) => {
-          this.comments = (response.data || []).reverse(); // Silent update, maintaining reverse order
-          this.scrollToBottom();
-        },
-        error: (error) => {
-          console.error('Error fetching comments:', error); // Silent error handling
+          if (response) {
+            this.comments = (response.data || []).reverse(); // Silent update, maintaining reverse order
+            this.scrollToBottom();
+          }
         }
       });
-    }, 30000); // 30 seconds
-  }
-
-  private stopPolling() {
-    if (this.pollingInterval) {
-      clearInterval(this.pollingInterval);
-    }
   }
 }

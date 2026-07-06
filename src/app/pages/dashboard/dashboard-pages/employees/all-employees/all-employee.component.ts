@@ -75,6 +75,10 @@ interface FilterOption {
           [showCurrentPageReport]="true" 
           [value]="filteredEmployees" 
           responsiveLayout="scroll"
+          [scrollable]="true"
+          scrollDirection="both"
+          dropdownAppendTo="body"
+          [tableStyle]="{ 'min-width': '70rem' }"
           (onSort)="onSort($event)">
           
           <ng-template pTemplate="header">
@@ -115,16 +119,16 @@ interface FilterOption {
               <th class="text-center">Actions</th>
             </tr>
           </ng-template>
-
+ 
           <ng-template pTemplate="body" let-emp>
             <tr>
-              <td class="text-center">{{ emp.id }}</td>
-              <td class="text-center">{{ emp.name }}</td>
-              <td class="text-center">{{ emp.email }}</td>
-              <!-- <td class="text-center">{{ emp.role }}</td> -->
+              <td class="text-center">{{ emp.id || 'N/A' }}</td>
+              <td class="text-center">{{ emp.name || 'N/A' }}</td>
+              <td class="text-center">{{ emp.email || 'N/A' }}</td>
+              <!-- <td class="text-center">{{ emp.role || 'N/A' }}</td> -->
               <td class="text-center">
                 <p-inputSwitch 
-                  [ngModel]="emp.is_active"
+                  [(ngModel)]="emp.is_active"
                   (onChange)="toggleStatus(emp)">
                 </p-inputSwitch>
               </td>
@@ -239,13 +243,15 @@ export class AllEmployeesComponent {
   private matchesSearch(emp: any): boolean {
     if (!this.searchTerm) return true;
     const searchFields = [
-      emp.id.toString(),
-      emp.name,
-      emp.email || '',
-      emp.role,
+      emp.id ? emp.id.toString() : '',
+      emp.name ? emp.name.toString() : '',
+      emp.email ? emp.email.toString() : '',
+      emp.role ? emp.role.toString() : '',
       emp.is_active ? 'active' : 'deleted',
     ];
-    return searchFields.some((field) => field.toLowerCase().includes(this.searchTerm.toLowerCase()));
+    return searchFields.some((field) => 
+      field && field.toLowerCase().includes(this.searchTerm.toLowerCase())
+    );
   }
 
   onGlobalFilter(event: Event): void {
@@ -260,16 +266,19 @@ export class AllEmployeesComponent {
 
   toggleStatus(emp: any): void {
     this.spinner.show('actionsLoader');
-    const newStatus = emp.is_active ? 1 : 0; // Inverse for API (0 = active, 1 = deleted)
+    // Two-way bound emp.is_active is already true/false matching the new toggled state.
+    // API expects 1 to delete/deactivate, and 0 to activate.
+    const newStatus = emp.is_active ? 0 : 1; 
     const action$ = newStatus ? this.userService.delete(emp.id) : this.userService.activate(emp.id);
     action$.subscribe({
       next: () => {
-        emp.is_active = newStatus ? 0 : 1;
         this.applyFilters();
         this.showSuccess(`Employee ${emp.is_active ? 'activated' : 'deleted'} successfully`);
         this.spinner.hide('actionsLoader');
       },
       error: () => {
+        // Rollback state in case of API failure
+        emp.is_active = !emp.is_active;
         this.showError('Failed to update employee status');
         this.spinner.hide('actionsLoader');
       },
@@ -285,8 +294,7 @@ export class AllEmployeesComponent {
   }
 
   getPagination(): number[] {
-    const dataLength = this.filteredEmployees.length;
-    return [10, 25, 50, 100, dataLength].filter(opt => opt <= dataLength);
+    return [10, 25, 50, 100];
   }
 
   onSort(event: { field: string; order: number }): void {

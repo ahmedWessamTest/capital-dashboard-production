@@ -621,3 +621,11 @@ tr td {
     margin-top: -.4rem !important;
   }
 }
+
+/* Align PrimeNG dropdown search/filter icon vertically on Y-axis */
+.p-dropdown-panel .p-dropdown-header .p-icon-wrapper {
+  position: absolute;
+  right: 0;
+  top: 50% !important;
+  transform: translateY(-50%) !important;
+}
