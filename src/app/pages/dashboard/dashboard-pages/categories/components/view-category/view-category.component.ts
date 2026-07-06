@@ -36,25 +36,19 @@ export class ViewCategoryComponent implements OnInit {
   constructor(
     private route: ActivatedRoute,
     private ngxSpinnerService: NgxSpinnerService
-  ) {}
+  ) { }
 
   ngOnInit(): void {
-    console.log('ViewCategoryComponent initialized');
-    
+
     this.route.data.subscribe({
       next: (data) => {
-        console.log('Route data received:', data);
-        console.log(data)
+
         const categoryData = data['data'];
-        console.log('Category resolver data:', categoryData);
-        
+
         if (categoryData) {
           this.category = categoryData.data || categoryData;
-          console.log('Assigned category:', this.category);
-        } else {
-          console.warn('No category data found in route data');
         }
-        
+
         this.ngxSpinnerService.hide("actionsLoader");
       },
       error: (err) => {

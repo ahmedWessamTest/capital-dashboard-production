@@ -15,9 +15,11 @@ export class ViewMedicalInsurancesComponent {
   medicalInsurance: MedicalInsurance | null = null;
   columns: Column[] = [
     { field: 'id', header: 'Medical Insurance ID ', type: 'text' },
-    { field: 'category_id', header: 'Category Name', type: 'text', displayFn(item) {
-      return item.category?.en_title || "No Category";
-    }},
+    {
+      field: 'category_id', header: 'Category Name', type: 'text', displayFn(item) {
+        return item.category?.en_title || "No Category";
+      }
+    },
     { field: 'en_title', header: 'English Title', type: 'text' },
     { field: 'ar_title', header: 'Arabic Title', type: 'text' },
     { field: 'year_money', header: 'Year Money', type: 'text' },
@@ -25,34 +27,28 @@ export class ViewMedicalInsurancesComponent {
     { field: 'active_status', header: 'Status', type: 'boolean' },
     { field: 'created_at', header: 'Created At', type: 'date' },
 
-    
-    
+
+
   ];
 
   constructor(
     private route: ActivatedRoute,
     private ngxSpinnerService: NgxSpinnerService,
-  ) {}  
+  ) { }
 
   ngOnInit(): void {
-    console.log('ViewMedicalInsurancesComponent initialized');
-    
+
     this.route.data.subscribe({
-      next: ({data}) => {
-        console.log('Route data received:', data);
-        
+      next: ({ data }) => {
+
         // Handle different response structures
         const medicalInsuranceData = data.data;
-        console.log('Medical insurance resolver data:', medicalInsuranceData);
-        
+
         if (medicalInsuranceData) {
           // Check if the response has a 'data' property (API wrapper)
           this.medicalInsurance = medicalInsuranceData;
-          console.log('Assigned medical insurance:', this.medicalInsurance);
-        } else {
-          console.warn('No medical  insurance data found in route data');
         }
-        
+
         // Hide spinner after processing data
         this.ngxSpinnerService.hide("actionsLoader");
       },

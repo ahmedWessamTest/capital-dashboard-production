@@ -25,10 +25,10 @@ export class AllPropertyInsurancesChoicesComponent implements OnInit, OnDestroy 
 
   columns: Column[] = [
     { field: 'id', header: 'ID', sortable: true },
-    { 
-      field: 'category_id', 
-      header: 'Category', 
-      sortable: true, 
+    {
+      field: 'category_id',
+      header: 'Category',
+      sortable: true,
       displayFn(item) {
         return item.category?.en_title || 'No Category';
       }
@@ -44,7 +44,7 @@ export class AllPropertyInsurancesChoicesComponent implements OnInit, OnDestroy 
     private buildingInsuranceChoicesService: BuildingInsuranceChoicesService,
     private normalizeActiveStatusService: NormalizeActiveStatusService,
     private dataRefreshService: DataRefreshService
-  ) {}
+  ) { }
 
   ngOnInit(): void {
     this.buildingInsuranceId = this.route.snapshot.params['id'];
@@ -70,7 +70,6 @@ export class AllPropertyInsurancesChoicesComponent implements OnInit, OnDestroy 
     this.isLoading = true;
     this.ngxSpinnerService.show('actionsLoader');
     this.buildingInsuranceChoicesService.getAll().pipe(
-      tap((response) => console.log('All building insurance choices request initiated', response)),
       map((response) => {
         if (!response?.data) {
           console.warn('No data in response');

@@ -29,18 +29,16 @@ export class ViewAdminstrationsComponent {
     private route: ActivatedRoute,
     private ngxSpinnerService: NgxSpinnerService,
     private normalizeActiveStatusService: NormalizeActiveStatusService
-  ) {}
+  ) { }
 
   ngOnInit(): void {
     this.route.data.subscribe({
       next: (data) => {
-        console.log(data)
         this.adminstration = data['adminstration'].data;
-        
+
         if (this.adminstration) {
           this.adminstration.active_status = this.normalizeActiveStatusService.normalizeActiveStatus(this.adminstration.active_status);
         }
-        console.log("form Adminstrations Page",this.adminstration)
       },
       error: (err) => {
         console.error('Failed to load adminstration', err);

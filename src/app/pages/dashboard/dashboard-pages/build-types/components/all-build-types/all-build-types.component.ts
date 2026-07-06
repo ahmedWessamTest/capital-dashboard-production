@@ -14,7 +14,7 @@ import { GenericTableComponent } from '../../../../../../shared/components/gener
   styleUrl: './all-build-types.component.scss'
 })
 export class AllBuildTypesComponent {
- buildTypes: BuildType[] = []; 
+  buildTypes: BuildType[] = [];
 
   columns: Column[] = [
     { field: 'id', header: 'ID', sortable: true, type: 'text' },
@@ -26,7 +26,7 @@ export class AllBuildTypesComponent {
     private ngxSpinnerService: NgxSpinnerService,
     private route: ActivatedRoute,
     private normalizeActiveStatusService: NormalizeActiveStatusService
-  ) {}
+  ) { }
 
   ngOnInit(): void {
     this.ngxSpinnerService.hide('actionsLoader');
@@ -36,13 +36,10 @@ export class AllBuildTypesComponent {
       next: (data) => {
         this.buildTypes = data['data'].data;
         this.buildTypes.forEach((buildType) => {
-          if(buildType.active_status){
+          if (buildType.active_status) {
             buildType.active_status = this.normalizeActiveStatusService.normalizeActiveStatus(buildType.active_status);
           }
         });
-        console.log( "build types",this.buildTypes)
-        
-        console.log(this.buildTypes)
         this.ngxSpinnerService.hide('actionsLoader');
       },
       error: (err) => {
@@ -50,5 +47,5 @@ export class AllBuildTypesComponent {
         this.ngxSpinnerService.hide('actionsLoader');
       }
     });
-  } 
+  }
 }

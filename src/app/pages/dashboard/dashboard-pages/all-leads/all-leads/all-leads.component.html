@@ -10,27 +10,14 @@
   <div class="mb-3 flex justify-end">
     <span class="p-input-icon-right">
       <i class="pi pi-search"></i>
-      <input
-        #search
-        class="mb-0"
-        type="text"
-        pInputText
-        placeholder="Search leads..."
-        (input)="onGlobalFilter(dt, $event)"
-      />
+      <input #search class="mb-0" type="text" pInputText placeholder="Search leads..."
+        (input)="onGlobalFilter(dt, $event)" />
     </span>
   </div>
 
-  <p-table
-    #dt
-    [paginator]="true"
-    [rows]="rowsPerPage"
-    [totalRecords]="totalRecords"
-    [rowsPerPageOptions]="getPagination()"
-    [showCurrentPageReport]="true"
-    [value]="filteredLeads"
-    responsiveLayout="scroll"
-  >
+  <p-table #dt [paginator]="true" [rows]="rowsPerPage" [totalRecords]="totalRecords"
+    [rowsPerPageOptions]="getPagination()" [showCurrentPageReport]="true" [value]="filteredLeads"
+    responsiveLayout="scroll">
     <ng-template pTemplate="header">
       <tr>
         <th class="text-center" pSortableColumn="name">
@@ -40,53 +27,22 @@
           Phone <p-sortIcon field="phone"></p-sortIcon>
         </th>
         <th class="text-center">
-          <p-dropdown
-              #leadType
-              class="mx-auto max-w-[120px]"
-              styleClass="mx-auto"
-              [options]="leadTypeData"
-              optionLabel="label"
-              optionValue="value"
-              (onChange)="
+          <p-dropdown #leadType class="mx-auto max-w-[120px]" styleClass="mx-auto" [options]="leadTypeData"
+            optionLabel="label" optionValue="value" (onChange)="
                 onFilterLeadTypeChange($event.value); leadType.showClear = true
-              "
-              placeholder="Lead Type"
-              [showClear]="true"
-              [autoZIndex]="true"
-            ></p-dropdown>
+              " placeholder="Lead Type" [showClear]="true" appendTo="body"></p-dropdown>
         </th>
         <th class="text-center">
-          <p-dropdown
-            #DdCategory
-            class="mx-auto max-w-[120px]"
-            styleClass="mx-auto"
-            [options]="categoryData"
-            optionLabel="label"
-            optionValue="value"
-            (onChange)="
+          <p-dropdown #DdCategory class="mx-auto max-w-[120px]" styleClass="mx-auto" [options]="categoryData"
+            optionLabel="label" optionValue="value" (onChange)="
               onFilterCategoryChange($event.value); DdCategory.showClear = true
-            "
-            placeholder="Category"
-            [showClear]="true"
-            [autoZIndex]="true"
-          ></p-dropdown>
+            " placeholder="Category" [showClear]="true" appendTo="body"></p-dropdown>
         </th>
         <th class="text-center">
-          <p-dropdown
-            #DdNeedCall
-            class="mx-auto max-w-[120px]"
-            styleClass="mx-auto"
-            [options]="needCallOptions"
-            optionLabel="label"
-            optionValue="value"
-            (onChange)="
+          <p-dropdown #DdNeedCall class="mx-auto max-w-[120px]" styleClass="mx-auto" [options]="needCallOptions"
+            optionLabel="label" optionValue="value" (onChange)="
               onFilterNeedCallChange($event.value); DdNeedCall.showClear = true
-            "
-            placeholder="Need Call"
-            [showClear]="true"
-            [autoZIndex]="true"
-            [style]="{ width: '120px' }"
-          ></p-dropdown>
+            " placeholder="Need Call" [showClear]="true" appendTo="body" [style]="{ width: '120px' }"></p-dropdown>
         </th>
         <th class="text-center">Category id</th>
         <th class="text-center">Actions</th>
@@ -103,11 +59,7 @@
         <td class="text-center">{{ lead.category_id }}</td>
         <td class="text-center">
           <div class="flex justify-center items-center">
-            <button
-              (click)="viewLead(lead.category_id, lead.id)"
-              pButton
-              icon="pi pi-search"
-            ></button>
+            <button (click)="viewLead(lead.category_id, lead.id)" pButton icon="pi pi-search"></button>
           </div>
         </td>
       </tr>

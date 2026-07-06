@@ -24,24 +24,22 @@ export class MedicalRequestsResolver implements Resolve<MedicalRequestsListRespo
     private categoriesService: CategoriesService,
     private medicalInsurancesService: MedicalInsurancesService,
     private ngxSpinnerService: NgxSpinnerService,
-  ) {}
+  ) { }
 
   resolve(route: ActivatedRouteSnapshot): Observable<MedicalRequestsListResponse | MedicalRequestCombinedResponse> {
     this.ngxSpinnerService.show('actionsLoader');
     const idParam = route.paramMap.get('id');
-const id = idParam ? Number(idParam) : null;
-if (!id) {
-  return this.medicalRequestsService.getAll();
-}
-console.log(id);
-
+    const id = idParam ? Number(idParam) : null;
+    if (!id) {
+      return this.medicalRequestsService.getAll();
+    }
     return this.medicalRequestsService.getById(id).pipe(
       switchMap((medicalRequest: MedicalRequestResponse) => {
         const categoryId = medicalRequest.data.category_id;
         const medicalInsuranceId = medicalRequest?.data.medical_insurance_id;
-        if(!medicalInsuranceId) {
+        if (!medicalInsuranceId) {
           this.ngxSpinnerService.hide("actionsLoader")
-return EMPTY;
+          return EMPTY;
         }
 
         return forkJoin([

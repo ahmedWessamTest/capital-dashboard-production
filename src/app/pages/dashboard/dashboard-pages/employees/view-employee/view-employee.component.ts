@@ -153,25 +153,22 @@ import { Subject, takeUntil } from 'rxjs';
       </div>
     </div>
   `,
-  styles:"",
+  styles: "",
   standalone: true,
   imports: [CommonModule],
- 
+
 })
-export class EmployeeDetailComponent implements OnInit,OnDestroy {
-  employee:any | null = null;
-  constructor(private route: ActivatedRoute) {}
+export class EmployeeDetailComponent implements OnInit, OnDestroy {
+  employee: any | null = null;
+  constructor(private route: ActivatedRoute) { }
   private readonly destroy$ = new Subject<void>()
   ngOnInit(): void {
     this.route.data.pipe(takeUntil(this.destroy$)).subscribe(data => {
-      console.log(data)
       this.employee = data['data'].data;
-      console.log(this.employee)
-      console.log('Resolved employee Data:', this.employee); // For debugging
     });
   }
   ngOnDestroy(): void {
-      this.destroy$.next();
-      this.destroy$.complete();
+    this.destroy$.next();
+    this.destroy$.complete();
   }
 }

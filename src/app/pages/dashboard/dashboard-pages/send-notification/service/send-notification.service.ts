@@ -1,9 +1,8 @@
 import { interval, Observable, switchMap } from 'rxjs';
 import { HttpClient } from '@angular/common/http';
-import { inject, Injectable, PLATFORM_ID, signal } from '@angular/core';
+import { inject, Injectable, signal } from '@angular/core';
 import { WEB_SITE_BASE_URL } from '../../../../../core/constants/WEB_SITE_BASE_UTL';
 import { toFormData } from '../../../../../shared/utils/form-data.util';
-import { isPlatformBrowser } from '@angular/common';
 interface ISendNotification {
   titleMessage: string;
   textMessage: string;
@@ -216,7 +215,6 @@ export interface Request {
 export class SendNotificationService {
   private http = inject(HttpClient);
   hasNewNotify = signal<boolean>(false);
-  private _PLATFORM_ID = inject(PLATFORM_ID)
   adminNotifications = signal<any>([]);
   constructor(){
     this.startPolling()
@@ -281,7 +279,6 @@ getCategoryName(name: number): string {
   }
 }
 private handleNewNotifications(newList: IAdminCommentResponse[]) {
-  if(!isPlatformBrowser(this._PLATFORM_ID)) return;
   const NOTIFY_KEY = 'lastNotificationLength';
   const SEEN_KEY = 'seenNotification';
 

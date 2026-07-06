@@ -5,7 +5,6 @@ import { ActivatedRoute, RouterLink } from '@angular/router';
 import { NgxSpinnerModule, NgxSpinnerService } from 'ngx-spinner';
 import { MessageService } from 'primeng/api';
 import { ToastModule } from 'primeng/toast';
-import { AuthService } from '../../../../../../auth/services/auth.service';
 import { IMAGE_BASE_URL } from '../../../../../../core/constants/WEB_SITE_BASE_UTL';
 import { LoadingDataBannerComponent } from '../../../../../../shared/components/loading-data-banner/loading-data-banner.component';
 import { NoDataFoundBannerComponent } from '../../../../../../shared/components/no-data-found-banner/no-data-found-banner.component';
@@ -37,7 +36,6 @@ export class AllJopCommentsComponent implements OnInit, OnDestroy {
   private commentsService = inject(JobRequestCommentsService);
   private messageService = inject(MessageService);
   private spinnerService = inject(NgxSpinnerService);
-  private authService = inject(AuthService);
 
   comments: JobRequestComment[] = [];
   newComment: string = '';
@@ -57,7 +55,6 @@ export class AllJopCommentsComponent implements OnInit, OnDestroy {
     this.requestId = +this.route.snapshot.paramMap.get('id')!;
     this.loadData();
     let user = JSON.parse(localStorage.getItem('user')!);
-    console.log(user);
     this.currentUserId = user.id || 1;
     this.currentUserRole = user.role || 'admin';
     this.currentUserName = user.name || 'admin name';
@@ -69,27 +66,15 @@ export class AllJopCommentsComponent implements OnInit, OnDestroy {
 
     this.route.data.subscribe({
       next: (data) => {
-        Object.keys(data['data']).forEach((key) => {
-          console.log(key, data['data'][key]);
-        });
         this.comments = data['data'].data;
         this.requestData = data['data'].request;
         this.comments = data['data'].comments;
-        for (let index = 0; index < this.comments.length; index++) {
-          const element = this.comments[index].comment;
-          console.log(element);
-        }
-        console.log(this.comments);
         this.loading = false;
         this.scrollToBottom();
         this.currentUserId = this.requestData.data.user_id || 1;
         this.requestStatus =
           this.requestData.data.active_status.toLowerCase() || 'pending';
-        console.log(
-          this.currentUserId,
-          this.currentUserRole,
-          this.currentUserName
-        );
+
         this.spinnerService.hide('actionsLoader');
       },
       error: () => {

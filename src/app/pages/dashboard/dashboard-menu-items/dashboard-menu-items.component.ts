@@ -8,6 +8,7 @@ import {
 } from '@angular/animations';
 import { CommonModule } from '@angular/common';
 import {
+  ChangeDetectionStrategy,
   Component,
   HostBinding,
   inject,
@@ -25,11 +26,11 @@ import { SidebarModule } from 'primeng/sidebar';
 import { filter, Subscription } from 'rxjs';
 import { DashboardLayoutService } from '../../../core/services/core/dashboard-layout.service';
 import { DashboardMenuService } from '../../../core/services/core/dashboard-menu.service';
-import { OrdersService } from '../../../core/services/g-orders/orders.service';
 
 @Component({
   selector: 'app-dashboard-menu-items',
   standalone: true,
+  changeDetection: ChangeDetectionStrategy.OnPush,
   imports: [
     CommonModule,
     RouterLink,
@@ -39,7 +40,6 @@ import { OrdersService } from '../../../core/services/g-orders/orders.service';
     BadgeModule,
   ],
   templateUrl: './dashboard-menu-items.component.html',
-  styleUrl: './dashboard-menu-items.component.scss',
   animations: [
     trigger('children', [
       state(
@@ -70,11 +70,11 @@ export class DashboardMenuItemsComponent {
 
   @Input() parentKey!: string;
   private sendNotificationService = inject(SendNotificationService);
-  get hasNotify(){
+  get hasNotify() {
     return this.sendNotificationService.hasNewNotify
-  } ;
+  };
 
-  ngOnChanges(changes: SimpleChanges): void {    
+  ngOnChanges(changes: SimpleChanges): void {
     if (this.item.label === 'Dashboard') {
       this.item.routerLinkActiveOptions = {
         exact: true,
@@ -93,7 +93,6 @@ export class DashboardMenuItemsComponent {
 
   key: string = '';
 
-  OrdersService = inject(OrdersService);
 
   constructor(
     public layoutService: DashboardLayoutService,

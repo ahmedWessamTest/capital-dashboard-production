@@ -1,5 +1,4 @@
-import { isPlatformBrowser } from '@angular/common';
-import { Component, ElementRef, Inject, PLATFORM_ID } from '@angular/core';
+import { ChangeDetectionStrategy, Component, ElementRef } from '@angular/core';
 import { Router } from '@angular/router';
 import { ConfirmationService } from 'primeng/api';
 import { ConfirmDialogModule } from 'primeng/confirmdialog';
@@ -11,8 +10,8 @@ import { DashboardMenuItemsComponent } from '../dashboard-menu-items/dashboard-m
   standalone: true,
   imports: [ConfirmDialogModule, DashboardMenuItemsComponent],
   templateUrl: './dashboard-side-bar.component.html',
-  styleUrl: './dashboard-side-bar.component.scss',
   providers: [ConfirmationService],
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class DashboardSideBarComponent {
   model: any[] = [];
@@ -22,17 +21,14 @@ export class DashboardSideBarComponent {
   constructor(
     public layoutService: DashboardLayoutService,
     public el: ElementRef,
-    @Inject(PLATFORM_ID) private _PLATFORM_ID: Object,
     private _Router: Router,
     private _ConfirmationService: ConfirmationService
   ) { }
 
   ngOnInit(): void {
-    if (isPlatformBrowser(this._PLATFORM_ID)) {
-      const user = JSON.parse(localStorage.getItem('user') || '{}');
-      this.userRole = user?.role || '';
-      this.isAdmin = this.userRole === 'admin'; // Assuming 'super-admin' is now 'admin'
-    }
+    const user = JSON.parse(localStorage.getItem('user') || '{}');
+    this.userRole = user?.role || '';
+    this.isAdmin = this.userRole === 'admin'; // Assuming 'super-admin' is now 'admin'
     this.initSideBar();
   }
 

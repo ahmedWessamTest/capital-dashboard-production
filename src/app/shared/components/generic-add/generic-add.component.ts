@@ -325,7 +325,6 @@ export class GenericFormComponent implements OnInit, OnDestroy {
   ];
 
   ngOnInit() {
-    console.log(this.fields);
 
     this.checkForStatusField();
     this.checkForHomeStatusField();
@@ -545,7 +544,6 @@ export class GenericFormComponent implements OnInit, OnDestroy {
           if (this.changeStatus) {
             formData.append(key, formValues[key]);
           } else {
-            console.log(formValues[key] ? '1' : '0');
             (formValues[key] ? '1' : '0')
             formData.append(key, formValues[key] ? '1' : '0');
           }
@@ -571,14 +569,13 @@ export class GenericFormComponent implements OnInit, OnDestroy {
       if (this.isEdit && this.editData?.id) {
         formData.append('id', this.editData.id.toString());
       }
-console.log(this.category);
       if (this.category === 'medical') {
         formData.append('category_id', '1');
       } else if (this.category === 'motor') {
         formData.append('category_id', '2');
       } else if (this.category === 'building') {
         formData.append('category_id', '3');
-      } else if (this.category === 'jop' ) {
+      } else if (this.category === 'jop') {
         formData.append('category_id', '5');
       }
 
@@ -607,7 +604,6 @@ console.log(this.category);
             this.removedImageUrls = [];
             this.initialImageForEdit = [];
             this.dataRefreshService.triggerRefresh();
-            console.log('redirect route', this.redirectRoute);
             this.router.navigateByUrl(this.redirectRoute);
             this.message = { text: '', type: '' };
           }, 2000);
@@ -765,10 +761,8 @@ console.log(this.category);
 
 
   patchFormData() {
-    console.log("edit data:", this.editData);
 
     const patchData = { ...this.editData };
-    console.log('the patch data ', patchData);
     if (this.hasStatusField && 'active_status' in patchData) {
       patchData.active_status = this.normalizeActiveStatus(
         patchData.active_status
@@ -805,7 +799,6 @@ console.log(this.category);
     }
 
     const finalPatchData: any = {};
-    console.log('finalPatchData', patchData);
 
     Object.keys(patchData).forEach((key) => {
       const field = this.fields.find((f) => f.name === key);
@@ -815,7 +808,7 @@ console.log(this.category);
         finalPatchData[key] = normalizedDate;
       } else if (field?.type === 'dropdown' && field.name === 'duration') {
         const durationValue = patchData[key];
-        
+
         finalPatchData[key] = ['1', '2', '3'].includes(String(durationValue))
           ? String(durationValue)
           : '1';
@@ -824,7 +817,6 @@ console.log(this.category);
       }
     });
 
-    console.log('finalPatchData after operation', finalPatchData);
     this.dataForm.patchValue(finalPatchData);
     this.calculateEndDate();
   }

@@ -1,6 +1,4 @@
 import { Component, OnInit } from '@angular/core';
-import { Router } from '@angular/router';
-import { NgxSpinnerService } from 'ngx-spinner';
 import { finalize, map } from 'rxjs';
 import { NormalizeActiveStatusService } from '../../core/normalize-active-status/normalize-active-status.service';
 import { DataRefreshService } from '../../core/services/refresh/data-refresh.service';
@@ -68,7 +66,6 @@ export class AllJopInsuranceComponent implements OnInit {
       .subscribe({
         next: (response) => {
           this.motorInsurances = response.data;
-          console.log(this.motorInsurances);
 
           this.isLoading = false;
         },

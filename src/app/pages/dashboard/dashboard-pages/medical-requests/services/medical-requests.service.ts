@@ -3,7 +3,7 @@ import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { WEB_SITE_BASE_URL } from '../../../../../core/constants/WEB_SITE_BASE_UTL';
 import { Category } from '../../categories/services/categories.service';
-import { BaseEntity, ApiResponse } from '../../../../../shared/service/genereic-table.service';
+import { ApiResponse } from '../../../../../shared/service/genereic-table.service';
 
 export interface User {
   id: number;
@@ -119,8 +119,6 @@ export class MedicalRequestsService {
   }
 
   getById(id: number): Observable<MedicalRequestResponse> {
-    console.log(id);
-    console.log(`${this.baseUrl}${this.endpoint}/${id}`);
     return this.http.get<MedicalRequestResponse>(`${this.baseUrl}${this.endpoint}/${id}`);
   }
 

@@ -100,7 +100,6 @@ export class AllLeadsComponent {
     this.isLoading.set(true);
     this.route.data.subscribe({
       next: (data: any) => {
-        console.log(data);
         this.leads = data.data?.combinedLeads || [];
         this.filteredLeads = [...this.leads];
         this.totalRecords = this.leads.length;

@@ -1,27 +1,7 @@
-/**
- * @file dashboard-layout.service.ts
- * @description Service for managing dashboard layout configuration and state
- *
- * This service handles:
- * - Layout configuration management
- * - Theme and styling preferences
- * - Menu behavior and states
- * - Responsive layout adjustments
- *
- * Features:
- * - Configuration for input styles, themes, and color schemes
- * - Menu mode management (static/overlay)
- * - Profile and config sidebar visibility
- * - Mobile/desktop layout state management
- * - Scale and ripple effect settings
- *
- * @exports AppConfig - Interface for application configuration
- * @exports LayoutState - Interface for layout state management
- * @exports DashboardLayoutService - Service for dashboard layout management
- */
 
-import { DOCUMENT, isPlatformBrowser } from "@angular/common";
-import { effect, Inject, Injectable, PLATFORM_ID, signal } from "@angular/core";
+
+import { DOCUMENT } from "@angular/common";
+import { effect, Inject, Injectable, signal } from "@angular/core";
 import { Subject } from "rxjs";
 export interface AppConfig {
   inputStyle: string;
@@ -44,7 +24,6 @@ interface LayoutState {
   providedIn: "root",
 })
 export class DashboardLayoutService {
-  private isBrowser: boolean;
 
   _config: AppConfig = {
     ripple: false,
@@ -72,8 +51,7 @@ export class DashboardLayoutService {
   configUpdate$ = this.configUpdate.asObservable();
   overlayOpen$ = this.overlayOpen.asObservable();
 
-  constructor(@Inject(DOCUMENT) private document: Document, @Inject(PLATFORM_ID) private platformId: Object) {
-    this.isBrowser = isPlatformBrowser(this.platformId);
+  constructor(@Inject(DOCUMENT) private document: Document) {
 
     effect(() => {
       const config = this.config();
@@ -123,7 +101,7 @@ export class DashboardLayoutService {
   }
 
   isDesktop() {
-    return this.isBrowser && window.innerWidth > 991;
+    return window.innerWidth > 991;
   }
 
   isMobile() {
@@ -136,7 +114,6 @@ export class DashboardLayoutService {
   }
 
   changeTheme() {
-    if (!this.isBrowser) return;
 
     const config = this.config();
     const themeLink = <HTMLLinkElement>this.document.getElementById("theme-css");
@@ -147,8 +124,8 @@ export class DashboardLayoutService {
         el === this._config.theme
           ? (el = config.theme)
           : el === `theme-${this._config.colorScheme}`
-          ? (el = `theme-${config.colorScheme}`)
-          : el
+            ? (el = `theme-${config.colorScheme}`)
+            : el
       )
       .join("/");
 
@@ -156,7 +133,6 @@ export class DashboardLayoutService {
   }
 
   replaceThemeLink(href: string) {
-    if (!this.isBrowser) return;
 
     const id = "theme-css";
     let themeLink = <HTMLLinkElement>this.document.getElementById(id);
@@ -173,8 +149,6 @@ export class DashboardLayoutService {
   }
 
   changeScale(value: number) {
-    if (this.isBrowser) {
-      this.document.documentElement.style.fontSize = `${value}px`;
-    }
+    this.document.documentElement.style.fontSize = `${value}px`;
   }
 }

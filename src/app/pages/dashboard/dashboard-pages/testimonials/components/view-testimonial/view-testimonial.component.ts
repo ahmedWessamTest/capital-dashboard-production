@@ -34,23 +34,17 @@ export class ViewTestimonialComponent implements OnInit {
     private route: ActivatedRoute,
     private ngxSpinnerService: NgxSpinnerService,
     private testimonialsService: TestimonialsService
-  ) {}
+  ) { }
 
   ngOnInit(): void {
-    console.log('ViewTestimonialComponent initialized');
 
     this.route.data.subscribe({
       next: (data) => {
-        console.log('Route data received:', data);
 
         const testimonialData = data['data'];
-        console.log('Testimonial resolver data:', testimonialData);
 
         if (testimonialData) {
           this.testimonial = testimonialData.data || testimonialData;
-          console.log('Assigned testimonial:', this.testimonial);
-        } else {
-          console.warn('No testimonial data found in route data');
         }
 
         this.ngxSpinnerService.hide('actionsLoader');

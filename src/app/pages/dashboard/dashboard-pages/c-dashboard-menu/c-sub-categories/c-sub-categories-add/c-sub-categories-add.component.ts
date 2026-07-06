@@ -76,7 +76,7 @@ export class CSubCategoriesAddComponent {
     if (this.activatedRoute.snapshot.data['categories']) {
       this.categories = (
         this.activatedRoute.snapshot.data['categories'] as IAllCategory
-      ).data.filter((c)=> c.active_status === 1).map((category: any) => ({
+      ).data.filter((c) => c.active_status === 1).map((category: any) => ({
         value: category.id,
         label: category.en_name,
       }));
@@ -122,7 +122,7 @@ export class CSubCategoriesAddComponent {
           },
         });
     } else {
-      this.subCategoryService.addSubCategory(this.submitForm.value.category_id,CategoryData).subscribe({
+      this.subCategoryService.addSubCategory(this.submitForm.value.category_id, CategoryData).subscribe({
         next: (response) => {
           {
             this.router.navigate(['/dashboard/menu/sub-categories']);
@@ -137,7 +137,7 @@ export class CSubCategoriesAddComponent {
           }
         },
         error: (error: HttpErrorResponse) => {
-          console.log(error.error.errors);
+          console.error(error.error.errors);
         },
       });
     }

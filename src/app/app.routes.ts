@@ -1,13 +1,6 @@
 import { MedicalRequestCommentsResolver } from './core/guards/medical-request-comments.resolver';
 import { MedicalRequestsResolver } from './core/guards/medical-requests.resolver';
 import { motorCategoriesInsuranceResolver } from './core/guards/motors-categories-insurance.resolver';
-/**
- * @file app.routes.ts
- * @description Application routing configuration
-
- * @exports routes - Application route configuration
- */
-
 import { Routes } from '@angular/router';
 import { authGuard } from './auth/gurd/auth.guard';
 import { loginGuard } from './auth/gurd/login.guard';
@@ -114,10 +107,7 @@ export const routes: Routes = [
           import('./auth/components/login/login.component').then(
             (c) => c.LoginComponent
           ),
-        data: {
-          title: 'Capital - Login',
-          description: 'User authentication page',
-        },
+        title: 'Capital - Login',
       },
     ],
   },
@@ -140,10 +130,7 @@ export const routes: Routes = [
           import(
             './pages/dashboard/dashboard-pages/dashboard-pages.component'
           ).then((c) => c.DashboardPagesComponent),
-        data: {
-          title: 'Capital Dashboard',
-          description: 'Main dashboard page',
-        },
+        title: 'Capital Dashboard',
         children: [
           // Default redirect to home statistics
           {
@@ -158,10 +145,7 @@ export const routes: Routes = [
           {
             path: 'home-statistics',
             component: HomeStatisticsComponent,
-            data: {
-              title: 'Dashboard Statistics',
-              description: 'Main dashboard statistics page',
-            },
+            title: 'Dashboard Statistics',
           },
 
           // ===============================================
@@ -173,10 +157,7 @@ export const routes: Routes = [
               import(
                 './pages/dashboard/dashboard-pages/c-dashboard-menu/c-dashboard-menu.component'
               ).then((c) => c.CDashboardMenuComponent),
-            data: {
-              title: 'Capital Dashboard Menu',
-              description: 'Main dashboard menu container',
-            },
+            title: 'Capital Dashboard Menu',
             children: [
               // ===============================================
               // CONTENT MANAGEMENT ROUTES
@@ -189,10 +170,7 @@ export const routes: Routes = [
                   import(
                     './pages/dashboard/dashboard-pages/sliders/components/sliders-page/sliders-page.component'
                   ).then((c) => c.SlidersPageComponent),
-                data: {
-                  title: 'Capital ',
-                  description: 'Dashboard Page',
-                },
+                title: 'Capital ',
                 children: [
                   { path: '', redirectTo: 'sliders-index', pathMatch: 'full' },
                   {
@@ -201,10 +179,7 @@ export const routes: Routes = [
                       import(
                         './pages/dashboard/dashboard-pages/sliders/components/all-sliders/all-sliders.component'
                       ).then((c) => c.AllSlidersComponent),
-                    data: {
-                      title: 'Capital ',
-                      description: 'Dashboard Page',
-                    },
+                    title: 'Capital ',
                   },
                   {
                     path: 'view/:id',
@@ -212,10 +187,7 @@ export const routes: Routes = [
                       import(
                         './pages/dashboard/dashboard-pages/sliders/components/view-slider/view-slider.component'
                       ).then((c) => c.ViewSliderComponent),
-                    data: {
-                      title: 'Capital ',
-                      description: 'Dashboard Page',
-                    },
+                    title: 'Capital ',
                     resolve: {
                       data: SlidersResolver,
                     },
@@ -226,10 +198,7 @@ export const routes: Routes = [
                       import(
                         './pages/dashboard/dashboard-pages/sliders/components/add-edit-slider/add-edit-slider.component'
                       ).then((c) => c.AddEditSliderComponent),
-                    data: {
-                      title: 'Capital ',
-                      description: 'Dashboard Page',
-                    },
+                    title: 'Capital ',
                   },
                   {
                     path: 'edit/:id',
@@ -237,10 +206,7 @@ export const routes: Routes = [
                       import(
                         './pages/dashboard/dashboard-pages/sliders/components/add-edit-slider/add-edit-slider.component'
                       ).then((c) => c.AddEditSliderComponent),
-                    data: {
-                      title: 'Capital Website ',
-                      description: 'Dashboard Page',
-                    },
+                    title: 'Capital Website ',
                     resolve: {
                       data: SlidersResolver,
                     },
@@ -255,10 +221,7 @@ export const routes: Routes = [
                   import(
                     './pages/dashboard/dashboard-pages/clients/components/clients-page/clients-page.component'
                   ).then((c) => c.ClientsPageComponent),
-                data: {
-                  title: 'Capital ',
-                  description: 'Dashboard Page',
-                },
+                title: 'Capital ',
                 children: [
                   { path: '', redirectTo: 'clients-index', pathMatch: 'full' },
                   {
@@ -267,10 +230,7 @@ export const routes: Routes = [
                       import(
                         './pages/dashboard/dashboard-pages/clients/components/all-clients/all-clients.component'
                       ).then((c) => c.AllClientsComponent),
-                    data: {
-                      title: 'Capital ',
-                      description: 'Dashboard Page',
-                    },
+                    title: 'Capital ',
                     resolve: {
                       data: ClientsResolver,
                     },
@@ -281,10 +241,7 @@ export const routes: Routes = [
                       import(
                         './pages/dashboard/dashboard-pages/clients/components/view-client/view-client.component'
                       ).then((c) => c.ViewClientComponent),
-                    data: {
-                      title: 'Capital ',
-                      description: 'Dashboard Page',
-                    },
+                    title: 'Capital ',
                     resolve: {
                       data: ClientsResolver,
                     },
@@ -295,10 +252,7 @@ export const routes: Routes = [
                       import(
                         './pages/dashboard/dashboard-pages/clients/components/add-edit-client/add-edit-client.component'
                       ).then((c) => c.AddEditClientComponent),
-                    data: {
-                      title: 'Capital ',
-                      description: 'Dashboard Page',
-                    },
+                    title: 'Capital ',
                   },
                   {
                     path: 'edit/:id',
@@ -306,10 +260,7 @@ export const routes: Routes = [
                       import(
                         './pages/dashboard/dashboard-pages/clients/components/add-edit-client/add-edit-client.component'
                       ).then((c) => c.AddEditClientComponent),
-                    data: {
-                      title: 'Capital Website ',
-                      description: 'Dashboard Page',
-                    },
+                    title: 'Capital Website ',
                     resolve: {
                       data: ClientsResolver,
                     },
@@ -324,10 +275,7 @@ export const routes: Routes = [
                   import(
                     './pages/dashboard/dashboard-pages/testimonials/components/testimonials-page/testimonials-page.component'
                   ).then((c) => c.TestimonialsPageComponent),
-                data: {
-                  title: 'Capital ',
-                  description: 'Dashboard Page',
-                },
+                title: 'Capital ',
                 children: [
                   { path: '', redirectTo: 'clients-index', pathMatch: 'full' },
                   {
@@ -336,10 +284,7 @@ export const routes: Routes = [
                       import(
                         './pages/dashboard/dashboard-pages/testimonials/components/all-testimonials/all-testimonials.component'
                       ).then((c) => c.AllTestimonialsComponent),
-                    data: {
-                      title: 'Capital ',
-                      description: 'Dashboard Page',
-                    },
+                    title: 'Capital ',
                     resolve: {
                       data: TestimonialsResolver,
                     },
@@ -350,10 +295,7 @@ export const routes: Routes = [
                       import(
                         './pages/dashboard/dashboard-pages/testimonials/components/view-testimonial/view-testimonial.component'
                       ).then((c) => c.ViewTestimonialComponent),
-                    data: {
-                      title: 'Capital ',
-                      description: 'Dashboard Page',
-                    },
+                    title: 'Capital ',
                     resolve: {
                       data: TestimonialsResolver,
                     },
@@ -364,10 +306,7 @@ export const routes: Routes = [
                       import(
                         './pages/dashboard/dashboard-pages/testimonials/components/add-edit-testimonial/add-edit-testimonial.component'
                       ).then((c) => c.AddEditTestimonialComponent),
-                    data: {
-                      title: 'Capital ',
-                      description: 'Dashboard Page',
-                    },
+                    title: 'Capital ',
                   },
                   {
                     path: 'edit/:id',
@@ -375,10 +314,7 @@ export const routes: Routes = [
                       import(
                         './pages/dashboard/dashboard-pages/testimonials/components/add-edit-testimonial/add-edit-testimonial.component'
                       ).then((c) => c.AddEditTestimonialComponent),
-                    data: {
-                      title: 'Capital Website ',
-                      description: 'Dashboard Page',
-                    },
+                    title: 'Capital Website ',
                     resolve: {
                       data: TestimonialsResolver,
                     },
@@ -397,10 +333,7 @@ export const routes: Routes = [
                   import(
                     './pages/dashboard/dashboard-pages/arabic-blogs/componets/arabic-blogs-page/arabic-blogs-page.component'
                   ).then((c) => c.ArabicBlogsPageComponent),
-                data: {
-                  title: 'Capital ',
-                  description: 'Dashboard Page',
-                },
+                title: 'Capital ',
                 children: [
                   { path: '', redirectTo: 'ar-blogs-index', pathMatch: 'full' },
                   {
@@ -409,10 +342,7 @@ export const routes: Routes = [
                       import(
                         './pages/dashboard/dashboard-pages/arabic-blogs/componets/all-arabic-blogs/all-arabic-blogs.component'
                       ).then((c) => c.AllArabicBlogsComponent),
-                    data: {
-                      title: 'Capital ',
-                      description: 'Dashboard Page',
-                    },
+                    title: 'Capital ',
                     resolve: {
                       data: ArabicBlogsResolver,
                     },
@@ -426,10 +356,7 @@ export const routes: Routes = [
                     resolve: {
                       data: ArabicBlogsResolver,
                     },
-                    data: {
-                      title: 'Capital ',
-                      description: 'Dashboard Page',
-                    },
+                    title: 'Capital ',
                   },
                   {
                     path: 'add',
@@ -437,10 +364,7 @@ export const routes: Routes = [
                       import(
                         './pages/dashboard/dashboard-pages/arabic-blogs/componets/add-edit-arabic-blogs/add-edit-arabic-blogs.component'
                       ).then((c) => c.AddEditArabicBlogsComponent),
-                    data: {
-                      title: 'Capital ',
-                      description: 'Dashboard Page',
-                    },
+                    title: 'Capital ',
                   },
                   {
                     path: 'edit/:id',
@@ -448,10 +372,7 @@ export const routes: Routes = [
                       import(
                         './pages/dashboard/dashboard-pages/arabic-blogs/componets/add-edit-arabic-blogs/add-edit-arabic-blogs.component'
                       ).then((c) => c.AddEditArabicBlogsComponent),
-                    data: {
-                      title: 'Capital Website ',
-                      description: 'Dashboard Page',
-                    },
+                    title: 'Capital Website ',
                     resolve: {
                       data: ArabicBlogsResolver,
                     },
@@ -510,10 +431,7 @@ export const routes: Routes = [
                   import(
                     './pages/dashboard/dashboard-pages/categories/components/categories-page/categories-page.component'
                   ).then((c) => c.CategoriesPageComponent),
-                data: {
-                  title: 'Capital ',
-                  description: 'Dashboard Page',
-                },
+                title: 'Capital ',
                 children: [
                   {
                     path: '',
@@ -526,10 +444,7 @@ export const routes: Routes = [
                       import(
                         './pages/dashboard/dashboard-pages/categories/components/all-categories/all-categories.component'
                       ).then((c) => c.AllCategoriesComponent),
-                    data: {
-                      title: 'Capital ',
-                      description: 'Dashboard Page',
-                    },
+                    title: 'Capital ',
                     resolve: {
                       data: CategoriesResolver,
                     },
@@ -540,10 +455,7 @@ export const routes: Routes = [
                       import(
                         './pages/dashboard/dashboard-pages/categories/components/view-category/view-category.component'
                       ).then((c) => c.ViewCategoryComponent),
-                    data: {
-                      title: 'Capital ',
-                      description: 'Dashboard Page',
-                    },
+                    title: 'Capital ',
                     resolve: {
                       data: CategoriesResolver,
                     },
@@ -565,10 +477,7 @@ export const routes: Routes = [
                       import(
                         './pages/dashboard/dashboard-pages/categories/components/add-edit-category/add-edit-category.component'
                       ).then((c) => c.AddEditCategoryComponent),
-                    data: {
-                      title: 'Capital Website ',
-                      description: 'Dashboard Page',
-                    },
+                    title: 'Capital Website ',
                     resolve: {
                       data: CategoriesResolver,
                     },
@@ -587,10 +496,7 @@ export const routes: Routes = [
                   import(
                     './pages/dashboard/dashboard-pages/parteners/components/parteners-page/parteners-page.component'
                   ).then((c) => c.PartenersPageComponent),
-                data: {
-                  title: 'Capital ',
-                  description: 'Dashboard Page',
-                },
+                title: 'Capital ',
                 children: [
                   { path: '', redirectTo: 'partners-index', pathMatch: 'full' },
                   {
@@ -599,10 +505,7 @@ export const routes: Routes = [
                       import(
                         './pages/dashboard/dashboard-pages/parteners/components/all-partenerss/all-partenerss.component'
                       ).then((c) => c.AllPartenerssComponent),
-                    data: {
-                      title: 'Capital ',
-                      description: 'Dashboard Page',
-                    },
+                    title: 'Capital ',
                     resolve: {
                       data: PartnersResolver,
                     },
@@ -613,10 +516,7 @@ export const routes: Routes = [
                       import(
                         './pages/dashboard/dashboard-pages/parteners/components/view-parteners/view-parteners.component'
                       ).then((c) => c.ViewPartenersComponent),
-                    data: {
-                      title: 'Capital ',
-                      description: 'Dashboard Page',
-                    },
+                    title: 'Capital ',
                     resolve: {
                       data: PartnersResolver,
                     },
@@ -627,10 +527,7 @@ export const routes: Routes = [
                       import(
                         './pages/dashboard/dashboard-pages/parteners/components/add-edit-parteners/add-edit-parteners.component'
                       ).then((c) => c.AddEditPartnersComponent),
-                    data: {
-                      title: 'Capital ',
-                      description: 'Dashboard Page',
-                    },
+                    title: 'Capital ',
                   },
                   {
                     path: 'edit/:id',
@@ -638,10 +535,7 @@ export const routes: Routes = [
                       import(
                         './pages/dashboard/dashboard-pages/parteners/components/add-edit-parteners/add-edit-parteners.component'
                       ).then((c) => c.AddEditPartnersComponent),
-                    data: {
-                      title: 'Capital Website ',
-                      description: 'Dashboard Page',
-                    },
+                    title: 'Capital Website ',
                     resolve: {
                       data: PartnersResolver,
                     },
@@ -656,10 +550,7 @@ export const routes: Routes = [
                   import(
                     './pages/dashboard/dashboard-pages/counters/components/counters-page/counters-page.component'
                   ).then((c) => c.CountersPageComponent),
-                data: {
-                  title: 'Capital ',
-                  description: 'Dashboard Page',
-                },
+                title: 'Capital ',
                 children: [
                   { path: '', redirectTo: 'counters-index', pathMatch: 'full' },
                   {
@@ -671,10 +562,7 @@ export const routes: Routes = [
                       import(
                         './pages/dashboard/dashboard-pages/counters/components/all-counters/all-counters.component'
                       ).then((c) => c.AllCountersComponent),
-                    data: {
-                      title: 'Capital ',
-                      description: 'Dashboard Page',
-                    },
+                    title: 'Capital ',
                   },
                   {
                     path: 'view-counter/:id',
@@ -685,10 +573,7 @@ export const routes: Routes = [
                       import(
                         './pages/dashboard/dashboard-pages/counters/components/view-counters/view-counters.component'
                       ).then((c) => c.ViewCountersComponent),
-                    data: {
-                      title: 'Capital ',
-                      description: 'Dashboard Page',
-                    },
+                    title: 'Capital ',
                   },
                   {
                     path: 'add-counter',
@@ -696,10 +581,7 @@ export const routes: Routes = [
                       import(
                         './pages/dashboard/dashboard-pages/counters/components/add-edit-counters/add-edit-counters.component'
                       ).then((c) => c.AddEditCountersComponent),
-                    data: {
-                      title: 'Capital ',
-                      description: 'Dashboard Page',
-                    },
+                    title: 'Capital ',
                   },
                   {
                     path: 'edit-counter/:id',
@@ -710,10 +592,7 @@ export const routes: Routes = [
                       import(
                         './pages/dashboard/dashboard-pages/counters/components/add-edit-counters/add-edit-counters.component'
                       ).then((c) => c.AddEditCountersComponent),
-                    data: {
-                      title: 'Capital Website ',
-                      description: 'Dashboard Page',
-                    },
+                    title: 'Capital Website ',
                   },
                 ],
               },
@@ -725,10 +604,7 @@ export const routes: Routes = [
                   import(
                     './pages/dashboard/dashboard-pages/features/components/features-page/features-page.component'
                   ).then((c) => c.FeaturesPageComponent),
-                data: {
-                  title: 'Capital ',
-                  description: 'Dashboard Page',
-                },
+                title: 'Capital ',
                 children: [
                   { path: '', redirectTo: 'features-index', pathMatch: 'full' },
                   {
@@ -740,10 +616,7 @@ export const routes: Routes = [
                       import(
                         './pages/dashboard/dashboard-pages/features/components/all-features/all-features.component'
                       ).then((c) => c.AllFeaturesComponent),
-                    data: {
-                      title: 'Capital ',
-                      description: 'Dashboard Page',
-                    },
+                    title: 'Capital ',
                   },
                   {
                     path: 'view-feature/:id',
@@ -754,10 +627,7 @@ export const routes: Routes = [
                       import(
                         './pages/dashboard/dashboard-pages/features/components/view-features/view-features.component'
                       ).then((c) => c.ViewFeaturesComponent),
-                    data: {
-                      title: 'Capital ',
-                      description: 'Dashboard Page',
-                    },
+                    title: 'Capital ',
                   },
                   {
                     path: 'add-feature',
@@ -765,10 +635,7 @@ export const routes: Routes = [
                       import(
                         './pages/dashboard/dashboard-pages/features/components/add-edit-features/add-edit-features.component'
                       ).then((c) => c.AddEditFeaturesComponent),
-                    data: {
-                      title: 'Capital ',
-                      description: 'Dashboard Page',
-                    },
+                    title: 'Capital ',
                   },
                   {
                     path: 'edit-feature/:id',
@@ -779,10 +646,7 @@ export const routes: Routes = [
                       import(
                         './pages/dashboard/dashboard-pages/features/components/add-edit-features/add-edit-features.component'
                       ).then((c) => c.AddEditFeaturesComponent),
-                    data: {
-                      title: 'Capital Website ',
-                      description: 'Dashboard Page',
-                    },
+                    title: 'Capital Website ',
                   },
                 ],
               },
@@ -798,10 +662,7 @@ export const routes: Routes = [
                   import(
                     './pages/dashboard/dashboard-pages/social-links/social-links/social-links.component'
                   ).then((c) => c.SocialLinksComponent),
-                data: {
-                  title: 'Capital ',
-                  description: 'Dashboard Page',
-                },
+                title: 'Capital ',
               },
               // --- Send notifications ---
               {
@@ -810,10 +671,7 @@ export const routes: Routes = [
                   import(
                     './pages/dashboard/dashboard-pages/send-notification/send-notification/send-notification.component'
                   ).then((c) => c.SendNotificationComponent),
-                data: {
-                  title: 'Capital',
-                  description: 'Dashboard Page',
-                },
+                title: 'Capital',
               },
               // --- expire notifications
               {
@@ -822,10 +680,7 @@ export const routes: Routes = [
                   import(
                     './pages/dashboard/dashboard-pages/expire-notification/expire-notification/expire-notification.component'
                   ).then((c) => c.ExpireNotificationComponent),
-                data: {
-                  title: 'Capital',
-                  description: 'Dashboard Page',
-                },
+                title: 'Capital',
               },
               // --- admin notifications
               {
@@ -834,10 +689,7 @@ export const routes: Routes = [
                   import(
                     './pages/dashboard/dashboard-pages/admin-notifications/admin-notifications/admin-notifications.component'
                   ).then((c) => c.AdminNotificationsComponent),
-                data: {
-                  title: 'Capital',
-                  description: 'Dashboard Page',
-                },
+                title: 'Capital',
               },
               // --- ADMINISTRATION MANAGEMENT ---
               {
@@ -846,10 +698,7 @@ export const routes: Routes = [
                   import(
                     './pages/dashboard/dashboard-pages/adminstrations/components/adminstrations-page/adminstrations-page.component'
                   ).then((c) => c.AdminstrationsPageComponent),
-                data: {
-                  title: 'Capital ',
-                  description: 'Dashboard Page',
-                },
+                title: 'Capital ',
                 children: [
                   {
                     path: '',
@@ -865,10 +714,7 @@ export const routes: Routes = [
                       import(
                         './pages/dashboard/dashboard-pages/adminstrations/components/all-adminstrations/all-adminstrations.component'
                       ).then((c) => c.AllAdminstrationsComponent),
-                    data: {
-                      title: 'Capital ',
-                      description: 'Dashboard Page',
-                    },
+                    title: 'Capital ',
                   },
                   {
                     path: 'view-adminstration/:id',
@@ -879,10 +725,7 @@ export const routes: Routes = [
                       import(
                         './pages/dashboard/dashboard-pages/adminstrations/components/view-adminstrations/view-adminstrations.component'
                       ).then((c) => c.ViewAdminstrationsComponent),
-                    data: {
-                      title: 'Capital ',
-                      description: 'Dashboard Page',
-                    },
+                    title: 'Capital ',
                   },
                   {
                     path: 'add',
@@ -890,10 +733,7 @@ export const routes: Routes = [
                       import(
                         './pages/dashboard/dashboard-pages/adminstrations/components/add-edit-adminstrations/add-edit-adminstrations.component'
                       ).then((c) => c.AddEditAdminstrationsComponent),
-                    data: {
-                      title: 'Capital ',
-                      description: 'Dashboard Page',
-                    },
+                    title: 'Capital ',
                   },
                   {
                     path: 'edit/:id',
@@ -904,10 +744,7 @@ export const routes: Routes = [
                       import(
                         './pages/dashboard/dashboard-pages/adminstrations/components/add-edit-adminstrations/add-edit-adminstrations.component'
                       ).then((c) => c.AddEditAdminstrationsComponent),
-                    data: {
-                      title: 'Capital Website ',
-                      description: 'Dashboard Page',
-                    },
+                    title: 'Capital Website ',
                   },
                 ],
               },
@@ -919,10 +756,7 @@ export const routes: Routes = [
                   import(
                     './pages/dashboard/dashboard-pages/contact-form/components/contact-form-page/contact-form-page.component'
                   ).then((c) => c.ContactFormPageComponent),
-                data: {
-                  title: 'Capital ',
-                  description: 'Dashboard Page',
-                },
+                title: 'Capital ',
                 children: [
                   {
                     path: '',
@@ -938,10 +772,7 @@ export const routes: Routes = [
                       import(
                         './pages/dashboard/dashboard-pages/contact-form/components/all-contact-form/all-contact-form.component'
                       ).then((c) => c.AllContactFormComponent),
-                    data: {
-                      title: 'Capital ',
-                      description: 'Dashboard Page',
-                    },
+                    title: 'Capital ',
                   },
                   {
                     path: 'view-contact-form/:id',
@@ -952,10 +783,7 @@ export const routes: Routes = [
                       import(
                         './pages/dashboard/dashboard-pages/contact-form/components/view-contact-form/view-contact-form.component'
                       ).then((c) => c.ViewContactFormComponent),
-                    data: {
-                      title: 'Capital ',
-                      description: 'Dashboard Page',
-                    },
+                    title: 'Capital ',
                   },
                 ],
               },
@@ -972,10 +800,7 @@ export const routes: Routes = [
                   import(
                     './pages/dashboard/dashboard-pages/build-types/components/build-types-page/build-types-page.component'
                   ).then((c) => c.BuildTypesPageComponent),
-                data: {
-                  title: 'Capital ',
-                  description: 'Dashboard Page',
-                },
+                title: 'Capital ',
                 children: [
                   {
                     path: '',
@@ -991,10 +816,7 @@ export const routes: Routes = [
                       import(
                         './pages/dashboard/dashboard-pages/build-types/components/all-build-types/all-build-types.component'
                       ).then((c) => c.AllBuildTypesComponent),
-                    data: {
-                      title: 'Capital ',
-                      description: 'Dashboard Page',
-                    },
+                    title: 'Capital ',
                   },
                   {
                     path: 'view/:id',
@@ -1005,10 +827,7 @@ export const routes: Routes = [
                       import(
                         './pages/dashboard/dashboard-pages/build-types/components/view-build-types/view-build-types.component'
                       ).then((c) => c.ViewBuildTypesComponent),
-                    data: {
-                      title: 'Capital ',
-                      description: 'Dashboard Page',
-                    },
+                    title: 'Capital ',
                   },
                   {
                     path: 'add',
@@ -1016,10 +835,7 @@ export const routes: Routes = [
                       import(
                         './pages/dashboard/dashboard-pages/build-types/components/add-edit-build-types/add-edit-build-types.component'
                       ).then((c) => c.AddEditBuildTypesComponent),
-                    data: {
-                      title: 'Capital ',
-                      description: 'Dashboard Page',
-                    },
+                    title: 'Capital ',
                   },
                   {
                     path: 'edit/:id',
@@ -1027,10 +843,7 @@ export const routes: Routes = [
                       import(
                         './pages/dashboard/dashboard-pages/build-types/components/add-edit-build-types/add-edit-build-types.component'
                       ).then((c) => c.AddEditBuildTypesComponent),
-                    data: {
-                      title: 'Capital ',
-                      description: 'Dashboard Page',
-                    },
+                    title: 'Capital ',
                     resolve: {
                       data: buildTypesResolver,
                     },
@@ -1045,10 +858,7 @@ export const routes: Routes = [
                   import(
                     './pages/dashboard/dashboard-pages/build-countries/components/build-countries-page/build-countries-page.component'
                   ).then((c) => c.BuildCountriesPageComponent),
-                data: {
-                  title: 'Capital ',
-                  description: 'Dashboard Page',
-                },
+                title: 'Capital ',
                 children: [
                   {
                     path: '',
@@ -1064,10 +874,7 @@ export const routes: Routes = [
                       import(
                         './pages/dashboard/dashboard-pages/build-countries/components/all-build-countries/all-build-countries.component'
                       ).then((c) => c.AllBuildCountriesComponent),
-                    data: {
-                      title: 'Capital ',
-                      description: 'Dashboard Page',
-                    },
+                    title: 'Capital ',
                   },
                   {
                     path: 'view/:id',
@@ -1078,10 +885,7 @@ export const routes: Routes = [
                       import(
                         './pages/dashboard/dashboard-pages/build-countries/components/view-build-countries/view-build-countries.component'
                       ).then((c) => c.ViewBuildCountriesComponent),
-                    data: {
-                      title: 'Capital ',
-                      description: 'Dashboard Page',
-                    },
+                    title: 'Capital ',
                   },
                   {
                     path: 'edit/:id',
@@ -1092,10 +896,7 @@ export const routes: Routes = [
                       import(
                         './pages/dashboard/dashboard-pages/build-countries/components/add-edit-build-countries/add-edit-build-countries.component'
                       ).then((c) => c.AddEditBuildCountriesComponent),
-                    data: {
-                      title: 'Capital ',
-                      description: 'Dashboard Page',
-                    },
+                    title: 'Capital ',
                   },
                   {
                     path: 'add',
@@ -1106,10 +907,7 @@ export const routes: Routes = [
                       import(
                         './pages/dashboard/dashboard-pages/build-countries/components/add-edit-build-countries/add-edit-build-countries.component'
                       ).then((c) => c.AddEditBuildCountriesComponent),
-                    data: {
-                      title: 'Capital ',
-                      description: 'Dashboard Page',
-                    },
+                    title: 'Capital ',
                   },
                 ],
               },
@@ -1122,10 +920,7 @@ export const routes: Routes = [
                   import(
                     './pages/dashboard/dashboard-pages/car-types/components/car-types-page/car-types-page.component'
                   ).then((c) => c.CarTypesPageComponent),
-                data: {
-                  title: 'Capital ',
-                  description: 'Dashboard Page',
-                },
+                title: 'Capital ',
                 children: [
                   {
                     path: '',
@@ -1141,10 +936,7 @@ export const routes: Routes = [
                       import(
                         './pages/dashboard/dashboard-pages/car-types/components/all-car-types/all-car-types.component'
                       ).then((c) => c.AllCarTypesComponent),
-                    data: {
-                      title: 'Capital ',
-                      description: 'Dashboard Page',
-                    },
+                    title: 'Capital ',
                   },
                   {
                     path: 'view/:id',
@@ -1155,10 +947,7 @@ export const routes: Routes = [
                       import(
                         './pages/dashboard/dashboard-pages/car-types/components/view-car-types/view-car-types.component'
                       ).then((c) => c.ViewCarTypesComponent),
-                    data: {
-                      title: 'Capital ',
-                      description: 'Dashboard Page',
-                    },
+                    title: 'Capital ',
                   },
                   {
                     path: 'add',
@@ -1166,10 +955,7 @@ export const routes: Routes = [
                       import(
                         './pages/dashboard/dashboard-pages/car-types/components/add-edit-car-types/add-edit-car-types.component'
                       ).then((c) => c.AddEditCarTypesComponent),
-                    data: {
-                      title: 'Capital ',
-                      description: 'Dashboard Page',
-                    },
+                    title: 'Capital ',
                   },
                   {
                     path: 'edit/:id',
@@ -1177,10 +963,7 @@ export const routes: Routes = [
                       import(
                         './pages/dashboard/dashboard-pages/car-types/components/add-edit-car-types/add-edit-car-types.component'
                       ).then((c) => c.AddEditCarTypesComponent),
-                    data: {
-                      title: 'Capital ',
-                      description: 'Dashboard Page',
-                    },
+                    title: 'Capital ',
                     resolve: {
                       data: carTypesResolver,
                     },
@@ -1193,10 +976,7 @@ export const routes: Routes = [
                   import(
                     './pages/dashboard/dashboard-pages/car-years/components/car-years-page/car-years-page.component'
                   ).then((c) => c.CarYearsPageComponent),
-                data: {
-                  title: 'Capital ',
-                  description: 'Dashboard Page',
-                },
+                title: 'Capital ',
                 children: [
                   {
                     path: '',
@@ -1212,10 +992,7 @@ export const routes: Routes = [
                       import(
                         './pages/dashboard/dashboard-pages/car-years/components/all-car-years/all-car-years.component'
                       ).then((c) => c.AllCarYearsComponent),
-                    data: {
-                      title: 'Capital ',
-                      description: 'Dashboard Page',
-                    },
+                    title: 'Capital ',
                   },
                   {
                     path: 'view/:id',
@@ -1226,10 +1003,7 @@ export const routes: Routes = [
                       import(
                         './pages/dashboard/dashboard-pages/car-years/components/view-car-years/view-car-years.component'
                       ).then((c) => c.ViewCarYearsComponent),
-                    data: {
-                      title: 'Capital ',
-                      description: 'Dashboard Page',
-                    },
+                    title: 'Capital ',
                   },
                   {
                     path: 'edit/:id',
@@ -1240,10 +1014,7 @@ export const routes: Routes = [
                       import(
                         './pages/dashboard/dashboard-pages/car-years/components/edit-year/edit-year.component'
                       ).then((c) => c.EditYearComponent),
-                    data: {
-                      title: 'Capital ',
-                      description: 'Dashboard Page',
-                    },
+                    title: 'Capital ',
                   },
                   {
                     path: 'add',
@@ -1254,10 +1025,7 @@ export const routes: Routes = [
                       import(
                         './pages/dashboard/dashboard-pages/car-years/components/add-year/add-year.component'
                       ).then((c) => c.AddYearComponent),
-                    data: {
-                      title: 'Capital ',
-                      description: 'Dashboard Page',
-                    },
+                    title: 'Capital ',
                   },
                 ],
               },
@@ -1267,10 +1035,7 @@ export const routes: Routes = [
                   import(
                     './pages/dashboard/dashboard-pages/car-model/components/car-model-page/car-model-page.component'
                   ).then((c) => c.CarModelPageComponent),
-                data: {
-                  title: 'Capital ',
-                  description: 'Dashboard Page',
-                },
+                title: 'Capital ',
                 children: [
                   {
                     path: '',
@@ -1286,10 +1051,7 @@ export const routes: Routes = [
                       import(
                         './pages/dashboard/dashboard-pages/car-model/components/all-car-model/all-car-model.component'
                       ).then((c) => c.AllCarModelComponent),
-                    data: {
-                      title: 'Capital ',
-                      description: 'Dashboard Page',
-                    },
+                    title: 'Capital ',
                   },
                   {
                     path: 'view-car-model/:id',
@@ -1300,10 +1062,7 @@ export const routes: Routes = [
                       import(
                         './pages/dashboard/dashboard-pages/car-model/components/view-car-model/view-car-model.component'
                       ).then((c) => c.ViewCarModelComponent),
-                    data: {
-                      title: 'Capital ',
-                      description: 'Dashboard Page',
-                    },
+                    title: 'Capital ',
                   },
                   {
                     path: 'edit/:id',
@@ -1314,10 +1073,7 @@ export const routes: Routes = [
                       import(
                         './pages/dashboard/dashboard-pages/car-model/components/add-edit-car-model/add-edit-car-model.component'
                       ).then((c) => c.AddEditCarModelsComponent),
-                    data: {
-                      title: 'Capital ',
-                      description: 'Dashboard Page',
-                    },
+                    title: 'Capital ',
                   },
                   {
                     path: 'add',
@@ -1328,10 +1084,7 @@ export const routes: Routes = [
                       import(
                         './pages/dashboard/dashboard-pages/car-model/components/add-edit-car-model/add-edit-car-model.component'
                       ).then((c) => c.AddEditCarModelsComponent),
-                    data: {
-                      title: 'Capital ',
-                      description: 'Dashboard Page',
-                    },
+                    title: 'Capital ',
                   },
                 ],
               },
@@ -1341,10 +1094,7 @@ export const routes: Routes = [
                   import(
                     './pages/dashboard/dashboard-pages/car-brands/components/car-brands-page/car-brands-page.component'
                   ).then((c) => c.CarBrandsPageComponent),
-                data: {
-                  title: 'Capital ',
-                  description: 'Dashboard Page',
-                },
+                title: 'Capital ',
                 children: [
                   {
                     path: '',
@@ -1360,10 +1110,7 @@ export const routes: Routes = [
                       import(
                         './pages/dashboard/dashboard-pages/car-brands/components/all-car-brands/all-car-brands.component'
                       ).then((c) => c.AllCarBrandsComponent),
-                    data: {
-                      title: 'Capital ',
-                      description: 'Dashboard Page',
-                    },
+                    title: 'Capital ',
                   },
                   {
                     path: 'view-car-brand/:id',
@@ -1374,10 +1121,7 @@ export const routes: Routes = [
                       import(
                         './pages/dashboard/dashboard-pages/car-brands/components/view-car-brands/view-car-brands.component'
                       ).then((c) => c.ViewCarBrandsComponent),
-                    data: {
-                      title: 'Capital ',
-                      description: 'Dashboard Page',
-                    },
+                    title: 'Capital ',
                   },
                   {
                     path: 'edit/:id',
@@ -1388,10 +1132,7 @@ export const routes: Routes = [
                       import(
                         './pages/dashboard/dashboard-pages/car-brands/components/edit-brand/edit-brand.component'
                       ).then((c) => c.EditCarBrandComponent),
-                    data: {
-                      title: 'Capital ',
-                      description: 'Dashboard Page',
-                    },
+                    title: 'Capital ',
                   },
                   {
                     path: 'add',
@@ -1402,10 +1143,7 @@ export const routes: Routes = [
                       import(
                         './pages/dashboard/dashboard-pages/car-brands/components/add-brand/add-brand.component'
                       ).then((c) => c.AddCarBrandComponent),
-                    data: {
-                      title: 'Capital ',
-                      description: 'Dashboard Page',
-                    },
+                    title: 'Capital ',
                   },
                 ],
               },
@@ -1518,10 +1256,7 @@ export const routes: Routes = [
                     path: '',
                     component: AllMotorInsuranceComponent,
                     pathMatch: 'full',
-                    data: {
-                      title: 'Capital',
-                      description: 'Dashboard Page',
-                    },
+                    title: 'Capital',
                   },
 
                   {
@@ -1656,10 +1391,7 @@ export const routes: Routes = [
                   import(
                     './pages/dashboard/dashboard-pages/medical-request-comment/components/medical-request-comment-page/medical-request-comment-page.component'
                   ).then((c) => c.MedicalRequestCommentPageComponent),
-                data: {
-                  title: 'Capital ',
-                  description: 'Dashboard Page',
-                },
+                title: 'Capital ',
                 children: [
                   {
                     path: '',
@@ -1675,10 +1407,7 @@ export const routes: Routes = [
                       import(
                         './pages/dashboard/dashboard-pages/medical-request-comment/components/all-medical-request-comment/all-medical-request-comment.component'
                       ).then((c) => c.AllMedicalRequestCommentComponent),
-                    data: {
-                      title: 'Capital ',
-                      description: 'Dashboard Page',
-                    },
+                    title: 'Capital ',
                   },
                   {
                     path: 'view-medical-request-comment/:id',
@@ -1689,10 +1418,7 @@ export const routes: Routes = [
                       import(
                         './pages/dashboard/dashboard-pages/medical-request-comment/components/view-medical-request-comment/view-medical-request-comment.component'
                       ).then((c) => c.ViewMedicalRequestCommentComponent),
-                    data: {
-                      title: 'Capital ',
-                      description: 'Dashboard Page',
-                    },
+                    title: 'Capital ',
                   },
                 ],
               },
@@ -1704,10 +1430,7 @@ export const routes: Routes = [
                   import(
                     './pages/dashboard/dashboard-pages/medical-requests/components/medical-requests-page/medical-requests-page.component'
                   ).then((c) => c.MedicalRequestsPageComponent),
-                data: {
-                  title: 'Capital ',
-                  description: 'Dashboard Page',
-                },
+                title: 'Capital ',
                 children: [
                   {
                     path: '',
@@ -1723,10 +1446,7 @@ export const routes: Routes = [
                       import(
                         './pages/dashboard/dashboard-pages/medical-requests/components/all-medical-requests/all-medical-requests.component'
                       ).then((c) => c.AllMedicalRequestsComponent),
-                    data: {
-                      title: 'Capital ',
-                      description: 'Dashboard Page',
-                    },
+                    title: 'Capital ',
                   },
                   {
                     path: 'edit/:id',
@@ -1737,10 +1457,7 @@ export const routes: Routes = [
                       import(
                         './pages/dashboard/dashboard-pages/medical-requests/components/add-edit-medical-requests/add-edit-medical-requests.component'
                       ).then((c) => c.AddEditMedicalRequestsComponent),
-                    data: {
-                      title: 'Capital ',
-                      description: 'Dashboard Page',
-                    },
+                    title: 'Capital ',
                   },
                   {
                     path: 'view-medical-request/:id',
@@ -1751,10 +1468,7 @@ export const routes: Routes = [
                       import(
                         './pages/dashboard/dashboard-pages/medical-requests/components/view-medical-requests/view-medical-requests.component'
                       ).then((c) => c.ViewMedicalRequestsComponent),
-                    data: {
-                      title: 'Capital ',
-                      description: 'Dashboard Page',
-                    },
+                    title: 'Capital ',
                   },
                 ],
               },
@@ -1765,10 +1479,7 @@ export const routes: Routes = [
                   import(
                     './pages/dashboard/dashboard-pages/motors-requests/components/motors-requests-page/motors-requests-page.component'
                   ).then((c) => c.MotorsRequestsPageComponent),
-                data: {
-                  title: 'Capital ',
-                  description: 'Dashboard Page',
-                },
+                title: 'Capital ',
                 children: [
                   {
                     path: '',
@@ -1784,10 +1495,7 @@ export const routes: Routes = [
                       import(
                         './pages/dashboard/dashboard-pages/motors-requests/components/all-motors-requests/all-motors-requests.component'
                       ).then((c) => c.AllMotorsRequestsComponent),
-                    data: {
-                      title: 'Capital ',
-                      description: 'Dashboard Page',
-                    },
+                    title: 'Capital ',
                   },
                   {
                     path: 'edit/:id',
@@ -1798,10 +1506,7 @@ export const routes: Routes = [
                       import(
                         './pages/dashboard/dashboard-pages/motors-requests/components/add-edit-motors-requests/add-edit-motors-requests.component'
                       ).then((c) => c.AddEditMotorsRequestsComponent),
-                    data: {
-                      title: 'Capital ',
-                      description: 'Dashboard Page',
-                    },
+                    title: 'Capital ',
                   },
                   {
                     path: 'view-motor-request/:id',
@@ -1812,10 +1517,7 @@ export const routes: Routes = [
                       import(
                         './pages/dashboard/dashboard-pages/motors-requests/components/view-motors-requests/view-motors-requests.component'
                       ).then((c) => c.ViewMotorsRequestsComponent),
-                    data: {
-                      title: 'Capital ',
-                      description: 'Dashboard Page',
-                    },
+                    title: 'Capital ',
                   },
                 ],
               },
@@ -1826,10 +1528,7 @@ export const routes: Routes = [
                   import(
                     './pages/dashboard/dashboard-pages/motors-comments/components/motors-comments-page/motors-comments-page.component'
                   ).then((c) => c.MotorsCommentsPageComponent),
-                data: {
-                  title: 'Capital ',
-                  description: 'Dashboard Page',
-                },
+                title: 'Capital ',
                 children: [
                   {
                     path: 'comments/:id',
@@ -1840,10 +1539,7 @@ export const routes: Routes = [
                       import(
                         './pages/dashboard/dashboard-pages/motors-comments/components/all-motors-comments/all-motors-comments.component'
                       ).then((c) => c.AllMotorsCommentsComponent),
-                    data: {
-                      title: 'Capital ',
-                      description: 'Dashboard Page',
-                    },
+                    title: 'Capital ',
                   },
                 ],
               },
@@ -1854,10 +1550,7 @@ export const routes: Routes = [
                   import(
                     './pages/dashboard/dashboard-pages/property-requests/components/property-requests-page/property-requests-page.component'
                   ).then((c) => c.PropertyRequestsPageComponent),
-                data: {
-                  title: 'Capital ',
-                  description: 'Dashboard Page',
-                },
+                title: 'Capital ',
                 children: [
                   {
                     path: '',
@@ -1873,10 +1566,7 @@ export const routes: Routes = [
                       import(
                         './pages/dashboard/dashboard-pages/property-requests/components/all-property-requests/all-property-requests.component'
                       ).then((c) => c.AllPropertyRequestsComponent),
-                    data: {
-                      title: 'Capital ',
-                      description: 'Dashboard Page',
-                    },
+                    title: 'Capital ',
                   },
                   {
                     path: 'edit/:id',
@@ -1887,10 +1577,7 @@ export const routes: Routes = [
                       import(
                         './pages/dashboard/dashboard-pages/property-requests/components/add-edit-property-requests/add-edit-property-requests.component'
                       ).then((c) => c.AddEditPropertyRequestsComponent),
-                    data: {
-                      title: 'Capital ',
-                      description: 'Dashboard Page',
-                    },
+                    title: 'Capital ',
                   },
                   {
                     path: 'view-building-request/:id',
@@ -1901,10 +1588,7 @@ export const routes: Routes = [
                       import(
                         './pages/dashboard/dashboard-pages/property-requests/components/view-property-requests/view-property-requests.component'
                       ).then((c) => c.ViewPropertyRequestsComponent),
-                    data: {
-                      title: 'Capital ',
-                      description: 'Dashboard Page',
-                    },
+                    title: 'Capital ',
                   },
                 ],
               },
@@ -2050,10 +1734,7 @@ export const routes: Routes = [
                   import(
                     './pages/dashboard/dashboard-pages/property-comments/components/property-comments-page/property-comments-page.component'
                   ).then((c) => c.PropertyCommentsPageComponent),
-                data: {
-                  title: 'Capital ',
-                  description: 'Dashboard Page',
-                },
+                title: 'Capital ',
                 children: [
                   {
                     path: '',
@@ -2069,10 +1750,7 @@ export const routes: Routes = [
                       import(
                         './pages/dashboard/dashboard-pages/property-comments/components/all-property-comments/all-property-comments.component'
                       ).then((c) => c.AllPropertyCommentsComponent),
-                    data: {
-                      title: 'Capital ',
-                      description: 'Dashboard Page',
-                    },
+                    title: 'Capital ',
                   },
                 ],
               }, // medical claims
@@ -2082,10 +1760,7 @@ export const routes: Routes = [
                   import(
                     './pages/dashboard/dashboard-pages/medical-claims/components/medical-claims-page/medical-claims-page.component'
                   ).then((c) => c.MedicalClaimsPageComponent),
-                data: {
-                  title: 'Capital',
-                  description: 'Dashboard Page',
-                },
+                title: 'Capital',
                 children: [
                   {
                     path: '',
@@ -2101,10 +1776,7 @@ export const routes: Routes = [
                       import(
                         './pages/dashboard/dashboard-pages/medical-claims/components/all-medical-claims/all-medical-claims.component'
                       ).then((c) => c.AllMedicalClaimsComponent),
-                    data: {
-                      title: 'Capital',
-                      description: 'Dashboard Page',
-                    },
+                    title: 'Capital',
                   },
 
                   {
@@ -2116,10 +1788,7 @@ export const routes: Routes = [
                       import(
                         './pages/dashboard/dashboard-pages/medical-claims/components/view-medical-claims/view-medical-claims.component'
                       ).then((c) => c.ViewMedicalClaimsComponent),
-                    data: {
-                      title: 'Capital',
-                      description: 'Dashboard Page',
-                    },
+                    title: 'Capital',
                   },
                 ],
               },
@@ -2131,10 +1800,7 @@ export const routes: Routes = [
                   import(
                     './pages/dashboard/dashboard-pages/medical-claims-comments/components/medical-claims-comments-page/medical-claims-comments-page.component'
                   ).then((c) => c.MedicalClaimsCommentsPageComponent),
-                data: {
-                  title: 'Capital',
-                  description: 'Dashboard Page',
-                },
+                title: 'Capital',
                 children: [
                   {
                     path: '',
@@ -2150,10 +1816,7 @@ export const routes: Routes = [
                       import(
                         './pages/dashboard/dashboard-pages/medical-claims-comments/components/all-medical-claims-comments/all-medical-claims-comments.component'
                       ).then((c) => c.AllMedicalClaimsCommentsComponent),
-                    data: {
-                      title: 'Capital',
-                      description: 'Dashboard Page',
-                    },
+                    title: 'Capital',
                   },
                 ],
               },
@@ -2164,10 +1827,7 @@ export const routes: Routes = [
                   import(
                     './pages/dashboard/dashboard-pages/building-claims/components/building-claims-page/building-claims-page.component'
                   ).then((c) => c.BuildingClaimsPageComponent),
-                data: {
-                  title: 'Capital',
-                  description: 'Dashboard Page',
-                },
+                title: 'Capital',
                 children: [
                   { path: '', redirectTo: 'building-index', pathMatch: 'full' },
                   {
@@ -2179,10 +1839,7 @@ export const routes: Routes = [
                       import(
                         './pages/dashboard/dashboard-pages/building-claims/components/all-building-claims/all-building-claims.component'
                       ).then((c) => c.AllBuildingClaimsComponent),
-                    data: {
-                      title: 'Capital',
-                      description: 'Dashboard Page',
-                    },
+                    title: 'Capital',
                   },
                   {
                     path: 'view-building-claim/:id',
@@ -2193,10 +1850,7 @@ export const routes: Routes = [
                       import(
                         './pages/dashboard/dashboard-pages/building-claims/components/view-building-claims/view-building-claims.component'
                       ).then((c) => c.ViewBuildingClaimsComponent),
-                    data: {
-                      title: 'Capital',
-                      description: 'Dashboard Page',
-                    },
+                    title: 'Capital',
                   },
                 ],
               },
@@ -2206,10 +1860,7 @@ export const routes: Routes = [
                   import(
                     './pages/dashboard/dashboard-pages/building-claims-comments/components/building-claims-comments-page/building-claims-comments-page.component'
                   ).then((c) => c.BuildingClaimsCommentsPageComponent),
-                data: {
-                  title: 'Capital',
-                  description: 'Dashboard Page',
-                },
+                title: 'Capital',
                 children: [
                   {
                     path: '',
@@ -2225,10 +1876,7 @@ export const routes: Routes = [
                       import(
                         './pages/dashboard/dashboard-pages/building-claims-comments/components/all-building-claims-comments/all-building-claims-comments.component'
                       ).then((c) => c.AllBuildingClaimsCommentsComponent),
-                    data: {
-                      title: 'Capital',
-                      description: 'Dashboard Page',
-                    },
+                    title: 'Capital',
                   },
                 ],
               },
@@ -2239,10 +1887,7 @@ export const routes: Routes = [
                   import(
                     './pages/dashboard/dashboard-pages/motors-claims/components/motors-claims-page/motors-claims-page.component'
                   ).then((c) => c.MotorsClaimsPageComponent),
-                data: {
-                  title: 'Capital',
-                  description: 'Dashboard Page',
-                },
+                title: 'Capital',
                 children: [
                   { path: '', redirectTo: 'motor-index', pathMatch: 'full' },
                   {
@@ -2254,10 +1899,7 @@ export const routes: Routes = [
                       import(
                         './pages/dashboard/dashboard-pages/motors-claims/components/all-motors-claims/all-motors-claims.component'
                       ).then((c) => c.AllMotorsClaimsComponent),
-                    data: {
-                      title: 'Capital',
-                      description: 'Dashboard Page',
-                    },
+                    title: 'Capital',
                   },
                   {
                     path: 'view-motor-claim/:id',
@@ -2268,10 +1910,7 @@ export const routes: Routes = [
                       import(
                         './pages/dashboard/dashboard-pages/motors-claims/components/view-motors-claims/view-motors-claims.component'
                       ).then((c) => c.ViewMotorsClaimsComponent),
-                    data: {
-                      title: 'Capital',
-                      description: 'Dashboard Page',
-                    },
+                    title: 'Capital',
                   },
                 ],
               },
@@ -2281,10 +1920,7 @@ export const routes: Routes = [
                   import(
                     './pages/dashboard/dashboard-pages/motors-clims-comments/components/motors-clims-comments-page/motors-clims-comments-page.component'
                   ).then((c) => c.MotorsClimsCommentsPageComponent),
-                data: {
-                  title: 'Capital',
-                  description: 'Dashboard Page',
-                },
+                title: 'Capital',
                 children: [
                   {
                     path: '',
@@ -2300,10 +1936,7 @@ export const routes: Routes = [
                       import(
                         './pages/dashboard/dashboard-pages/motors-clims-comments/components/all-motors-clims-comments/all-motors-clims-comments.component'
                       ).then((c) => c.AllMotorClaimsCommentsComponent),
-                    data: {
-                      title: 'Capital',
-                      description: 'Dashboard Page',
-                    },
+                    title: 'Capital',
                   },
                 ],
               },
@@ -2315,10 +1948,7 @@ export const routes: Routes = [
                   import(
                     './pages/dashboard/dashboard-pages/jop-claims/components/jop-claims-page/jop-claims-page.component'
                   ).then((c) => c.JopClaimsPageComponent),
-                data: {
-                  title: 'Capital',
-                  description: 'Dashboard Page',
-                },
+                title: 'Capital',
                 children: [
                   { path: '', redirectTo: 'jop-index', pathMatch: 'full' },
                   {
@@ -2330,10 +1960,7 @@ export const routes: Routes = [
                       import(
                         './pages/dashboard/dashboard-pages/jop-claims/components/all-jop-claims/all-jop-claims.component'
                       ).then((c) => c.AllJopClaimsComponent),
-                    data: {
-                      title: 'Capital',
-                      description: 'Dashboard Page',
-                    },
+                    title: 'Capital',
                   },
                   {
                     path: 'view-jop-claim/:id',
@@ -2354,10 +1981,7 @@ export const routes: Routes = [
                       import(
                         './pages/dashboard/dashboard-pages/jop-claims/components/all-jop-claims-comments/all-jop-claims-comments.component'
                       ).then((c) => c.AllJopClaimsCommentsComponent),
-                    data: {
-                      title: 'Capital',
-                      description: 'Dashboard Page',
-                    },
+                    title: 'Capital',
                   },
                 ],
               },
@@ -2369,10 +1993,7 @@ export const routes: Routes = [
                   import(
                     './pages/dashboard/dashboard-pages/jop-requests/components/jop-requests-page/jop-requests-page.component'
                   ).then((c) => c.JopRequestsPageComponent),
-                data: {
-                  title: 'Capital',
-                  description: 'Dashboard Page',
-                },
+                title: 'Capital',
                 children: [
                   {
                     path: '',
@@ -2388,10 +2009,7 @@ export const routes: Routes = [
                       import(
                         './pages/dashboard/dashboard-pages/jop-requests/components/all-jop-requests/all-jop-requests.component'
                       ).then((c) => c.AllJopRequestsComponent),
-                    data: {
-                      title: 'Capital',
-                      description: 'Dashboard Page',
-                    },
+                    title: 'Capital',
                   },
                   {
                     path: 'edit/:id',
@@ -2402,10 +2020,7 @@ export const routes: Routes = [
                       import(
                         './pages/dashboard/dashboard-pages/jop-requests/components/add-edit-jop-requests/add-edit-jop-requests.component'
                       ).then((c) => c.AddEditJopRequestsComponent),
-                    data: {
-                      title: 'Capital',
-                      description: 'Dashboard Page',
-                    },
+                    title: 'Capital',
                   },
                   {
                     path: 'view/:id',
@@ -2416,10 +2031,7 @@ export const routes: Routes = [
                       import(
                         './pages/dashboard/dashboard-pages/jop-requests/components/view-jop-requests/view-jop-requests.component'
                       ).then((c) => c.ViewJopRequestsComponent),
-                    data: {
-                      title: 'Capital',
-                      description: 'Dashboard Page',
-                    },
+                    title: 'Capital',
                   },
                 ],
               },
@@ -2431,10 +2043,7 @@ export const routes: Routes = [
                   import(
                     './pages/dashboard/dashboard-pages/jop-comments/components/jop-comments-page/jop-comments-page.component'
                   ).then((c) => c.JopCommentsPageComponent),
-                data: {
-                  title: 'Capital',
-                  description: 'Dashboard Page',
-                },
+                title: 'Capital',
                 children: [
                   {
                     path: '',
@@ -2450,10 +2059,7 @@ export const routes: Routes = [
                       import(
                         './pages/dashboard/dashboard-pages/jop-comments/components/all-jop-comments/all-jop-comments.component'
                       ).then((c) => c.AllJopCommentsComponent),
-                    data: {
-                      title: 'Capital',
-                      description: 'Dashboard Page',
-                    },
+                    title: 'Capital',
                   },
                 ],
               },
@@ -2464,10 +2070,7 @@ export const routes: Routes = [
                   import(
                     './pages/dashboard/dashboard-pages/darna-blogs/edit-darna-blogs/edit-darna-blogs.component'
                   ).then((c) => c.EditBlogComponent),
-                data: {
-                  title: 'Capital',
-                  description: 'Dashboard Page',
-                },
+                title: 'Capital',
                 resolve: {
                   data: darnaBlogsResolver,
                 },
@@ -2479,10 +2082,7 @@ export const routes: Routes = [
                   import(
                     './pages/dashboard/dashboard-pages/darna-blogs/darna-blogs.component'
                   ).then((c) => c.DarnaBlogsComponent),
-                data: {
-                  title: 'Capital',
-                  description: 'Dashboard Page',
-                },
+                title: 'Capital',
                 resolve: {
                   data: darnaBlogsResolver,
                 },
@@ -2493,10 +2093,7 @@ export const routes: Routes = [
                   import(
                     './pages/dashboard/dashboard-pages/darna-blogs/all-darna-blogs/all-darna-blogs.component'
                   ).then((c) => c.AllDarnaBlogsComponent),
-                data: {
-                  title: 'Capital',
-                  description: 'Dashboard Page',
-                },
+                title: 'Capital',
               },
 
               {
@@ -2505,10 +2102,7 @@ export const routes: Routes = [
                   import(
                     './pages/dashboard/dashboard-pages/darna-projects/all-darna-projects/all-darna-projects.component'
                   ).then((c) => c.AllDarnaProjectsComponent),
-                data: {
-                  title: 'Capital',
-                  description: 'Dashboard Page',
-                },
+                title: 'Capital',
               },
               {
                 path: 'edit-darna-projects/:id',
@@ -2516,10 +2110,7 @@ export const routes: Routes = [
                   import(
                     './pages/dashboard/dashboard-pages/darna-projects/add-edit-darna-projects/add-edit-darna-projects.component'
                   ).then((c) => c.AddEditDarnaProjectsComponent),
-                data: {
-                  title: 'Capital',
-                  description: 'Dashboard Page',
-                },
+                title: 'Capital',
               },
               {
                 path: 'add-darna-projects',
@@ -2527,10 +2118,7 @@ export const routes: Routes = [
                   import(
                     './pages/dashboard/dashboard-pages/darna-projects/add-darna/add-darna.component'
                   ).then((c) => c.AddDarnaComponent),
-                data: {
-                  title: 'Capital',
-                  description: 'Dashboard Page',
-                },
+                title: 'Capital',
               },
               {
                 path: 'all-darna-projects',
@@ -2538,10 +2126,7 @@ export const routes: Routes = [
                   import(
                     './pages/dashboard/dashboard-pages/darna-projects/all-darna-projects/all-darna-projects.component'
                   ).then((c) => c.AllDarnaProjectsComponent),
-                data: {
-                  title: 'Capital',
-                  description: 'Dashboard Page',
-                },
+                title: 'Capital',
               },
 
               // ===============================================
@@ -2555,10 +2140,7 @@ export const routes: Routes = [
                   import(
                     './pages/dashboard/dashboard-pages/create_policies/create-medical-policy/create-medical-policy.component'
                   ).then((c) => c.CreateMedicalPolicyComponent),
-                data: {
-                  title: 'Capital',
-                  description: 'Dashboard Page',
-                },
+                title: 'Capital',
                 resolve: {
                   data: medicalPolicyResolver,
                 },
@@ -2571,10 +2153,7 @@ export const routes: Routes = [
                   import(
                     './pages/dashboard/dashboard-pages/create_policies/create-motor-policy/create-motor-policy.component'
                   ).then((c) => c.CreateMotorPolicyComponent),
-                data: {
-                  title: 'Capital',
-                  description: 'Dashboard Page',
-                },
+                title: 'Capital',
                 resolve: {
                   data: motorPolicyResolver,
                 },
@@ -2587,10 +2166,7 @@ export const routes: Routes = [
                   import(
                     './pages/dashboard/dashboard-pages/create_policies/create-building-policy/create-building-policy.component'
                   ).then((c) => c.CreateBuildingPolicyComponent),
-                data: {
-                  title: 'Capital',
-                  description: 'Dashboard Page',
-                },
+                title: 'Capital',
                 resolve: {
                   data: buildingPolicyResolver,
                 },
@@ -2603,10 +2179,7 @@ export const routes: Routes = [
                   import(
                     './jop-insurance/create-jop-request/create-request.component'
                   ).then((c) => c.CreateJopPolicy),
-                data: {
-                  title: 'Capital',
-                  description: 'Dashboard Page',
-                },
+                title: 'Capital',
                 resolve: {
                   data: jopPolicyResolver,
                 },
@@ -2623,10 +2196,7 @@ export const routes: Routes = [
                   import(
                     './pages/dashboard/dashboard-pages/claims-info/claim-info/claim-info.component'
                   ).then((c) => c.ClaimInfoComponent),
-                data: {
-                  title: 'Capital',
-                  description: 'Dashboard Page',
-                },
+                title: 'Capital',
                 // resolve: {
                 //   // data: claimInfoResolver,
                 // },
@@ -2639,10 +2209,7 @@ export const routes: Routes = [
                   import(
                     './pages/dashboard/dashboard-pages/about-us/about-us.component'
                   ).then((c) => c.AboutUsComponent),
-                data: {
-                  title: 'Capital',
-                  description: 'Dashboard Page',
-                },
+                title: 'Capital',
               },
 
               // ===============================================
@@ -2666,10 +2233,7 @@ export const routes: Routes = [
                       import(
                         './pages/dashboard/dashboard-pages/all-leads/all-leads/all-leads.component'
                       ).then((c) => c.AllLeadsComponent),
-                    data: {
-                      title: 'Capital ',
-                      description: 'Dashboard Page',
-                    },
+                    title: 'Capital ',
                     resolve: {
                       data: AllLeadsResolver,
                     },
@@ -2683,10 +2247,7 @@ export const routes: Routes = [
                       import(
                         './pages/dashboard/dashboard-pages/motors-lead/components/view-motors-lead/view-motors-lead.component'
                       ).then((c) => c.ViewMotorsLeadComponent),
-                    data: {
-                      title: 'Capital ',
-                      description: 'Dashboard Page',
-                    },
+                    title: 'Capital ',
                   },
                   {
                     path: 'view-medical-lead/:id',
@@ -2697,10 +2258,7 @@ export const routes: Routes = [
                       import(
                         './pages/dashboard/dashboard-pages/medical-leads/components/view-medical-leads/view-medical-leads.component'
                       ).then((c) => c.ViewMedicalLeadsComponent),
-                    data: {
-                      title: 'Capital ',
-                      description: 'Dashboard Page',
-                    },
+                    title: 'Capital ',
                   },
                   {
                     path: 'view-building-lead/:id',
@@ -2711,10 +2269,7 @@ export const routes: Routes = [
                       import(
                         './pages/dashboard/dashboard-pages/building-lead/components/view-building-lead/view-building-lead.component'
                       ).then((c) => c.ViewBuildingLeadComponent),
-                    data: {
-                      title: 'Capital ',
-                      description: 'Dashboard Page',
-                    },
+                    title: 'Capital ',
                   },
                   {
                     path: 'view-jop-lead/:id',
@@ -2725,10 +2280,7 @@ export const routes: Routes = [
                       import(
                         './jop-insurance/view-jop-lead/view-jop-lead.component'
                       ).then((c) => c.ViewJopLeadComponent),
-                    data: {
-                      title: 'Capital ',
-                      description: 'Dashboard Page',
-                    },
+                    title: 'Capital ',
                   },
                 ],
               },
@@ -2742,10 +2294,7 @@ export const routes: Routes = [
                   import(
                     './pages/dashboard/dashboard-pages/users/all-users/all-users.component'
                   ).then((c) => c.AllUsersComponent),
-                data: {
-                  title: 'Capital ',
-                  description: 'Dashboard Page',
-                },
+                title: 'Capital ',
               },
 
               // --- ADD USER ---
@@ -2755,10 +2304,7 @@ export const routes: Routes = [
                   import(
                     './pages/dashboard/dashboard-pages/users/add-user/add-user.component'
                   ).then((c) => c.AddUserComponent),
-                data: {
-                  title: 'Capital ',
-                  description: 'Dashboard Page',
-                },
+                title: 'Capital ',
               },
 
               // --- VIEW USER ---
@@ -2768,10 +2314,7 @@ export const routes: Routes = [
                   import(
                     './pages/dashboard/dashboard-pages/users/view-user/view-user.component'
                   ).then((c) => c.UserDetailComponent),
-                data: {
-                  title: 'Capital ',
-                  description: 'Dashboard Page',
-                },
+                title: 'Capital ',
                 resolve: {
                   data: UserResolver,
                 },
@@ -2785,10 +2328,7 @@ export const routes: Routes = [
                   import(
                     './pages/dashboard/dashboard-pages/employees/all-employees/all-employee.component'
                   ).then((c) => c.AllEmployeesComponent),
-                data: {
-                  title: 'Capital ',
-                  description: 'Dashboard Page',
-                },
+                title: 'Capital ',
               },
 
               // --- ADD USER ---
@@ -2798,10 +2338,7 @@ export const routes: Routes = [
                   import(
                     './pages/dashboard/dashboard-pages/employees/add-employee/add-employee.component'
                   ).then((c) => c.AddEmployeeComponent),
-                data: {
-                  title: 'Capital ',
-                  description: 'Dashboard Page',
-                },
+                title: 'Capital ',
               },
 
               // --- VIEW USER ---
@@ -2811,10 +2348,7 @@ export const routes: Routes = [
                   import(
                     './pages/dashboard/dashboard-pages/employees/view-employee/view-employee.component'
                   ).then((c) => c.EmployeeDetailComponent),
-                data: {
-                  title: 'Capital ',
-                  description: 'Dashboard Page',
-                },
+                title: 'Capital ',
                 resolve: {
                   data: UserResolver,
                 },
@@ -2826,10 +2360,7 @@ export const routes: Routes = [
                   import(
                     './pages/dashboard/dashboard-pages/download/download-info/download-info.component'
                   ).then((c) => c.DownloadInfoComponent),
-                data: {
-                  title: 'Capital ',
-                  description: 'Dashboard Page',
-                },
+                title: 'Capital ',
               },
               // END OF MENU CHILDREN
             ],
@@ -2842,10 +2373,7 @@ export const routes: Routes = [
       {
         path: 'internet-error',
         component: JInternetConnectionComponent,
-        data: {
-          title: 'Internet Connection Error',
-          description: 'Internet connection error page',
-        },
+        title: 'Internet Connection Error',
       },
     ],
   },
@@ -2858,9 +2386,6 @@ export const routes: Routes = [
       import('./pages/main/not-found/not-found.component').then(
         (e) => e.NotFoundComponent
       ),
-    data: {
-      title: 'Page Not Found',
-      description: '404 error page',
-    },
+    title: 'Page Not Found',
   },
 ];

@@ -6,7 +6,7 @@ import { ToastModule } from 'primeng/toast';
 import { Category } from '../../../categories/services/categories.service';
 import { NgxSpinnerModule, NgxSpinnerService } from 'ngx-spinner';
 import { BuildingInsurance } from '../../../property-insurance/services/property-insurance.service';
-import {  BuildingRequest } from '../../services/property-requests.service';
+import { BuildingRequest } from '../../services/property-requests.service';
 import { LoadingDataBannerComponent } from "../../../../../../shared/components/loading-data-banner/loading-data-banner.component"
 
 interface TableRow {
@@ -263,7 +263,6 @@ export class ViewPropertyRequestsComponent implements OnInit {
 
   ngOnInit(): void {
     this.route.data.subscribe((data: any) => {
-      console.log(data);
 
       this.buildingRequest = data['data'].buildingRequest.data;
       this.category = data['data'].category.data;

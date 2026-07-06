@@ -5,11 +5,11 @@ import { ButtonModule } from 'primeng/button';
 
 export interface ProductImage {
   id: string | number;
-  image: string; 
-  active_status?: boolean; 
-  is_main?: boolean; 
-  created_at?: string; 
-  updated_at?: string; 
+  image: string;
+  active_status?: boolean;
+  is_main?: boolean;
+  created_at?: string;
+  updated_at?: string;
 }
 
 @Component({
@@ -34,21 +34,20 @@ export class ImageUploadComponent implements OnInit {
 
   constructor(
     private messageService: MessageService
-  ) {}
+  ) { }
 
   ngOnInit() {
     this.InputId = `file-input-${this.id}`;
     this.images = [...this.initialImages];
     this.emitChanges();
-    console.log('ngOnInit initialImages:', this.initialImages);
   }
 
   async removeImage(index: number) {
     const visibleImages = this.getVisibleImages();
     const imageToRemove = visibleImages[index];
-    
+
     this.isDeleting[imageToRemove.id.toString()] = true;
-    
+
     try {
       if (!imageToRemove.created_at) {
         // New image
@@ -58,9 +57,9 @@ export class ImageUploadComponent implements OnInit {
           this.addedFiles.splice(fileIndex, 1);
         }
       } else {
-       
+
       }
-      
+
       this.emitChanges();
     } catch (error) {
       this.messageService.add({
@@ -77,7 +76,6 @@ export class ImageUploadComponent implements OnInit {
     if (changes['initialImages'] && changes['initialImages'].currentValue) {
       this.images = [...changes['initialImages'].currentValue];
       this.emitChanges();
-      console.log('ngOnChanges initialImages:', this.initialImages);
     }
   }
 
@@ -113,7 +111,7 @@ export class ImageUploadComponent implements OnInit {
 
   handleFiles(fileList: FileList) {
     const files = Array.from(fileList).filter(file => file.type.startsWith('image/'));
-    
+
     if (files.length === 0) return;
 
     if (this.singleImageMode) {
@@ -123,10 +121,10 @@ export class ImageUploadComponent implements OnInit {
           this.removedUrls.add(img.image);
         }
       });
-      
+
       this.images = this.images.filter(img => !img.created_at);
       this.addedFiles = [];
-      
+
       const file = files[0];
       this.addImageFile(file);
     } else {
@@ -147,10 +145,10 @@ export class ImageUploadComponent implements OnInit {
         created_at: '',
         updated_at: ''
       };
-      
+
       this.images.push(newImage);
       this.addedFiles.push(file);
-      
+
       this.emitChanges();
     };
     reader.readAsDataURL(file);
@@ -158,9 +156,9 @@ export class ImageUploadComponent implements OnInit {
 
   emitChanges() {
     const removed = Array.from(this.removedUrls);
-    
-    this.imagesChanged.emit({ 
-      added: [...this.addedFiles], 
+
+    this.imagesChanged.emit({
+      added: [...this.addedFiles],
       removed: removed
     });
   }

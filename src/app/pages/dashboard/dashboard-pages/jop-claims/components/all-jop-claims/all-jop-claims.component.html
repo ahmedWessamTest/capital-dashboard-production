@@ -48,7 +48,7 @@
           <th pSortableColumn="status" class="text-center">
             <p-dropdown [options]="selectOptions" optionLabel="label" optionValue="value"
               (onChange)="onFilterChange($event.value)" placeholder="Filter by Status" [showClear]="true"
-              [autoZIndex]="true">
+              appendTo="body">
               <ng-template pTemplate="selectedItem" let-selected>
                 <div class="flex items-center justify-center">
                   <i [class]="selected.icon + ' ' + selected.color" class="mr-2"></i>
@@ -66,7 +66,7 @@
           <th pSortableColumn="type" class="text-center">
             <p-dropdown [options]="typeOptions" optionLabel="label" optionValue="value"
               (onChange)="onTypeFilterChange($event.value)" placeholder="Filter by Type" [showClear]="true"
-              [autoZIndex]="true">
+              appendTo="body">
               <ng-template pTemplate="selectedItem" let-selected>
                 <span>{{ selected.label }}</span>
               </ng-template>
@@ -95,9 +95,8 @@
           </td>
           <td [ngClass]="getStatusClass(claim.status)">
             <p-dropdown [options]="getAvailableStatusOptions(claim.status)" [(ngModel)]="claim.status"
-              optionLabel="label" optionValue="value" [autoZIndex]="true" [appendTo]="'body'"
-              styleClass="status-dropdown" [style]="{ width: '100%' }"
-              (onChange)="updateClaimStatus(claim, $event.value)">
+              optionLabel="label" optionValue="value" appendTo="body" [appendTo]="'body'" styleClass="status-dropdown"
+              [style]="{ width: '100%' }" (onChange)="updateClaimStatus(claim, $event.value)">
               <ng-template pTemplate="selectedItem" let-selected>
                 <div class="flex items-center justify-center">
                   <i [class]="selected.icon + ' ' + selected.color" class="mr-2"></i>

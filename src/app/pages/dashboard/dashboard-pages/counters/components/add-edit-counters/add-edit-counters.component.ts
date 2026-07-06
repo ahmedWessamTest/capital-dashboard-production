@@ -22,7 +22,7 @@ export class AddEditCountersComponent implements OnInit {
   constructor(
     private route: ActivatedRoute,
     private ngxSpinnerService: NgxSpinnerService
-  ) {}
+  ) { }
 
   ngOnInit(): void {
     this.counterId = this.route.snapshot.paramMap.get('id');
@@ -40,7 +40,6 @@ export class AddEditCountersComponent implements OnInit {
     this.route.data.subscribe({
       next: ({ data }) => {
         this.editData = data.row;
-        console.log(this.editData);
         this.ngxSpinnerService.hide('actionsLoader');
       },
       error: (err) => {

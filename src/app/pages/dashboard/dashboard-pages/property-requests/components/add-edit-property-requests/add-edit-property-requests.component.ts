@@ -55,7 +55,7 @@ export class AddEditPropertyRequestsComponent implements OnInit {
     private ngxSpinnerService: NgxSpinnerService,
     private buildingRequestsService: BuildingRequestsService,
     private messageService: MessageService
-  ) {}
+  ) { }
 
   ngOnInit() {
     this.buildingRequestId = this.route.snapshot.paramMap.get('id');
@@ -113,7 +113,7 @@ export class AddEditPropertyRequestsComponent implements OnInit {
     });
   }
 
-  initializeFields(type:any) {
+  initializeFields(type: any) {
     // Define status steps to determine order
     const statusSteps = ['requested', 'pending', 'confirmed', 'canceled'];
     // Get the current status from editData if in edit mode
@@ -135,9 +135,8 @@ export class AddEditPropertyRequestsComponent implements OnInit {
       // Only include options with equal or higher index than current status
       return !this.isEditMode || currentIndex === -1 || optionIndex >= currentIndex;
     });
-    console.log(type);
-    
-    if(type ==="corporate" || type === "company-corporate") {
+
+    if (type === "corporate" || type === "company-corporate") {
       this.formFields = [
         {
           name: 'admin_building_insurance_number',
@@ -145,7 +144,7 @@ export class AddEditPropertyRequestsComponent implements OnInit {
           type: 'text',
           required: true,
           placeholder: 'Enter Admin Building Insurance Number',
-          
+
         },
         {
           name: 'start_date',
@@ -153,7 +152,7 @@ export class AddEditPropertyRequestsComponent implements OnInit {
           type: 'date',
           required: true,
           placeholder: 'Select Start Date',
-          showIf:{filed:"active_status",value:'confirmed'}
+          showIf: { filed: "active_status", value: 'confirmed' }
         },
         {
           name: 'duration',
@@ -161,7 +160,7 @@ export class AddEditPropertyRequestsComponent implements OnInit {
           type: 'dropdown',
           required: true,
           placeholder: 'Enter Duration in Years',
-          showIf:{filed:"active_status",value:'confirmed'}
+          showIf: { filed: "active_status", value: 'confirmed' }
         },
         {
           name: 'end_date',
@@ -283,7 +282,7 @@ export class AddEditPropertyRequestsComponent implements OnInit {
           type: 'date',
           required: true,
           placeholder: 'Select Start Date',
-          showIf:{filed:"active_status",value:'confirmed'}
+          showIf: { filed: "active_status", value: 'confirmed' }
         },
         {
           name: 'duration',
@@ -291,7 +290,7 @@ export class AddEditPropertyRequestsComponent implements OnInit {
           type: 'dropdown',
           required: true,
           placeholder: 'Enter Duration in Years',
-          showIf:{filed:"active_status",value:'confirmed'}
+          showIf: { filed: "active_status", value: 'confirmed' }
         },
         {
           name: 'end_date',

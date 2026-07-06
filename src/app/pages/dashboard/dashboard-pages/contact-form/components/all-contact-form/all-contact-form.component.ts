@@ -16,7 +16,7 @@ export class AllContactFormComponent {
   contactForms: ContactForm[] = []; // Populated via CategoriesService
 
   columns: Column[] = [
-    
+
     { field: 'name', header: 'Name', sortable: true, type: 'text', maxLength: 30 },
     { field: 'email', header: 'Email', sortable: true, type: 'text', maxLength: 30 },
     { field: 'phone', header: 'Phone', sortable: true, type: 'text', maxLength: 30 },
@@ -27,7 +27,7 @@ export class AllContactFormComponent {
   constructor(
     private ngxSpinnerService: NgxSpinnerService,
     private route: ActivatedRoute,
-  ) {}
+  ) { }
 
   ngOnInit(): void {
     this.ngxSpinnerService.hide('actionsLoader');
@@ -36,7 +36,6 @@ export class AllContactFormComponent {
 
       next: (data) => {
         this.contactForms = data['data'].data;
-        console.log(this.contactForms)
         this.ngxSpinnerService.hide('actionsLoader');
       },
       error: (err) => {

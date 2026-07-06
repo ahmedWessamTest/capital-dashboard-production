@@ -154,21 +154,18 @@ import { ActivatedRoute, RouterLink } from '@angular/router';
   `,
   standalone: true,
   imports: [CommonModule, RouterLink],
- 
+
 })
 export class UserDetailComponent implements OnInit {
-  user:any | null = null;
+  user: any | null = null;
 
-  constructor(private route: ActivatedRoute) {}
+  constructor(private route: ActivatedRoute) { }
 
   ngOnInit(): void {
-    // Subscribe to the 'data' observable provided by the ActivatedRoute
-    // The 'userData' key matches the key defined in the route's resolve configuration
+
     this.route.data.subscribe(data => {
-      console.log(data)
       this.user = data['data'].data;
-      console.log(this.user)
-      console.log('Resolved User Data:', this.user); // For debugging
+
     });
   }
 }

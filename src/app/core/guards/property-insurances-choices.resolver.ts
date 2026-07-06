@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { Resolve, ActivatedRouteSnapshot, RouterStateSnapshot } from '@angular/router';
-import { map, Observable, tap, catchError, throwError } from 'rxjs';
+import { map, Observable, catchError, throwError } from 'rxjs';
 import { NgxSpinnerService } from 'ngx-spinner';
 import { NormalizeActiveStatusService } from '../normalize-active-status/normalize-active-status.service';
 import { BuildingInsurancesService } from '../../pages/dashboard/dashboard-pages/property-insurance/services/property-insurance.service';
@@ -15,18 +15,17 @@ export class PropertyInsuranceChoicesResolver implements Resolve<BuildingInsuran
     private buildingInsurancesService: BuildingInsurancesService,
     private ngxSpinnerService: NgxSpinnerService,
     private normalizeActiveStatusService: NormalizeActiveStatusService
-  ) {}
+  ) { }
 
   resolve(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): Observable<BuildingInsuranceChoicesListResponse | BuildingInsuranceChoiceResponse> {
     this.ngxSpinnerService.show('actionsLoader');
     const id = route.paramMap.get('id');
     const choiceId = route.paramMap.get('choiceId');
-    const isViewOrEditRoute = route.routeConfig?.path?.includes('view-building-insurance-choices') || 
-                             route.routeConfig?.path?.includes('edit-building-insurance-choices');
+    const isViewOrEditRoute = route.routeConfig?.path?.includes('view-building-insurance-choices') ||
+      route.routeConfig?.path?.includes('edit-building-insurance-choices');
 
     if (choiceId) {
       return this.buildingInsuranceChoicesService.getById(+choiceId).pipe(
-        tap((response) => console.log('Single building insurance choice request initiated', response)),
         map((response) => {
           if (!response?.data) {
             console.warn('No data in response');
@@ -43,7 +42,6 @@ export class PropertyInsuranceChoicesResolver implements Resolve<BuildingInsuran
       );
     } else if (id) {
       return this.buildingInsuranceChoicesService.getAll().pipe(
-        tap((response) => console.log('All building insurance choices request initiated', response)),
         map((response) => {
           if (!response?.data) {
             console.warn('No data in response');
@@ -63,7 +61,6 @@ export class PropertyInsuranceChoicesResolver implements Resolve<BuildingInsuran
       );
     } else {
       return this.buildingInsuranceChoicesService.getAll().pipe(
-        tap((response) => console.log('All building insurance choices request initiated', response)),
         map((response) => {
           if (!response?.data) {
             console.warn('No data in response');

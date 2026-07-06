@@ -51,7 +51,7 @@ export class CarYearsResolver implements Resolve<FullCarDataResponse | CarYearWi
     private carTypesService: CarTypesService,
     private ngxSpinnerService: NgxSpinnerService,
     private normalizeActiveStatusService: NormalizeActiveStatusService
-  ) {}
+  ) { }
 
   resolve(
     route: ActivatedRouteSnapshot,
@@ -81,9 +81,6 @@ export class CarYearsResolver implements Resolve<FullCarDataResponse | CarYearWi
             created_at: yearData.created_at,
             updated_at: yearData.updated_at,
           };
-
-          console.log("carYear",carYear, models.data)
-
           return {
             carYear,
             carModels: models.data,

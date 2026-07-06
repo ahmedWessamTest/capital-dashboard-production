@@ -56,7 +56,7 @@ interface TypeOption {
   styleUrl: './all-jop-claims.component.scss',
   providers: [MessageService],
 })
-export class AllJopClaimsComponent implements AfterViewInit {
+export class AllJopClaimsComponent {
   private ngxSpinnerService = inject(NgxSpinnerService);
   private messageService = inject(MessageService);
   private jobClaimsService = inject(JobClaimsService);
@@ -81,18 +81,15 @@ export class AllJopClaimsComponent implements AfterViewInit {
     this.initDropDownFilter();
     this.initTypeFilter();
     this.isLoading.set(true);
-    console.log(this.route.snapshot.data['data']);
     this.isLoading.set(false);
     this.claims = this.route.snapshot.data['data']?.data || [];
     this.applyFilters();
     this.ngxSpinnerService.hide('actionsLoader');
   }
 
-  ngAfterViewInit() {
-    console.log('Table reference:', this.dt);
-  }
 
-  constructor(private cdRef: ChangeDetectorRef) {}
+
+  constructor(private cdRef: ChangeDetectorRef) { }
 
   initDropDownFilter(): void {
     this.selectOptions = [

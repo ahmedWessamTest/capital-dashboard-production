@@ -1,20 +1,14 @@
-import { inject, PLATFORM_ID } from "@angular/core";
+import { inject } from "@angular/core";
 import { CanActivateFn, Router } from "@angular/router";
-import { isPlatformBrowser } from "@angular/common";
 
-export const loginGuard: CanActivateFn = (route, state) => {
+export const loginGuard: CanActivateFn = () => {
   const _Router = inject(Router);
-  const platformId = inject(PLATFORM_ID);
+  const userToken = localStorage.getItem("user");
 
-  if (isPlatformBrowser(platformId)) {
-    const userToken = localStorage.getItem("user");
-    if (userToken) {
-      return true;
-    } else {
-      _Router.navigate(["/login"]);
-      return false;
-    }
+  if (userToken) {
+    return true;
+  } else {
+    _Router.navigate(["/login"]);
+    return false;
   }
-
-  return true;
 };

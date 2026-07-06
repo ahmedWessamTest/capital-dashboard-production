@@ -1,4 +1,4 @@
-import {  Component } from '@angular/core';
+import { Component } from '@angular/core';
 import { GenericTableComponent } from "../../../../../../shared/components/generic-table/generic-table.component";
 import { ActivatedRoute } from '@angular/router';
 import { NgxSpinnerService } from 'ngx-spinner';
@@ -21,16 +21,18 @@ export class AllAdminstrationsComponent {
     { field: 'admin_image', header: 'Image', sortable: false, type: 'image' },
     { field: 'en_name', header: 'Name', sortable: true, type: 'text', maxLength: 30 },
     { field: 'created_at', header: 'Created At', sortable: true, type: 'date' },
-    { field: 'active_status', header: 'Status', sortable: true, type: 'text',displayFn(item){
-      return item.active_status ? "Enabled" : "Disabled"
-    } },
+    {
+      field: 'active_status', header: 'Status', sortable: true, type: 'text', displayFn(item) {
+        return item.active_status ? "Enabled" : "Disabled"
+      }
+    },
   ];
 
   constructor(
     private ngxSpinnerService: NgxSpinnerService,
     private route: ActivatedRoute,
     private normalizeActiveStatusService: NormalizeActiveStatusService
-  ) {}
+  ) { }
 
   ngOnInit(): void {
     this.ngxSpinnerService.hide('actionsLoader');
@@ -42,7 +44,6 @@ export class AllAdminstrationsComponent {
         this.adminstrations.forEach((adminstration) => {
           adminstration.active_status = this.normalizeActiveStatusService.normalizeActiveStatus(adminstration.active_status);
         });
-        console.log(this.adminstrations)
         this.ngxSpinnerService.hide('actionsLoader');
       },
       error: (err) => {

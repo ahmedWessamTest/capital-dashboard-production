@@ -3,27 +3,17 @@
 @if (!isLoading) {
 <div class="card overflow-x-auto">
   <!-- Header Section -->
-  <div
-    class="flex flex-column md:flex-row md:justify-content-between md:align-items-center mb-3 gap-2"
-  >
+  <div class="flex flex-column md:flex-row md:justify-content-between md:align-items-center mb-3 gap-2">
     <h2 class="text-xl md:text-2xl font-semibold m-0">{{ title }}</h2>
     <div class="flex flex-column md:flex-row gap-2 w-full md:w-auto">
       @if (addRoute) { @if(addRoute2){
       <a [routerLink]="[addRoute, addRoute2]" class="w-full md:w-auto">
-        <p-button
-          label="Add {{ title }}"
-          icon="pi pi-plus"
-          class="btn-main text-white w-full md:w-auto"
-        >
+        <p-button label="Add {{ title }}" icon="pi pi-plus" class="btn-main text-white w-full md:w-auto">
         </p-button>
       </a>
       } @else{
       <a [routerLink]="addRoute" class="w-full md:w-auto">
-        <p-button
-          label="Add {{ title }}"
-          icon="pi pi-plus"
-          class="btn-main text-white w-full md:w-auto"
-        >
+        <p-button label="Add {{ title }}" icon="pi pi-plus" class="btn-main text-white w-full md:w-auto">
         </p-button>
       </a>
       } }
@@ -61,15 +51,10 @@
   <div class="mb-3 flex justify-content-end">
     <span class="p-input-icon-right w-full md:w-auto">
       <i class="pi pi-search"></i>
-      <input
-        #search
-        class="mb-0 w-full md:!w-[188px] ps-1 block"
-        type="text"
-        pInputText
+      <input #search class="mb-0 w-full md:!w-[188px] ps-1 block" type="text" pInputText
         [title]="'Search ' + title.toLowerCase()"
-          [placeholder]="'Search ' + title.toLowerCase().split(' ',2).join(' ') + '...'"
-        (input)="onGlobalFilter(dt, $event)"
-      />
+        [placeholder]="'Search ' + title.toLowerCase().split(' ',2).join(' ') + '...'"
+        (input)="onGlobalFilter(dt, $event)" />
     </span>
   </div>
 
@@ -86,21 +71,11 @@
   [tableStyle]="{'min-width': '700px'}"
   responsiveLayout="scroll"
 > -->
-  <p-table
-    #dt
-    [paginator]="true"
-    [rows]="rowsPerPage"
-    [totalRecords]="totalRecords"
-    [rowsPerPageOptions]="getPagination()"
-    [showCurrentPageReport]="true"
-    currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries"
-    [value]="filteredData"
-    responsiveLayout="scroll"
-    [scrollable]="true"
-    scrollDirection="both"
-    (onPage)="onPageChange($event)"
-    [tableStyle]="{ 'min-width': '700px' }"
-  >
+  <p-table #dt [paginator]="true" [rows]="rowsPerPage" [totalRecords]="totalRecords"
+    [rowsPerPageOptions]="getPagination()" [showCurrentPageReport]="true"
+    currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries" [value]="filteredData"
+    responsiveLayout="scroll" [scrollable]="true" scrollDirection="both" (onPage)="onPageChange($event)"
+    [tableStyle]="{ 'min-width': '700px' }">
     <ng-template pTemplate="header">
       <tr class="text-center">
         @for (col of columns; track col.field) { @if (col.sortable) {
@@ -110,36 +85,17 @@
         } @else if (col.field === 'category_id' || col.field ===
         'build_type_id') {
         <th class="text-center">
-          <p-dropdown
-            #categoryDropdown
-            class="mx-auto"
-            styleClass="mx-auto"
-            [options]="categoryOptions"
-            optionLabel="label"
-            optionValue="value"
-            [(ngModel)]="selectedCategory"
-            (onChange)="onCategoryFilterChange($event.value)"
-            placeholder="Category"
-            [showClear]="true"
-            [autoZIndex]="true"
-          >
+          <p-dropdown #categoryDropdown class="mx-auto" styleClass="mx-auto" [options]="categoryOptions"
+            optionLabel="label" optionValue="value" [(ngModel)]="selectedCategory"
+            (onChange)="onCategoryFilterChange($event.value)" placeholder="Category" [showClear]="true" appendTo="body">
           </p-dropdown>
         </th>
         } @else if (col.field === 'need_call') {
         <th class="text-center">
-          <p-dropdown
-            #needCallDropdown
-            class="mx-auto"
-            styleClass="mx-auto"
-            [options]="needCallOptions"
-            optionLabel="label"
-            optionValue="value"
-            [(ngModel)]="selectedNeedCall"
-            (onChange)="onNeedCallFilterChange($event.value)"
-            placeholder="Need Call"
-            [showClear]="true"
-            [autoZIndex]="true"
-          >
+          <p-dropdown #needCallDropdown class="mx-auto" styleClass="mx-auto" [options]="needCallOptions"
+            optionLabel="label" optionValue="value" [(ngModel)]="selectedNeedCall"
+            (onChange)="onNeedCallFilterChange($event.value)" placeholder="Need Call" [showClear]="true"
+            appendTo="body">
           </p-dropdown>
         </th>
         } @else {
@@ -148,19 +104,9 @@
         </th>
         } } @if (ToggelStatus) {
         <th class="text-center">
-          <p-dropdown
-            #statusDropdown
-            class="mx-auto"
-            styleClass="mx-auto"
-            [options]="selectOptions"
-            optionLabel="label"
-            optionValue="value"
-            [(ngModel)]="selectedStatus"
-            (onChange)="onFilterChange($event.value)"
-            placeholder="Status"
-            [showClear]="true"
-            [autoZIndex]="true"
-          >
+          <p-dropdown #statusDropdown class="mx-auto" styleClass="mx-auto" [options]="selectOptions" optionLabel="label"
+            optionValue="value" [(ngModel)]="selectedStatus" (onChange)="onFilterChange($event.value)"
+            placeholder="Status" [showClear]="true" appendTo="body">
           </p-dropdown>
         </th>
         }
@@ -174,42 +120,27 @@
         <td class="text-center">
           @if (col.type === 'image') {
           <div class="w-16 h-16 mx-auto">
-            <img
-              class="w-full h-full object-cover"
-              [src]="getImageUrl(item[col.field])"
-              [alt]="
+            <img class="w-full h-full object-cover" [src]="getImageUrl(item[col.field])" [alt]="
                 item['en_title'] ||
                 item['en_name'] ||
                 item['en_blog_title'] ||
                 'image'
-              "
-              appImageLoader
-            />
+              " appImageLoader />
           </div>
           } @else if (col.type === 'date') {
           {{ formatDate(item[col.field]) }}
           } @else if (col.type === 'link') {
-          <a
-            [href]="item[col.field]"
-            target="_blank"
-            class="!text-main-500 hover:underline"
-          >
+          <a [href]="item[col.field]" target="_blank" class="!text-main-500 hover:underline">
             {{ "Network_link" }}
           </a>
           } @else if(col.field === 'choices'){ @if(col.choicesProperty &&
           item[col.choicesProperty]?.length > 0){ @if(choicesRoute2){
-          <a
-            [routerLink]="[choicesRoute, item.id, choicesRoute2]"
-            [title]="col.displayFn ? col.displayFn(item) : ''"
-          >
+          <a [routerLink]="[choicesRoute, item.id, choicesRoute2]" [title]="col.displayFn ? col.displayFn(item) : ''">
             <p-button icon="pi pi-list" class="p-button-text p-button-sm">
             </p-button>
           </a>
           }@else{
-          <a
-            [routerLink]="[choicesRoute, item.id]"
-            [title]="col.displayFn ? col.displayFn(item) : ''"
-          >
+          <a [routerLink]="[choicesRoute, item.id]" [title]="col.displayFn ? col.displayFn(item) : ''">
             <p-button icon="pi pi-list" class="p-button-text p-button-sm">
             </p-button>
           </a>
@@ -222,19 +153,16 @@
           } @else {
           <span [title]="item[col.field]">
             {{
-              item[col.field] !== null
-                ? truncateText(item[col.field], col.maxLength || 30)
-                : "N/A"
+            item[col.field] !== null
+            ? truncateText(item[col.field], col.maxLength || 30)
+            : "N/A"
             }}
           </span>
           } }
         </td>
         } @if(ToggelStatus){
         <td class="text-center">
-          <p-inputSwitch
-            [ngModel]="item.active_status"
-            (onChange)="toggleStatus(item)"
-          >
+          <p-inputSwitch [ngModel]="item.active_status" (onChange)="toggleStatus(item)">
           </p-inputSwitch>
         </td>
         }

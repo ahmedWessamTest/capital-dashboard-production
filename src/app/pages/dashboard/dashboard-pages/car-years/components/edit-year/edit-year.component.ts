@@ -86,7 +86,6 @@ export class EditYearComponent implements OnInit, OnDestroy {
   ngOnInit() {
     this.dataSubscription = this.route.data.subscribe({
       next: (data: any) => {
-        console.log(data)
         if (data?.data?.carYear && data?.data?.carModels) {
           this.carModels = data.data.carModels || [];
           this.carYearId = data.data.carYear.id;
@@ -150,24 +149,24 @@ export class EditYearComponent implements OnInit, OnDestroy {
         formData.append('car_model_id', selectedCarModelId);
         formData.append('year_date', enteredYear);
         formData.append('active_status', formValues.active_status ? '1' : '0');
-if(this.carYearId){
-        this.carYearsService.update(this.carYearId!, formData).subscribe({
-          next: () => {
-            this.message = { text: 'Car year updated successfully', type: 'success' };
-            this.router.navigate(['/dashboard/menu/car-years']);
-            this.ngxSpinnerService.hide('actionsLoader');
-            this.loading = false;
-            this.clearMessage();
-          },
-          error: (err) => {
-            console.error('Error updating car year:', err);
-            this.message = { text: 'Failed to update car year', type: 'error' };
-            this.clearMessage();
-            this.ngxSpinnerService.hide('actionsLoader');
-            this.loading = false;
-          }
-        });
-      }
+        if (this.carYearId) {
+          this.carYearsService.update(this.carYearId!, formData).subscribe({
+            next: () => {
+              this.message = { text: 'Car year updated successfully', type: 'success' };
+              this.router.navigate(['/dashboard/menu/car-years']);
+              this.ngxSpinnerService.hide('actionsLoader');
+              this.loading = false;
+              this.clearMessage();
+            },
+            error: (err) => {
+              console.error('Error updating car year:', err);
+              this.message = { text: 'Failed to update car year', type: 'error' };
+              this.clearMessage();
+              this.ngxSpinnerService.hide('actionsLoader');
+              this.loading = false;
+            }
+          });
+        }
       },
       error: (err) => {
         console.error('Error fetching existing car years:', err);

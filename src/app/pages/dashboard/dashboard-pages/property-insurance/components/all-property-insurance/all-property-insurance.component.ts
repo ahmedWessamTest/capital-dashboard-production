@@ -1,9 +1,6 @@
 import { Component, OnInit } from '@angular/core';
-import { NgxSpinnerService } from 'ngx-spinner';
 import { NormalizeActiveStatusService } from '../../../../../../core/normalize-active-status/normalize-active-status.service';
-import { Router } from '@angular/router';
 import { GenericTableComponent } from '../../../../../../shared/components/generic-table/generic-table.component';
-import { DataRefreshService } from '../../../../../../core/services/refresh/data-refresh.service';
 import { finalize, map } from 'rxjs';
 import { Column } from '../../../../../../shared/service/genereic-table.service';
 import { LoadingDataBannerComponent } from '../../../../../../shared/components/loading-data-banner/loading-data-banner.component';
@@ -17,14 +14,14 @@ import { BuildingInsurance, BuildingInsurancesService, BuildingInsurancesListRes
   styleUrls: ['./all-property-insurance.component.scss']
 })
 export class AllPropertyInsuranceComponent implements OnInit {
-  buildingInsurances: BuildingInsurance[] = []; 
+  buildingInsurances: BuildingInsurance[] = [];
   isLoading: boolean = true;
   columns: Column[] = [
     { field: 'id', header: 'ID', sortable: true },
-    { 
-      field: 'category_id', 
-      header: 'Category', 
-      sortable: true, 
+    {
+      field: 'category_id',
+      header: 'Category',
+      sortable: true,
       displayFn(item) {
         return item.category?.en_title || 'No Category';
       }
@@ -32,24 +29,21 @@ export class AllPropertyInsuranceComponent implements OnInit {
     { field: 'en_title', header: 'English Title', sortable: true },
     { field: 'year_money', header: 'Year Money', sortable: true },
     { field: 'company_name', header: 'Company Name', sortable: true },
-    { 
-      field: 'choices', 
-      header: 'Choices', 
-      sortable: false, 
-      choicesProperty: 'buildingchoices', 
+    {
+      field: 'choices',
+      header: 'Choices',
+      sortable: false,
+      choicesProperty: 'buildingchoices',
       displayFn(item) {
         return item.buildingchoices?.length ? `${item.buildingchoices.length} Choices` : 'No Choices';
-      } 
+      }
     },
   ];
 
   constructor(
-    private ngxSpinnerService: NgxSpinnerService,
     private buildingInsurancesService: BuildingInsurancesService,
     private normalizeActiveStatusService: NormalizeActiveStatusService,
-    private dataRefreshService: DataRefreshService,
-    private router: Router
-  ) {}
+  ) { }
 
   ngOnInit(): void {
     this.loadData();
@@ -57,7 +51,6 @@ export class AllPropertyInsuranceComponent implements OnInit {
 
   private loadData(): void {
     this.isLoading = true;
-    console.log('call-data-again');
     this.buildingInsurancesService.getAll().pipe(
       map((response: BuildingInsurancesListResponse) => this.normalizeInsurances(response)),
       finalize(() => this.isLoading = false)

@@ -56,7 +56,7 @@ export class AllJopInsuranceComponent implements OnInit {
     private normalizeActiveStatusService: NormalizeActiveStatusService,
     private dataRefreshService: DataRefreshService,
     private router: Router
-  ) {}
+  ) { }
 
   ngOnInit(): void {
     this.loadData();
@@ -64,7 +64,6 @@ export class AllJopInsuranceComponent implements OnInit {
 
   private loadData(): void {
     this.isLoading = true;
-    console.log('call-data-again');
     this.jopInsuranceService
       .getAll()
       .pipe(

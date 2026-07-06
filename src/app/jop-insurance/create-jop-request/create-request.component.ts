@@ -129,13 +129,13 @@ export class CreateJopPolicy implements OnInit {
       jop_second_id: [null],
       active_status: ['requested', Validators.required],
       start_date: [null, Validators.required],
-            duration: [null, Validators.required],
-            end_date: [{ value: null, disabled: true }, Validators.required],
+      duration: [null, Validators.required],
+      end_date: [{ value: null, disabled: true }, Validators.required],
     });
     this.policyForm
       .get('start_date')
       ?.valueChanges.subscribe(() => this.updateEndDate());
-      this.policyForm
+    this.policyForm
       .get('duration')
       ?.valueChanges.subscribe(() => this.updateEndDate());
   }
@@ -187,7 +187,7 @@ export class CreateJopPolicy implements OnInit {
         this.policyForm.get('custom_jop_title')?.updateValueAndValidity();
       });
   }
-updateEndDate() {
+  updateEndDate() {
     const startDate = this.policyForm.get('start_date')?.value;
     const duration = this.policyForm.get('duration')?.value;
     if (startDate && duration) {
@@ -242,7 +242,7 @@ updateEndDate() {
 
     this.isSubmitting = true;
     this.ngxSpinnerService.show('policyLoader');
-const formatDate = (date: Date): string => {
+    const formatDate = (date: Date): string => {
       const day = String(date.getDate()).padStart(2, '0');
       const month = String(date.getMonth() + 1).padStart(2, '0');
       const year = date.getFullYear();
@@ -266,7 +266,6 @@ const formatDate = (date: Date): string => {
       duration: String(this.policyForm.get('duration')?.value),
       end_date: formatDate(this.policyForm.get('end_date')?.value),
     };
-console.log(policyData);
 
     this.jopInsuranceService.submitJopPolicy(policyData).subscribe({
       next: () => {

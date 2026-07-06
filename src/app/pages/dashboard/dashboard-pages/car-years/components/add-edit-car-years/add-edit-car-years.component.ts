@@ -47,7 +47,7 @@ export class AddEditCarYearsComponent implements OnInit, OnDestroy {
     private validationService: ValidationService,
     private ngxSpinnerService: NgxSpinnerService,
     private messageService: MessageService
-  ) {}
+  ) { }
 
   ngOnInit() {
     this.carYearId = this.route.snapshot.paramMap.get('id');
@@ -55,7 +55,6 @@ export class AddEditCarYearsComponent implements OnInit, OnDestroy {
 
     this.dataSubscription = this.route.data.subscribe({
       next: (data: any) => {
-        console.log(data)
         if (data?.data) {
           // Handle different response structures
           if (this.isEditMode && data.data.carYear) {

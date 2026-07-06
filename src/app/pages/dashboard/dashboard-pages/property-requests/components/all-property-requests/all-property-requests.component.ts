@@ -46,7 +46,7 @@ export class AllPropertyRequestsComponent {
   private messageService = inject(MessageService);
   private buildingRequestsService = inject(BuildingRequestsService);
   private route = inject(ActivatedRoute);
- isLoading = signal<boolean>(false);
+  isLoading = signal<boolean>(false);
   requests: BuildingRequest[] = [];
   filteredRequests: BuildingRequest[] = [];
   totalRecords: number = 0;
@@ -66,9 +66,6 @@ export class AllPropertyRequestsComponent {
     this.isLoading.set(true);
     this.requests = this.route.snapshot.data['data'].data.sort((a: any, b: any) => new Date(b.created_at).getTime() - new Date(a.created_at).getTime());
     this.isLoading.set(false);
-    console.log(this.isLoading());
-    
-    console.log("requests:", this.requests);
     this.initRequestTypeOptions();
     this.applyFilters();
     this.ngxSpinnerService.hide('actionsLoader');
@@ -172,7 +169,6 @@ export class AllPropertyRequestsComponent {
     }
 
     this.filteredRequests = filtered;
-    console.log("filtered data:", this.filteredRequests);
 
     this.totalRecords = filtered.length;
   }
@@ -225,7 +221,7 @@ export class AllPropertyRequestsComponent {
       : this.buildingRequestsService.changeStatus(request.id, status);
 
     action$.subscribe({
-      next: (response) => {        
+      next: (response) => {
         request.active_status = response.data.active_status;
         this.applyFilters();
         this.messageService.add({
@@ -261,17 +257,17 @@ export class AllPropertyRequestsComponent {
     });
   }
   getStatusLabel(status: string): string {
-  const option = this.selectOptions.find(opt => opt.value === status);
-  return option ? option.label : status;
-}
+    const option = this.selectOptions.find(opt => opt.value === status);
+    return option ? option.label : status;
+  }
 
-getStatusIcon(status: string): string {
-  const option = this.selectOptions.find(opt => opt.value === status);
-  return option ? option.icon : '';
-}
+  getStatusIcon(status: string): string {
+    const option = this.selectOptions.find(opt => opt.value === status);
+    return option ? option.icon : '';
+  }
 
-getStatusColor(status: string): string {
-  const option = this.selectOptions.find(opt => opt.value === status);
-  return option ? option.color : '';
-}
+  getStatusColor(status: string): string {
+    const option = this.selectOptions.find(opt => opt.value === status);
+    return option ? option.color : '';
+  }
 }

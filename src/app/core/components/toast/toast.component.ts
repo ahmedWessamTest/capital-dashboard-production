@@ -31,8 +31,6 @@ export class ToastComponent implements AfterViewInit, OnDestroy {
   constructor(private toastService: ToastService) {
     this.subscription = this.toastService.toasts$.subscribe((config) => {
       if (config) {
-        // This is where you receive the config from the service
-        console.log('ToastComponent received config:', config); // <-- ADD THIS LOG
         this.showToast(config.position, config.type, config.msg);
       }
     });
@@ -50,12 +48,9 @@ export class ToastComponent implements AfterViewInit, OnDestroy {
     type: string,
     msg: string
   ) {
-    // These logs will show what's being passed into the function that creates the toast
-    console.log('showToast arguments - Type:', type, 'Message:', msg, 'Position:', position); // <-- ADD THIS LOG
 
     const container = this[position]; // Get the container based on position
     if (!container || !this.toastTemplate) {
-      console.error('Container or toast template is not available.');
       return;
     }
 
@@ -70,8 +65,6 @@ export class ToastComponent implements AfterViewInit, OnDestroy {
         },
       },
     });
-    // This log will show what's being passed to the template context
-    console.log('Toast template context ($implicit):', toastRef.context.$implicit); // <-- ADD THIS LOG
 
     this.animateIn(toastRef);
 

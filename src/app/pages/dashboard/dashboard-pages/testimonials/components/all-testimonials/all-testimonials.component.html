@@ -4,41 +4,22 @@
 <div class="card">
   <div class="flex justify-between items-center mb-3">
     <h2 class="text-2xl font-semibold">Testimonials Control</h2>
-    <p-button
-      routerLink="/dashboard/menu/testimonials/add"
-      label="Add Testimonial"
-      icon="pi pi-plus"
-      class="btn-main text-white"
-    ></p-button>
+    <p-button routerLink="/dashboard/menu/testimonials/add" label="Add Testimonial" icon="pi pi-plus"
+      class="btn-main text-white"></p-button>
   </div>
 
   <!-- Search Input -->
   <div class="mb-3 flex justify-content-end">
     <span class="p-input-icon-right">
       <i class="pi pi-search"></i>
-      <input
-        #search
-        class="mb-0"
-        type="text"
-        pInputText
-        placeholder="Search testimonials..."
-        (input)="onGlobalFilter(dt, $event)"
-      />
+      <input #search class="mb-0" type="text" pInputText placeholder="Search testimonials..."
+        (input)="onGlobalFilter(dt, $event)" />
     </span>
   </div>
 
-  <p-table
-    #dt
-    [paginator]="true"
-    [rows]="rowsPerPage"
-    [totalRecords]="totalRecords"
-    [rowsPerPageOptions]="getPagination()"
-    [showCurrentPageReport]="true"
-    [value]="filteredTestimonials"
-    responsiveLayout="scroll"
-    (onSort)="onSort($event)"
-    (onPage)="onPageChange($event)"
-  >
+  <p-table #dt [paginator]="true" [rows]="rowsPerPage" [totalRecords]="totalRecords"
+    [rowsPerPageOptions]="getPagination()" [showCurrentPageReport]="true" [value]="filteredTestimonials"
+    responsiveLayout="scroll" (onSort)="onSort($event)" (onPage)="onPageChange($event)">
     <ng-template pTemplate="header">
       <tr>
         <th class="text-center" pSortableColumn="id">
@@ -54,18 +35,9 @@
           Created<p-sortIcon field="created_at"></p-sortIcon>
         </th>
         <th class="text-center">
-          <p-dropdown
-            #Dd
-            class="mx-auto"
-            styleClass="mx-auto"
-            [options]="selectOptions"
-            optionLabel="label"
-            optionValue="value"
-            (onChange)="onFilterChange($event.value); Dd.showClear = true"
-            placeholder="Status"
-            [showClear]="true"
-            [autoZIndex]="true"
-          ></p-dropdown>
+          <p-dropdown #Dd class="mx-auto" styleClass="mx-auto" [options]="selectOptions" optionLabel="label"
+            optionValue="value" (onChange)="onFilterChange($event.value); Dd.showClear = true" placeholder="Status"
+            [showClear]="true" appendTo="body"></p-dropdown>
         </th>
         <th class="text-center">Actions</th>
       </tr>
@@ -86,34 +58,20 @@
         </td>
         <td class="text-center">{{ formatDate(testimonial.created_at) }}</td>
         <td class="text-center">
-          <p-inputSwitch
-            [ngModel]="testimonial.active_status === 1"
-            (onChange)="toggleTestimonialStatus(testimonial)"
-          ></p-inputSwitch>
+          <p-inputSwitch [ngModel]="testimonial.active_status === 1"
+            (onChange)="toggleTestimonialStatus(testimonial)"></p-inputSwitch>
         </td>
         <td class="text-center">
           <div class="flex justify-center gap-2">
-            <p-button
-              icon="pi pi-pencil"
-              [routerLink]="[
+            <p-button icon="pi pi-pencil" [routerLink]="[
                 '/dashboard/menu/testimonials/edit',
                 testimonial.id
-              ]"
-              (onClick)="runSpinner()"
-              class="p-button-text p-button-sm"
-              pTooltip="Edit Testimonial"
-            ></p-button>
+              ]" (onClick)="runSpinner()" class="p-button-text p-button-sm" pTooltip="Edit Testimonial"></p-button>
 
-            <p-button
-              icon="pi pi-eye"
-              [routerLink]="[
+            <p-button icon="pi pi-eye" [routerLink]="[
                 '/dashboard/menu/testimonials/view',
                 testimonial.id
-              ]"
-              (onClick)="runSpinner()"
-              class="p-button-text p-button-sm"
-              pTooltip="View Testimonial"
-            ></p-button>
+              ]" (onClick)="runSpinner()" class="p-button-text p-button-sm" pTooltip="View Testimonial"></p-button>
           </div>
         </td>
       </tr>

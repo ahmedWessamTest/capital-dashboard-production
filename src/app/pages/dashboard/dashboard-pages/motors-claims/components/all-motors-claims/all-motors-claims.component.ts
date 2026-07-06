@@ -1,4 +1,4 @@
-import { AfterViewInit, ChangeDetectorRef, Component, inject, signal, ViewChild } from '@angular/core';
+import { Component, inject, signal, ViewChild } from '@angular/core';
 import { ActivatedRoute, RouterLink } from '@angular/router';
 import { NgxSpinnerModule, NgxSpinnerService } from 'ngx-spinner';
 import { MessageService } from 'primeng/api';
@@ -46,7 +46,7 @@ interface TypeOption {
   styleUrl: './all-motors-claims.component.scss',
   providers: [MessageService],
 })
-export class AllMotorsClaimsComponent implements AfterViewInit {
+export class AllMotorsClaimsComponent {
   private ngxSpinnerService = inject(NgxSpinnerService);
   private messageService = inject(MessageService);
   private motorClaimsService = inject(MotorClaimsService);
@@ -77,11 +77,6 @@ export class AllMotorsClaimsComponent implements AfterViewInit {
     this.ngxSpinnerService.hide('actionsLoader');
   }
 
-  ngAfterViewInit() {
-    console.log('Table reference:', this.dt);
-  }
-
-  constructor(private cdRef: ChangeDetectorRef) {}
 
   initDropDownFilter(): void {
     this.selectOptions = [
@@ -266,7 +261,7 @@ export class AllMotorsClaimsComponent implements AfterViewInit {
   }
   getPagination(): number[] {
     const dataLength = this.filteredClaims.length;
-    return [10, 25, 50, 100,dataLength].filter(opt => opt <= dataLength);
+    return [10, 25, 50, 100, dataLength].filter(opt => opt <= dataLength);
   }
 
   formatDate(dateString: string): string {

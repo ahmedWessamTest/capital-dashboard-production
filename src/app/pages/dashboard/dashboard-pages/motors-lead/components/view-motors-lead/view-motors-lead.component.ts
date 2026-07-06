@@ -13,12 +13,14 @@ import { GenericViewComponent } from '../../../../../../core/components/far-gene
   styleUrl: './view-motors-lead.component.scss'
 })
 export class ViewMotorsLeadComponent {
-motorLead: MotorLead | null = null;
+  motorLead: MotorLead | null = null;
   columns: Column[] = [
     { field: 'id', header: 'Motor Lead ID ', type: 'text' },
-    { field: 'category_id', header: 'Category Name', type: 'text', displayFn(item) {
-      return item.category?.en_title || "No Category";
-    }},
+    {
+      field: 'category_id', header: 'Category Name', type: 'text', displayFn(item) {
+        return item.category?.en_title || "No Category";
+      }
+    },
     { field: 'name', header: 'Name', type: 'text' },
 
     { field: 'phone', header: 'Phone', type: 'text' },
@@ -41,27 +43,21 @@ motorLead: MotorLead | null = null;
   constructor(
     private route: ActivatedRoute,
     private ngxSpinnerService: NgxSpinnerService,
-  ) {}
+  ) { }
 
   ngOnInit(): void {
-    console.log('ViewMotorsLeadComponent initialized');
-    
+
     this.route.data.subscribe({
       next: (data) => {
-        console.log('Route data received:', data);
-        
+
         // Handle different response structures
         const motorLeadData = data['data'];
-        console.log('Motor lead resolver data:', motorLeadData);
-        
+
         if (motorLeadData) {
           // Check if the response has a 'data' property (API wrapper)
           this.motorLead = motorLeadData.data || motorLeadData;
-          console.log('Assigned motor lead:', this.motorLead);
-        } else {
-          console.warn('No motor lead data found in route data');
         }
-        
+
         // Hide spinner after processing data
         this.ngxSpinnerService.hide("actionsLoader");
       },

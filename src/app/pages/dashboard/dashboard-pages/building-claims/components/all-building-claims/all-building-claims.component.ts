@@ -46,7 +46,7 @@ interface TypeOption {
   styleUrl: './all-building-claims.component.scss',
   providers: [MessageService],
 })
-export class AllBuildingClaimsComponent implements AfterViewInit {
+export class AllBuildingClaimsComponent {
   private ngxSpinnerService = inject(NgxSpinnerService);
   private messageService = inject(MessageService);
   private buildingClaimsService = inject(BuildingClaimsService);
@@ -77,11 +77,7 @@ export class AllBuildingClaimsComponent implements AfterViewInit {
     this.ngxSpinnerService.hide('actionsLoader');
   }
 
-  ngAfterViewInit() {
-    console.log('Table reference:', this.dt);
-  }
-
-  constructor(private cdRef: ChangeDetectorRef) {}
+  constructor(private cdRef: ChangeDetectorRef) { }
 
   initDropDownFilter(): void {
     this.selectOptions = [
@@ -267,7 +263,7 @@ export class AllBuildingClaimsComponent implements AfterViewInit {
 
   getPagination(): number[] {
     const dataLength = this.filteredClaims.length;
-    return [10, 25, 50, 100,dataLength].filter(opt => opt <= dataLength);
+    return [10, 25, 50, 100, dataLength].filter(opt => opt <= dataLength);
   }
   formatDate(dateString: string): string {
     return new Date(dateString).toLocaleDateString('en-US', {

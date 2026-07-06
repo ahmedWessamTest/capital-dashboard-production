@@ -29,8 +29,8 @@ export class AddEditMedicalInsurancesComponent {
     private route: ActivatedRoute,
     private validationService: ValidationService
     ,
-    private ngxSpinnerService :NgxSpinnerService,
-  ) {}
+    private ngxSpinnerService: NgxSpinnerService,
+  ) { }
 
   ngOnInit() {
     this.initializeFields();
@@ -61,7 +61,7 @@ export class AddEditMedicalInsurancesComponent {
         validators: [this.validationService.positiveNumberValidator()],
         placeholder: 'Yearly Money'
       },
-      
+
       {
         name: 'company_name',
         label: 'Company Name',
@@ -75,8 +75,8 @@ export class AddEditMedicalInsurancesComponent {
         type: 'boolean',
         required: true
       },
-    
-     
+
+
     ];
   }
 
@@ -87,11 +87,7 @@ export class AddEditMedicalInsurancesComponent {
     }
     this.route.data.subscribe({
       next: ({ data }) => {
-        console.log(data)
-        console.log("from medical insurance data",data)
         this.editData = data.data;
-        console.log(this.editData);
-        
       },
       error: (err) => {
         console.error('Failed to load medicalInsurances', err);
@@ -103,5 +99,5 @@ export class AddEditMedicalInsurancesComponent {
     this.ngxSpinnerService.hide('actionsLoader');
   }
 
-  
+
 }

@@ -58,7 +58,7 @@ export class AddEditJopRequestsComponent implements OnInit {
     private ngxSpinnerService: NgxSpinnerService,
     private jobRequestsService: JobRequestsService,
     private messageService: MessageService
-  ) {}
+  ) { }
 
   ngOnInit() {
     this.jobRequestId = this.route.snapshot.paramMap.get('id');
@@ -88,9 +88,6 @@ export class AddEditJopRequestsComponent implements OnInit {
               };
             }
           }
-          console.log('jobInsurances', this.jobInsurances);
-          console.log('jobInsurances', this.editData);
-
           this.jobInsuranceOptions = this.jobInsurances.map((insurance) => ({
             label: `${insurance.company_name} - ${insurance.en_title}`,
             value: insurance.id.toString(),
@@ -120,7 +117,7 @@ export class AddEditJopRequestsComponent implements OnInit {
     });
   }
 
-  initializeFields(type:any) {
+  initializeFields(type: any) {
     // Define status steps to determine order
     const statusSteps = ['requested', 'pending', 'confirmed', 'canceled'];
     // Get the current status from editData if in edit mode
@@ -147,7 +144,7 @@ export class AddEditJopRequestsComponent implements OnInit {
         !this.isEditMode || currentIndex === -1 || optionIndex >= currentIndex
       );
     });
-    if(type ==="corporate" || type === "company-corporate"){
+    if (type === "corporate" || type === "company-corporate") {
       this.formFields = [
         {
           name: 'admin_jop_insurance_number',
@@ -169,7 +166,7 @@ export class AddEditJopRequestsComponent implements OnInit {
           type: 'dropdown',
           required: true,
           placeholder: 'Enter Duration in Years',
-          showIf:{filed:"active_status",value:'confirmed'}
+          showIf: { filed: "active_status", value: 'confirmed' }
         },
         {
           name: 'end_date',
@@ -177,7 +174,7 @@ export class AddEditJopRequestsComponent implements OnInit {
           type: 'date',
           required: true,
           placeholder: 'Select End Date',
-          showIf:{filed:"active_status",value:'confirmed'}
+          showIf: { filed: "active_status", value: 'confirmed' }
         },
         {
           name: 'active_status',
@@ -245,7 +242,7 @@ export class AddEditJopRequestsComponent implements OnInit {
           disabled: true,
         },
       ];
-    }else {
+    } else {
       this.formFields = [
         {
           name: 'admin_jop_insurance_number',
@@ -267,7 +264,7 @@ export class AddEditJopRequestsComponent implements OnInit {
           type: 'dropdown',
           required: true,
           placeholder: 'Enter Duration in Years',
-          showIf:{filed:"active_status",value:'confirmed'}
+          showIf: { filed: "active_status", value: 'confirmed' }
         },
         {
           name: 'end_date',
@@ -275,7 +272,7 @@ export class AddEditJopRequestsComponent implements OnInit {
           type: 'date',
           required: true,
           placeholder: 'Select End Date',
-          showIf:{filed:"active_status",value:'confirmed'}
+          showIf: { filed: "active_status", value: 'confirmed' }
         },
         {
           name: 'active_status',
@@ -367,7 +364,7 @@ export class AddEditJopRequestsComponent implements OnInit {
           placeholder: 'Professional Second Image Link',
           disabled: true,
         },
-      ];  
+      ];
     }
   }
 }

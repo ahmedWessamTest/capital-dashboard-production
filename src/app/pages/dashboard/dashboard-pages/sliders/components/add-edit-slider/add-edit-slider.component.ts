@@ -21,7 +21,7 @@ export class AddEditSliderComponent implements OnInit {
   constructor(
     private route: ActivatedRoute,
     private ngxSpinnerService: NgxSpinnerService
-  ) {}
+  ) { }
 
   ngOnInit(): void {
     this.sliderId = this.route.snapshot.paramMap.get('id');
@@ -39,7 +39,6 @@ export class AddEditSliderComponent implements OnInit {
     this.route.data.subscribe({
       next: ({ data }) => {
         this.editData = data?.data || null;
-        console.log(this.editData);
         this.ngxSpinnerService.hide('actionsLoader');
       },
       error: (err) => {

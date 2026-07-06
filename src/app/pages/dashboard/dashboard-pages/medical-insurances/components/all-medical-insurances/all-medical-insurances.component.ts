@@ -16,7 +16,7 @@ import { LoadingDataBannerComponent } from "../../../../../../shared/components/
   templateUrl: './all-medical-insurances.component.html',
   styleUrl: './all-medical-insurances.component.scss'
 })
-export class AllMedicalInsurancesComponent implements OnInit,OnDestroy {
+export class AllMedicalInsurancesComponent implements OnInit, OnDestroy {
   private readonly destroy$ = new Subject<void>();
   medicalInsurances: MedicalInsurance[] = [];
   isLoading: boolean = true;
@@ -30,11 +30,12 @@ export class AllMedicalInsurancesComponent implements OnInit,OnDestroy {
     { field: 'en_title', header: 'English Title', sortable: true },
     { field: 'year_money', header: 'Year Money', sortable: true },
     { field: 'company_name', header: 'Company Name', sortable: true },
-    { field: 'active_status', header: 'Status', sortable: true, type: 'text',displayFn(item) {
-      console.log(item.active_status);
-            
-      return item.active_status ? "Enabled":"Disabled"
-    } },
+    {
+      field: 'active_status', header: 'Status', sortable: true, type: 'text', displayFn(item) {
+
+        return item.active_status ? "Enabled" : "Disabled"
+      }
+    },
     {
       field: "choices",
       header: "Choices",
@@ -64,25 +65,22 @@ export class AllMedicalInsurancesComponent implements OnInit,OnDestroy {
 
   private loadData(): void {
     this.isLoading = true,
-      console.log('call-data-again')
-    // this.ngxSpinnerService.show('actionsLoader');
-    this.medicalInsurancesService.getAll().pipe(
-      map((response: MedicalInsurancesListResponse) => this.normalizeInsurances(response)),
-      finalize(() => this.isLoading = false)
-    ).pipe(takeUntil(this.destroy$)).subscribe({
-      next: (response) => {
-        this.medicalInsurances = response.data;
-        console.log("medical data:", this.medicalInsurances);
+      // this.ngxSpinnerService.show('actionsLoader');
+      this.medicalInsurancesService.getAll().pipe(
+        map((response: MedicalInsurancesListResponse) => this.normalizeInsurances(response)),
+        finalize(() => this.isLoading = false)
+      ).pipe(takeUntil(this.destroy$)).subscribe({
+        next: (response) => {
+          this.medicalInsurances = response.data;
+          this.isLoading = false;
 
-        this.isLoading = false;
+        },
+        error: (err) => {
+          console.error('Failed to load medical insurances', err);
+          this.isLoading = false;
 
-      },
-      error: (err) => {
-        console.error('Failed to load medical insurances', err);
-        this.isLoading = false;
-
-      }
-    });
+        }
+      });
   }
 
   private normalizeInsurances(response: MedicalInsurancesListResponse): MedicalInsurancesListResponse {
@@ -94,7 +92,7 @@ export class AllMedicalInsurancesComponent implements OnInit,OnDestroy {
     return response;
   }
   ngOnDestroy(): void {
-      this.destroy$.next();
-      this.destroy$.complete()
+    this.destroy$.next();
+    this.destroy$.complete()
   }
 }

@@ -1,4 +1,3 @@
-import { Partner } from './../../services/parteners.service';
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { NgxSpinnerService } from 'ngx-spinner';
@@ -41,11 +40,8 @@ export class AddEditPartnersComponent implements OnInit {
   loadEditData(): void {
     this.route.data.subscribe({
       next: ({ data }) => {
-        console.log("data", data.partner.data)
         this.editData = data?.partner.data || null;
         this.categoriesData = data?.categories.data || null;
-        console.log(this.editData);
-        console.log(this.categoriesData);
         this.ngxSpinnerService.hide('actionsLoader');
         this.categoryOptions = this.categoriesData.map((category: any) => ({
           label: category.en_title || 'Unnamed category',

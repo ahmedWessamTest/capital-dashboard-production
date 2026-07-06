@@ -73,7 +73,7 @@ export class EditBlogComponent implements OnInit {
   minDate: string = new Date().toISOString().split('T')[0];
   message = { text: '', type: '' };
 
-  constructor(private normalizeActiveStatusService: NormalizeActiveStatusService) {}
+  constructor(private normalizeActiveStatusService: NormalizeActiveStatusService) { }
 
   ngOnInit() {
     this.ngxSpinnerService.hide('actionsLoader');
@@ -92,7 +92,7 @@ export class EditBlogComponent implements OnInit {
       ar_alt_image: [''],
       en_slug: ['', Validators.required],
       ar_slug: ['', Validators.required],
-      blog_date: ['', ],
+      blog_date: ['',],
       en_meta_title: ['', Validators.required],
       ar_meta_title: ['', Validators.required],
       en_meta_text: ['', Validators.required],
@@ -125,24 +125,22 @@ export class EditBlogComponent implements OnInit {
   loadBlogData() {
     this.route.data.subscribe({
       next: (data: any) => {
-        console.log(data)
         // const response = data.data;
         const blog = data.data.data;
-        console.log(blog)
         const currentTime = new Date().toISOString();
         this.initialImages = blog.main_image
           ? [{
-              id: `temp-${Date.now()}`,
-              product_id: 0,
-              image: "https://digitalbondmena.com/darnaapi/" + blog.main_image,
-              thumb: "https://digitalbondmena.com/darnaapi/" + blog.main_image,
-              medium: "https://digitalbondmena.com/darnaapi/" + blog.main_image,
-              order_view: 0,
-              is_main: true,
-              active_status: true,
-              created_at: currentTime,
-              updated_at: currentTime
-            }]
+            id: `temp-${Date.now()}`,
+            product_id: 0,
+            image: "https://digitalbondmena.com/darnaapi/" + blog.main_image,
+            thumb: "https://digitalbondmena.com/darnaapi/" + blog.main_image,
+            medium: "https://digitalbondmena.com/darnaapi/" + blog.main_image,
+            order_view: 0,
+            is_main: true,
+            active_status: true,
+            created_at: currentTime,
+            updated_at: currentTime
+          }]
           : [];
         this.blogForm.patchValue({
           en_blog_title: blog.en_blog_title,
@@ -162,7 +160,7 @@ export class EditBlogComponent implements OnInit {
           en_second_script_text: blog.en_second_script_text,
           ar_second_script_text: blog.ar_second_script_text,
           active_status: this.normalizeActiveStatusService.normalizeActiveStatus(blog.active_status),
-          main_image:"https://digitalbondmena.com/darnaapi/" + blog.main_image
+          main_image: "https://digitalbondmena.com/darnaapi/" + blog.main_image
         });
         // this.blogForm.get('blog_date')?.setValidators([Validators.required]);
         // this.blogForm.get('blog_date')?.updateValueAndValidity();

@@ -5,7 +5,7 @@ import {
   RouterStateSnapshot,
 } from '@angular/router';
 import { NgxSpinnerService } from 'ngx-spinner';
-import { catchError, map, Observable, tap, throwError } from 'rxjs';
+import { catchError, map, Observable, throwError } from 'rxjs';
 import { JopInsuranceService } from '../../pages/dashboard/dashboard-pages/a-jop-insurance/jop-insurance.service';
 import {
   JopInsuranceChoiceResponse,
@@ -19,14 +19,13 @@ import { NormalizeActiveStatusService } from '../normalize-active-status/normali
 })
 export class JopInsuranceChoicesResolver
   implements
-    Resolve<JopInsuranceChoicesListResponse | JopInsuranceChoiceResponse>
-{
+  Resolve<JopInsuranceChoicesListResponse | JopInsuranceChoiceResponse> {
   constructor(
     private jopInsuranceChoicesService: JopInsuranceChoicesService,
     private jopInsuranceService: JopInsuranceService,
     private ngxSpinnerService: NgxSpinnerService,
     private normalizeActiveStatusService: NormalizeActiveStatusService
-  ) {}
+  ) { }
 
   resolve(
     route: ActivatedRouteSnapshot,
@@ -41,12 +40,8 @@ export class JopInsuranceChoicesResolver
 
     if (choiceId) {
       return this.jopInsuranceChoicesService.getById(+choiceId).pipe(
-        tap((response) =>
-          console.log('Single job insurance choice request initiated', response)
-        ),
         map((response) => {
           if (!response?.data) {
-            console.warn('No data in response');
             return response;
           }
           response.data.active_status =
@@ -63,12 +58,9 @@ export class JopInsuranceChoicesResolver
       );
     } else if (id) {
       return this.jopInsuranceChoicesService.getAll().pipe(
-        tap((response) =>
-          console.log('All job insurance choices request initiated', response)
-        ),
+
         map((response) => {
           if (!response?.data) {
-            console.warn('No data in response');
             return response;
           }
           response.data = response.data.filter(
@@ -90,12 +82,8 @@ export class JopInsuranceChoicesResolver
       );
     } else {
       return this.jopInsuranceChoicesService.getAll().pipe(
-        tap((response) =>
-          console.log('All job insurance choices request initiated', response)
-        ),
         map((response) => {
           if (!response?.data) {
-            console.warn('No data in response');
             return response;
           }
           response.data.forEach((choice) => {

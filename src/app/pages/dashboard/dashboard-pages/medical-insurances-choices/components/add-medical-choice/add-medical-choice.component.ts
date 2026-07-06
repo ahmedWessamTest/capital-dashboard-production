@@ -1,9 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { ReactiveFormsModule, FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { Router, ActivatedRoute } from '@angular/router';
-import { NormalizeActiveStatusService } from '../../../../../../core/normalize-active-status/normalize-active-status.service';
-import { PrimeNGConfig } from 'primeng/api';
+import { ReactiveFormsModule } from '@angular/forms';
+import { ActivatedRoute } from '@angular/router';
 import { DropdownModule } from 'primeng/dropdown';
 import { InputTextModule } from 'primeng/inputtext';
 import { InputTextareaModule } from 'primeng/inputtextarea';
@@ -11,7 +9,6 @@ import { InputSwitchModule } from 'primeng/inputswitch';
 import { ButtonModule } from 'primeng/button';
 import { MessageService } from 'primeng/api';
 import { ToastModule } from 'primeng/toast';
-import { Category } from '../../../categories/services/categories.service';
 import { MedicalInsurance } from '../../../medical-requests/services/medical-requests.service';
 import { MedicalInsuranceChoicesService } from '../../services/medical-insurances-choices.service';
 import { ValidationService } from '../../../../../../core/services/validation/form-validators.service';
@@ -51,21 +48,17 @@ export class AddMedicalChoiceComponent implements OnInit {
     private validationService: ValidationService,
     private ngxSpinnerService: NgxSpinnerService,
     private medicalInsuranceChoicesService: MedicalInsuranceChoicesService
-  ) {}
+  ) { }
 
   ngOnInit() {
     this.route.data.subscribe({
       next: ({ data }) => {
-        console.log("from medical insurance data", data);
-console.log("data",data.data)        
-        console.log("medicalInsurances",this.medicalInsurances)
         // Create options for dropdown
-        this.medicalInsuranceOptions = data.data.map((insurance:MedicalInsurance) => ({
+        this.medicalInsuranceOptions = data.data.map((insurance: MedicalInsurance) => ({
           label: `${insurance.company_name} - ${insurance.en_title}`,
           value: insurance.id
-        }));       
+        }));
 
-        console.log("medicalInsuranceOptions",this.medicalInsuranceOptions)
       },
       error: (err) => {
         console.error('Failed to load medicalInsurances', err);
@@ -81,7 +74,7 @@ console.log("data",data.data)
 
   }
 
- 
+
   initializeFields() {
     this.formFields = [
       {

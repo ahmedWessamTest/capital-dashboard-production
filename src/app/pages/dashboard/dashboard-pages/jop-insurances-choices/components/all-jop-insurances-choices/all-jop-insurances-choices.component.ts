@@ -7,7 +7,6 @@ import {
   finalize,
   map,
   Subscription,
-  tap,
   throwError,
 } from 'rxjs';
 import { NormalizeActiveStatusService } from '../../../../../../core/normalize-active-status/normalize-active-status.service';
@@ -54,7 +53,7 @@ export class AllJopInsurancesChoicesComponent implements OnInit, OnDestroy {
     private jopInsuranceChoicesService: JopInsuranceChoicesService,
     private normalizeActiveStatusService: NormalizeActiveStatusService,
     private dataRefreshService: DataRefreshService
-  ) {}
+  ) { }
 
   ngOnInit(): void {
     this.jopInsuranceId = this.route.snapshot.params['id'];
@@ -82,9 +81,6 @@ export class AllJopInsurancesChoicesComponent implements OnInit, OnDestroy {
     this.jopInsuranceChoicesService
       .getAll()
       .pipe(
-        tap((response) =>
-          console.log('All job insurance choices request initiated', response)
-        ),
         map((response) => {
           if (!response?.data) {
             console.warn('No data in response');

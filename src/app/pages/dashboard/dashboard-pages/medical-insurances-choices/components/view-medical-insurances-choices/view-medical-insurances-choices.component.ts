@@ -16,9 +16,11 @@ export class ViewMedicalInsurancesChoicesComponent {
   medicalInsuranceChoice: MedicalInsuranceChoice | null = null;
   columns: Column[] = [
     { field: 'id', header: 'Choice ID', type: 'text' },
-    { field: 'category_id', header: 'Category Name', type: 'text', displayFn(item) {
-      return item.category?.en_title || 'No Category';
-    }},
+    {
+      field: 'category_id', header: 'Category Name', type: 'text', displayFn(item) {
+        return item.category?.en_title || 'No Category';
+      }
+    },
 
     { field: 'en_title', header: 'English Title', type: 'text' },
     { field: 'ar_title', header: 'Arabic Title', type: 'text' },
@@ -29,20 +31,14 @@ export class ViewMedicalInsurancesChoicesComponent {
   constructor(
     private route: ActivatedRoute,
     private ngxSpinnerService: NgxSpinnerService,
-  ) {}
+  ) { }
 
   ngOnInit(): void {
-    console.log('ViewMedicalInsurancesChoicesComponent initialized');
     this.route.data.subscribe({
       next: ({ data }) => {
-        console.log('Route data received:', data);
         const medicalInsuranceChoiceData = data.data;
-        console.log('Medical insurance choice resolver data:', medicalInsuranceChoiceData);
         if (medicalInsuranceChoiceData) {
           this.medicalInsuranceChoice = medicalInsuranceChoiceData;
-          console.log('Assigned medical insurance choice:', this.medicalInsuranceChoice);
-        } else {
-          console.warn('No medical insurance choice data found in route data');
         }
         this.ngxSpinnerService.hide('actionsLoader');
       },

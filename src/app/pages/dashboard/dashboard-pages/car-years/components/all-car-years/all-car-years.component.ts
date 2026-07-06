@@ -1,13 +1,13 @@
 import { CommonModule } from '@angular/common';
 import { Component, inject } from '@angular/core';
 import { FormsModule } from '@angular/forms';
-import { ActivatedRoute, Router, RouterLink } from '@angular/router';
+import { ActivatedRoute, RouterLink } from '@angular/router';
 import { NgxSpinnerService } from 'ngx-spinner';
 import { MessageService } from 'primeng/api';
 import { ButtonModule } from 'primeng/button';
 import { DropdownModule } from 'primeng/dropdown';
 import { InputSwitchModule } from 'primeng/inputswitch';
-import { Table, TableModule } from 'primeng/table';
+import { TableModule } from 'primeng/table';
 import { ToastModule } from 'primeng/toast';
 import { LoadingDataBannerComponent } from '../../../../../../shared/components/loading-data-banner/loading-data-banner.component';
 import { NoDataFoundBannerComponent } from '../../../../../../shared/components/no-data-found-banner/no-data-found-banner.component';
@@ -94,13 +94,11 @@ export class AllCarYearsComponent {
   public normalizeActiveStatus = inject(NormalizeActiveStatusService);
   private spinner = inject(NgxSpinnerService);
   private messageService = inject(MessageService);
-  private router = inject(Router);
   private route = inject(ActivatedRoute);
 
   ngOnInit(): void {
     this.route.data.subscribe({
       next: (data: any) => {
-        console.log(data.data);
         this.combinedData = data.data.combinedData;
         this.carTypes = data.data.carTypes;
         this.carBrands = data.data.carBrands;
@@ -192,10 +190,6 @@ export class AllCarYearsComponent {
     this.currentPage = event.page + 1;
     this.rowsPerPage = event.rows;
     this.first = event.first;
-    
-    // You can add custom logic here when page changes
-    console.log('Page changed to:', this.currentPage);
-    console.log('Current page info:', this.getCurrentPageInfo());
   }
 
   getCurrentPageInfo(): string {

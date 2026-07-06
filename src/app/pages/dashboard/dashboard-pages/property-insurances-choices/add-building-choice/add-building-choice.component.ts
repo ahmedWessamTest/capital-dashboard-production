@@ -50,21 +50,18 @@ export class AddBuildingChoiceComponent implements OnInit {
     private ngxSpinnerService: NgxSpinnerService,
     private buildingInsuranceChoicesService: BuildingInsuranceChoicesService,
     private messageService: MessageService
-  ) {}
+  ) { }
 
   ngOnInit() {
     this.route.data.subscribe({
       next: ({ data }) => {
-        console.log("from building insurance data", data);
-        console.log("data", data.data);
-        console.log("buildingInsurances", this.buildingInsurances);
+
         // Create options for dropdown
         this.buildingInsuranceOptions = data.data.map((insurance: BuildingInsurance) => ({
           label: `${insurance.company_name} - ${insurance.en_title}`,
           value: insurance.id
         }));
 
-        console.log("buildingInsuranceOptions", this.buildingInsuranceOptions);
       },
       error: (err) => {
         console.error('Failed to load buildingInsurances', err);

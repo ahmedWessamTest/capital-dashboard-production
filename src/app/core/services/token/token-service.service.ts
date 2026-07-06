@@ -1,7 +1,5 @@
 import { Injectable } from '@angular/core';
 import { Router } from '@angular/router';
-import { isPlatformBrowser } from '@angular/common';
-import { PLATFORM_ID, Inject } from '@angular/core';
 
 @Injectable({
   providedIn: 'root',
@@ -10,38 +8,32 @@ export class TokenService {
   private tokenCheckInterval: any;
 
   constructor(
-    private router: Router,
-    @Inject(PLATFORM_ID) private platformId: Object
-  ) {}
+    private router: Router
+  ) { }
 
   setToken(token: string, expiresIn?: number) {
-    if (isPlatformBrowser(this.platformId)) {
-      localStorage.setItem('token', token); // Consider cookies/in-memory
-      this.startTokenExpiryCheck(expiresIn);
-    }
+    localStorage.setItem('token', token);
+    this.startTokenExpiryCheck(expiresIn);
   }
 
   startTokenExpiryCheck(expiresIn?: number) {
-    if (isPlatformBrowser(this.platformId)) {
-      const token = localStorage.getItem('token')?.replace(/^"|"$/g, '');
-      if (!token) return;
+    const token = localStorage.getItem('token')?.replace(/^"|"$/g, '');
+    if (!token) return;
 
-      let expiryTime: number;
-      try {
-        const payload = this.decodeJwt(token);
-        expiryTime = expiresIn ? Date.now() + expiresIn * 1000 : payload.exp * 1000;
-      } catch (e) {
-        this.logout();
-        return;
-      }
-
-      this.tokenCheckInterval = setInterval(() => {
-        console.log("check authorization")
-        if (Date.now() >= expiryTime - 30000) {
-          this.logout();
-        }
-      }, 60000); // Check every minute
+    let expiryTime: number;
+    try {
+      const payload = this.decodeJwt(token);
+      expiryTime = expiresIn ? Date.now() + expiresIn * 1000 : payload.exp * 1000;
+    } catch (e) {
+      this.logout();
+      return;
     }
+
+    this.tokenCheckInterval = setInterval(() => {
+      if (Date.now() >= expiryTime - 30000) {
+        this.logout();
+      }
+    }, 60000); // Check every minute
   }
 
   private decodeJwt(token: string): any {
@@ -68,12 +60,10 @@ export class TokenService {
   }
 
   private logout() {
-    if (isPlatformBrowser(this.platformId)) {
-      localStorage.removeItem('token');
-      localStorage.removeItem('user');
-      localStorage.removeItem('savedEmail');
-      this.stopTokenCheck();
-      this.router.navigate(['/login'], { queryParams: { reason: 'session_expired' } });
-    }
+    localStorage.removeItem('token');
+    localStorage.removeItem('user');
+    localStorage.removeItem('savedEmail');
+    this.stopTokenCheck();
+    this.router.navigate(['/login'], { queryParams: { reason: 'session_expired' } });
   }
 }

@@ -87,7 +87,7 @@ export class DCategoryAddComponent {
           }
         },
         error: (error: HttpErrorResponse) => {
-          console.log(error.error.errors);
+          console.error(error.error.errors);
         },
       });
     }

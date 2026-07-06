@@ -14,7 +14,7 @@ import { CarType } from '../../services/car-types.service';
   styleUrl: './all-car-types.component.scss'
 })
 export class AllCarTypesComponent {
-  carTypes: CarType[] = []; 
+  carTypes: CarType[] = [];
 
   columns: Column[] = [
     { field: 'id', header: 'ID', sortable: true, type: 'text' },
@@ -26,7 +26,7 @@ export class AllCarTypesComponent {
     private ngxSpinnerService: NgxSpinnerService,
     private route: ActivatedRoute,
     private normalizeActiveStatusService: NormalizeActiveStatusService
-  ) {}
+  ) { }
 
   ngOnInit(): void {
     this.ngxSpinnerService.hide('actionsLoader');
@@ -36,13 +36,11 @@ export class AllCarTypesComponent {
       next: (data) => {
         this.carTypes = data['data'].data;
         this.carTypes.forEach((carType) => {
-          if(carType.active_status){
+          if (carType.active_status) {
             carType.active_status = this.normalizeActiveStatusService.normalizeActiveStatus(carType.active_status);
           }
         });
-        console.log( "car types",this.carTypes)
-        
-        console.log(this.carTypes)
+
         this.ngxSpinnerService.hide('actionsLoader');
       },
       error: (err) => {
@@ -50,5 +48,5 @@ export class AllCarTypesComponent {
         this.ngxSpinnerService.hide('actionsLoader');
       }
     });
-  } 
+  }
 }

@@ -1,6 +1,5 @@
 import { MessageService } from 'primeng/api';
-import { isPlatformBrowser } from "@angular/common";
-import { Component, Inject, PLATFORM_ID, Renderer2, ViewChild } from "@angular/core";
+import { Component, Renderer2, ViewChild } from "@angular/core";
 import { NavigationEnd, Router, RouterOutlet } from "@angular/router";
 import { Subscription, filter } from "rxjs";
 import { DashboardConfigBarComponent } from "../dashboard-config-bar/dashboard-config-bar.component";
@@ -8,7 +7,6 @@ import { DashboardSideBarComponent } from "../dashboard-side-bar/dashboard-side-
 import { DashboardTopBarComponent } from "../dashboard-top-bar/dashboard-top-bar.component";
 import { DashboardLayoutService } from "../../../core/services/core/dashboard-layout.service";
 import { ToastModule } from "primeng/toast";
-import { log } from 'console';
 import { ToastComponent } from "../../../core/components/toast/toast.component";
 import { ToastService } from '../../../core/services/toast.service';
 
@@ -18,7 +16,7 @@ import { ToastService } from '../../../core/services/toast.service';
   imports: [ToastModule, RouterOutlet, DashboardSideBarComponent, DashboardTopBarComponent, DashboardConfigBarComponent, ToastComponent],
   templateUrl: "./dashboard-pages.component.html",
   styleUrl: "./dashboard-pages.component.scss",
-  providers:[MessageService]
+  providers: [MessageService]
 })
 export class DashboardPagesComponent {
   overlayMenuOpenSubscription!: Subscription;
@@ -33,52 +31,25 @@ export class DashboardPagesComponent {
   constructor(
     public layoutService: DashboardLayoutService,
     public renderer: Renderer2,
-    private toastService:ToastService,    public router: Router,
-    @Inject(PLATFORM_ID) private _PLATFORM_ID: Object
-  ) {}
+    private toastService: ToastService, public router: Router
+  ) { }
   ngOnInit(): void {
-    if (isPlatformBrowser(this._PLATFORM_ID)) {
-      this.overlayMenuOpenSubscription = this.layoutService.overlayOpen$.subscribe(() => {
-        if (!this.menuOutsideClickListener) {
-          this.menuOutsideClickListener = this.renderer.listen("document", "click", (event) => {
-            // const isOutsideClicked = !(
-              // this.appSidebar.el.nativeElement.isSameNode(event.target) ||
-              // this.appSidebar.el.nativeElement.contains(event.target) ||
-              // this.appTopbar.menuButton.nativeElement.isSameNode(event.target) ||
-              // this.appTopbar.menuButton.nativeElement.contains(event.target)
-            // );
+    this.overlayMenuOpenSubscription = this.layoutService.overlayOpen$.subscribe(() => {
+      if (!this.menuOutsideClickListener) {
+        this.menuOutsideClickListener = this.renderer.listen("document", "click", (event) => {
 
-            // if (isOutsideClicked) {
-            //   this.hideMenu();
-            // }
-          });
-        }
+        });
+      }
 
-        // if (!this.profileMenuOutsideClickListener) {
-        //   this.profileMenuOutsideClickListener = this.renderer.listen("document", "click", (event) => {
-        //     const isOutsideClicked = !(
-        //       this.appTopbar.menu.nativeElement.isSameNode(event.target) ||
-        //       this.appTopbar.menu.nativeElement.contains(event.target) ||
-        //       this.appTopbar.topbarMenuButton.nativeElement.isSameNode(event.target) ||
-        //       this.appTopbar.topbarMenuButton.nativeElement.contains(event.target)
-        //     );
+      if (this.layoutService.state.staticMenuMobileActive) {
+        this.blockBodyScroll();
+      }
+    });
 
-        //     if (isOutsideClicked) {
-        //       this.hideProfileMenu();
-        //     }
-        //   });
-        // }
-
-        if (this.layoutService.state.staticMenuMobileActive) {
-          this.blockBodyScroll();
-        }
-      });
-
-      this.router.events.pipe(filter((event) => event instanceof NavigationEnd)).subscribe(() => {
-        this.hideMenu();
-        this.hideProfileMenu();
-      });
-    }
+    this.router.events.pipe(filter((event) => event instanceof NavigationEnd)).subscribe(() => {
+      this.hideMenu();
+      this.hideProfileMenu();
+    });
   }
   hideMenu() {
     this.layoutService.state.overlayMenuActive = false;
@@ -108,7 +79,6 @@ export class DashboardPagesComponent {
   }
 
   unblockBodyScroll(): void {
-    if (isPlatformBrowser(this._PLATFORM_ID)) return;
     if (document.body.classList) {
       document.body.classList.remove("blocked-scroll");
     } else {
@@ -142,13 +112,8 @@ export class DashboardPagesComponent {
     if (this.menuOutsideClickListener) {
       this.menuOutsideClickListener();
     }
-    if (isPlatformBrowser(this._PLATFORM_ID)) {
-      // localStorage.removeItem('user');
-    }
   }
-  test(){
-    console.log("click");
-    this.toastService.showToast('warning','hellow','topLeft')
-   
+  test() {
+    this.toastService.showToast('warning', 'hellow', 'topLeft')
   }
 }

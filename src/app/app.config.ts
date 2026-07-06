@@ -14,11 +14,11 @@
  *
  * @exports appConfig - Main application configuration object
  */
-import { ApplicationConfig, importProvidersFrom } from "@angular/core";
+import { ApplicationConfig } from "@angular/core";
 import {
   provideRouter,
   withRouterConfig,
-  
+
 } from "@angular/router";
 
 import { IMAGE_CONFIG } from "@angular/common";
@@ -27,12 +27,9 @@ import { provideAnimations } from "@angular/platform-browser/animations";
 import { provideShareButtonsOptions, SharerMethods, withConfig } from "ngx-sharebuttons";
 import { shareIcons } from "ngx-sharebuttons/icons";
 import { routes } from "./app.routes";
-// import { networkInterceptor } from "./core/interceptors/is-stable.interceptor";
 import { loadingSpinnerInterceptor } from "./core/interceptors/loading-spinner.interceptor";
-import { networkInterceptor }  from "./core/interceptors/is-stable.interceptor";
 import { MessageService } from "primeng/api";
 import { authInterceptor } from "./core/interceptors/auth.interceptor";
-import { CustomRouteReuseStrategy } from "./core/custom-route-reuse.strategy";
 /**
  * @description Configuration for in-memory scrolling behavior
  * @property scrollPositionRestoration - Restores scroll position to "top" when navigating
@@ -55,31 +52,15 @@ import { CustomRouteReuseStrategy } from "./core/custom-route-reuse.strategy";
 export const appConfig: ApplicationConfig = {
   providers: [
     MessageService,
-    // Router configuration with in-memory scrolling and view transitions
-    // provideRouter(routes, inMemoryScrollingFeature, withViewTransitions()),
-
-    // Enables Angular animations
     provideAnimations(),
-
-    // Toast notification configuration
-    // provideToastr({
-    //   positionClass: "toast-top-left",  // Shows toasts in the top-left corner
-    //   timeOut: 20000,                    // Toasts disappear after 2 seconds
-    //   preventDuplicates: true           // Prevents duplicate toast messages
-    // }),
-
-    // HTTP Client configuration with interceptors
     provideHttpClient(
       withInterceptors([
-        loadingSpinnerInterceptor, 
-        authInterceptor     // Handles loading spinner state
-        // networkInterceptor,             // Handles network state
+        loadingSpinnerInterceptor,
+        authInterceptor
       ]),
-      withFetch()                       // Enables fetch for lazy loading
+      withFetch()
     ),
     provideRouter(routes, withRouterConfig({ onSameUrlNavigation: 'reload' })),
-    // Date range picker configuration
-    // Social sharing buttons configuration
     provideShareButtonsOptions(
       shareIcons(),
       withConfig({
@@ -87,13 +68,10 @@ export const appConfig: ApplicationConfig = {
         sharerMethod: SharerMethods.Anchor,
       })
     ),
-
-    // Image configuration to disable warnings
     {
       provide: IMAGE_CONFIG,
       useValue: {
-        disableImageSizeWarning: true,      // Disables image size warnings
-        disableImageLazyLoadWarning: true,  // Disables lazy loading warnings
+        disableImageSizeWarning: true,
       },
     },
   ],

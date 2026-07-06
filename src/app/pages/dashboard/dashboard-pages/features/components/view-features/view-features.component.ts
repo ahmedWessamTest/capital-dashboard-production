@@ -14,7 +14,7 @@ import { Feature } from '../../services/features.service';
   styleUrl: './view-features.component.scss'
 })
 export class ViewFeaturesComponent {
- feature: Feature | null = null;
+  feature: Feature | null = null;
 
   columns: Column[] = [
     { field: 'icon_image', header: 'Icon Image', type: 'image' },
@@ -32,17 +32,15 @@ export class ViewFeaturesComponent {
     private route: ActivatedRoute,
     private ngxSpinnerService: NgxSpinnerService,
     private normalizeActiveStatusService: NormalizeActiveStatusService
-  ) {}
+  ) { }
 
   ngOnInit(): void {
     this.route.data.subscribe({
       next: (data) => {
-        console.log(data)
         this.feature = data['feature'].data;
-        if(this.feature){
+        if (this.feature) {
           this.feature.active_status = this.normalizeActiveStatusService.normalizeActiveStatus(this.feature.active_status);
         }
-        console.log("form Features Page",this.feature)
       },
       error: (err) => {
         console.error('Failed to load feature', err);

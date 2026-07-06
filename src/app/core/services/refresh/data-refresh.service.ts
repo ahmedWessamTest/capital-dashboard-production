@@ -9,7 +9,6 @@ export class DataRefreshService {
   refresh$ = this.refreshSubject.asObservable();
 
   triggerRefresh() {
-    console.log("triggered data refresh")
     this.refreshSubject.next();
   }
 }

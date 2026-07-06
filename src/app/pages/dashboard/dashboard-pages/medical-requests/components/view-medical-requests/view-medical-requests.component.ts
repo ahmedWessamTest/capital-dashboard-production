@@ -267,9 +267,7 @@ export class ViewMedicalRequestsComponent implements OnInit {
   constructor(private route: ActivatedRoute, private ngxSpinnerService: NgxSpinnerService) { }
 
   ngOnInit(): void {
-    console.log("View medical request component initialized");
     this.route.data.subscribe((data: any) => {
-      console.log("Resolver data:", data);
       this.medicalRequest = data['data'].medicalRequest.data;
       this.category = data['data'].category.data;
       this.medicalInsurance = data['data'].medicalInsurance.data;

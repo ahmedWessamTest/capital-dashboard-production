@@ -68,7 +68,6 @@ export class AllJopClaimsCommentsComponent implements OnInit, OnDestroy {
       next: (data) => {
         this.comments = data['data'].comments;
         this.claimData = data['data'].claim;
-        console.log(this.claimData);
         this.claimStatus = this.claimData.data.status || 'pending';
         this.loading = false;
         this.scrollToBottom();

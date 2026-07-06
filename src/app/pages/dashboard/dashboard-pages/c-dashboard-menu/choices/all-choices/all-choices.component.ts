@@ -44,7 +44,7 @@ export class ProductChoicesComponent {
   private productsService = inject(ProductsService);
   private route = inject(ActivatedRoute);
   private router = inject(Router);
-productId: string | null = this.route.snapshot.paramMap.get('id');  // Dropdown
+  productId: string | null = this.route.snapshot.paramMap.get('id');  // Dropdown
   selectedStatus: string = "";
   selectOptions: ISelectOptions[] = [];
   private spinnerService = inject(NgxSpinnerService);
@@ -76,7 +76,7 @@ productId: string | null = this.route.snapshot.paramMap.get('id');  // Dropdown
           this.choices = response.row.choices;
           this.filteredChoices = [...this.choices];
           this.totalRecords = this.choices.length;
-    this.spinnerService.hide("actionsLoader");
+          this.spinnerService.hide("actionsLoader");
         },
         error: () => {
           this.messageService.add({
@@ -84,7 +84,7 @@ productId: string | null = this.route.snapshot.paramMap.get('id');  // Dropdown
             summary: "Error",
             detail: "Failed to load product choices",
           });
-    this.spinnerService.hide("actionsLoader");
+          this.spinnerService.hide("actionsLoader");
         },
       });
     } else {
@@ -191,12 +191,10 @@ productId: string | null = this.route.snapshot.paramMap.get('id');  // Dropdown
 
 
 
-  editChoice(id:string,choiceData:any){
+  editChoice(id: string, choiceData: any) {
 
     localStorage.setItem('choiceData', JSON.stringify(choiceData));
-    console.log("Clicked Data Well ")
     this.productsService.setChoiceData(choiceData);
-    console.log(choiceData)
     this.router.navigateByUrl(`dashboard/menu/products/edit-choice/${id}`);
   }
 }

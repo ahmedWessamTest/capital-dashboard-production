@@ -97,7 +97,7 @@ interface FilterOption {
                   (onChange)="onFilterChange('role', $event.value)"
                   placeholder="Role" 
                   [showClear]="true" 
-                  [autoZIndex]="true">
+                  appendTo="body">
                 </p-dropdown>
               </th> -->
               <th class="text-center">
@@ -109,7 +109,7 @@ interface FilterOption {
                   (onChange)="onFilterChange('is_active', $event.value)"
                   placeholder="Status" 
                   [showClear]="true" 
-                  [autoZIndex]="true">
+                  appendTo="body">
                 </p-dropdown>
               </th>
               <th class="text-center">Actions</th>
@@ -287,7 +287,7 @@ export class AllUsersComponent implements OnDestroy, OnInit {
 
   getPagination(): number[] {
     const dataLength = this.filteredUsers.length;
-    return [10, 25, 50, 100,dataLength].filter(opt => opt <= dataLength);
+    return [10, 25, 50, 100, dataLength].filter(opt => opt <= dataLength);
   }
 
   onSort(event: { field: string; order: number }): void {
@@ -300,7 +300,7 @@ export class AllUsersComponent implements OnDestroy, OnInit {
     });
   }
   ngOnDestroy(): void {
-      this.destroy$.next();
-      this.destroy$.complete();
+    this.destroy$.next();
+    this.destroy$.complete();
   }
 }

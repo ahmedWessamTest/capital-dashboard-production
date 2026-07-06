@@ -1,4 +1,5 @@
-<div *ngIf="usersData?.role === 'admin'" class="statistics-container">
+@if(usersData?.role === 'admin'){
+<div class="statistics-container">
   <div class="grid">
     <div class="col-12">
       <div class="card">
@@ -11,7 +12,9 @@
         <div class="card text-center">
           <div class="card-content">
             <i class="pi pi-users text-blue-500 text-4xl mb-3"></i>
-            <h3 class="text-2xl font-bold text-900 mb-2" *ngIf="statisticsData?.users">{{ statisticsData.users }}</h3>
+            @if(statisticsData().users){
+            <h3 class="text-2xl font-bold text-900 mb-2">{{ statisticsData().users }}</h3>
+            }
             <p class="text-600 m-2">Total Users</p>
           </div>
         </div>
@@ -46,28 +49,28 @@
             <div class="surface-100 p-3 border-round text-center">
               <i class="pi pi-file text-blue-500 text-2xl mb-2"></i>
               <div class="text-900 font-medium mb-1">Medical Policies</div>
-              <div class="text-2xl font-bold text-blue-500">{{ statisticsData?.medicalPolicy }}</div>
+              <div class="text-2xl font-bold text-blue-500">{{ statisticsData().medicalPolicy }}</div>
             </div>
           </div>
           <div class="col-12 md:col-3">
             <div class="surface-100 p-3 border-round text-center">
               <i class="pi pi-car text-orange-500 text-2xl mb-2"></i>
               <div class="text-900 font-medium mb-1">Motor Policies</div>
-              <div class="text-2xl font-bold text-orange-500">{{ statisticsData?.motorPolicy }}</div>
+              <div class="text-2xl font-bold text-orange-500">{{ statisticsData().motorPolicy }}</div>
             </div>
           </div>
           <div class="col-12 md:col-3">
             <div class="surface-100 p-3 border-round text-center">
               <i class="pi pi-building text-green-500 text-2xl mb-2"></i>
               <div class="text-900 font-medium mb-1">Property Policies</div>
-              <div class="text-2xl font-bold text-green-500">{{ statisticsData?.buildingPolicy }}</div>
+              <div class="text-2xl font-bold text-green-500">{{ statisticsData().buildingPolicy }}</div>
             </div>
           </div>
           <div class="col-12 md:col-3">
             <div class="surface-100 p-3 border-round text-center">
               <i class="pi pi-briefcase text-[#702A17] text-2xl mb-2"></i>
               <div class="text-900 font-medium mb-1">Professional Indemnity</div>
-              <div class="text-2xl font-bold text-[#702A17]">{{ statisticsData?.jobPolicy }}</div>
+              <div class="text-2xl font-bold text-[#702A17]">{{ statisticsData().jobPolicy }}</div>
             </div>
           </div>
         </div>
@@ -79,7 +82,8 @@
         <div class="card">
           <h3 class="card-title">Policies Overview</h3>
           <div class="chart-container">
-            <p-chart type="doughnut" [data]="overviewChartData" [options]="chartOptions" width="100%" height="300px"></p-chart>
+            <p-chart type="doughnut" [data]="overviewChartData" [options]="chartOptions" width="100%"
+              height="300px"></p-chart>
           </div>
         </div>
       </div>
@@ -88,20 +92,24 @@
         <div class="card">
           <h3 class="card-title">Claims Overview</h3>
           <div class="chart-container">
-            <p-chart type="polarArea" [data]="claimsChartData" [options]="chartOptions" width="100%" height="300px"></p-chart>
+            <p-chart type="polarArea" [data]="claimsChartData" [options]="chartOptions" width="100%"
+              height="300px"></p-chart>
           </div>
         </div>
       </div>
     </div>
   </div>
-
-
 </div>
-<div *ngIf="usersData?.role == 'employee'" class="flex justify-center items-center w-full h-full">
+}
+
+@if(usersData?.role == 'employee'){
+<div class="flex justify-center items-center w-full h-full">
   <h1 class="text-2xl font-bold text-900 "> Welcome Back {{usersData?.name}}</h1>
 </div>
+}
 
 
-<ngx-spinner name="actionsLoader" bdColor="rgba(0, 0, 0, 0.8)" size="medium" color="#fff" type="square-spin" [fullScreen]="true">
+<ngx-spinner name="actionsLoader" bdColor="rgba(0, 0, 0, 0.8)" size="medium" color="#fff" type="square-spin"
+  [fullScreen]="true">
   <p style="color: white">Loading...</p>
 </ngx-spinner>

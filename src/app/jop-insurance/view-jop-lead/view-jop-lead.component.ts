@@ -28,8 +28,6 @@ export class ViewJopLeadComponent {
     { field: 'phone', header: 'Phone', type: 'text' },
     {
       field: 'lead_type', header: 'Type', type: 'text', displayFn(item) {
-        console.log(item);
-
         return item.lead_type || 'individual'
       },
     },
@@ -55,22 +53,16 @@ export class ViewJopLeadComponent {
   ) { }
 
   ngOnInit(): void {
-    console.log('ViewBuildingLeadComponent initialized');
 
     this.route.data.subscribe({
       next: (data) => {
-        console.log('Route data received:', data);
 
         // Handle different response structures
         const buildingLeadData = data['data'];
-        console.log('Building lead resolver data:', buildingLeadData);
 
         if (buildingLeadData) {
           // Check if the response has a 'data' property (API wrapper)
           this.buildingLead = buildingLeadData.data || buildingLeadData;
-          console.log('Assigned building lead:', this.buildingLead);
-        } else {
-          console.warn('No building lead data found in route data');
         }
 
         // Hide spinner after processing data

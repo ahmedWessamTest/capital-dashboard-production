@@ -21,7 +21,7 @@ export class AddEditTestimonialComponent implements OnInit {
   constructor(
     private route: ActivatedRoute,
     private ngxSpinnerService: NgxSpinnerService
-  ) {}
+  ) { }
 
   ngOnInit(): void {
     this.testimonialId = this.route.snapshot.paramMap.get('id');
@@ -42,7 +42,6 @@ export class AddEditTestimonialComponent implements OnInit {
     this.route.data.subscribe({
       next: ({ data }) => {
         this.editData = data?.data || null;
-        console.log(this.editData);
         this.ngxSpinnerService.hide('actionsLoader');
       },
       error: (err) => {

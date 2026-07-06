@@ -161,7 +161,6 @@ export class ViewJopRequestsComponent implements OnInit {
     this.ngxSpinnerService.show('actionsLoader');
 
     this.route.data.subscribe((data: any) => {
-      console.log('Resolver data:', data);
 
       const resolvedData = data?.['data'] || {};
 

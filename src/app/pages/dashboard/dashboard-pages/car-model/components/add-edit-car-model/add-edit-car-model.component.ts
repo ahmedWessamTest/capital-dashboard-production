@@ -61,7 +61,6 @@ export class AddEditCarModelsComponent implements OnInit, OnDestroy {
     this.dataSubscription = this.route.data.subscribe({
       next: (data: any) => {
         this.carBrands = data.data.carBrands || [];
-        console.log(data);
 
         if (!this.carBrands.length) {
           console.warn('No car brands received from resolver');

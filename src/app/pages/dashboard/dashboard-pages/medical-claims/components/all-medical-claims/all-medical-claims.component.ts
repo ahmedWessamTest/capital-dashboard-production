@@ -1,4 +1,4 @@
-import { ChangeDetectorRef, Component, inject, ViewChild, AfterViewInit, signal } from '@angular/core';
+import { Component, inject, ViewChild, signal } from '@angular/core';
 import { ActivatedRoute, RouterLink } from '@angular/router';
 import { NgxSpinnerModule, NgxSpinnerService } from 'ngx-spinner';
 import { MessageService } from 'primeng/api';
@@ -47,7 +47,7 @@ interface TypeOption {
   styleUrl: './all-medical-claims.component.scss',
   providers: [MessageService]
 })
-export class AllMedicalClaimsComponent implements AfterViewInit {
+export class AllMedicalClaimsComponent {
   private ngxSpinnerService = inject(NgxSpinnerService);
   private messageService = inject(MessageService);
   private medicalClaimsService = inject(MedicalClaimsService);
@@ -74,16 +74,10 @@ export class AllMedicalClaimsComponent implements AfterViewInit {
     this.isLoading.set(true);
     this.claims = this.route.snapshot.data['data']?.data || [];
     this.isLoading.set(false);
-    console.log('Claims:', this.claims);
     this.applyFilters();
     this.ngxSpinnerService.hide('actionsLoader');
   }
 
-  ngAfterViewInit() {
-    console.log('Table reference:', this.dt);
-  }
-
-  constructor(private cdRef: ChangeDetectorRef) {}
 
   initDropDownFilter(): void {
     this.selectOptions = [
@@ -92,7 +86,6 @@ export class AllMedicalClaimsComponent implements AfterViewInit {
       { label: 'Confirmed', value: 'confirmed', icon: 'pi pi-check-circle', color: 'text-green-600' },
       { label: 'Canceled', value: 'canceled', icon: 'pi pi-times-circle', color: 'text-red-600' }
     ];
-    console.log('Status options:', this.selectOptions);
   }
 
   initTypeFilter(): void {
@@ -100,7 +93,6 @@ export class AllMedicalClaimsComponent implements AfterViewInit {
       { label: 'Manual', value: 'manual' },
       { label: 'Ordinary', value: 'ordinary' }
     ];
-    console.log('Type options:', this.typeOptions);
   }
 
   getStatusClass(status: string): string {
@@ -146,8 +138,8 @@ export class AllMedicalClaimsComponent implements AfterViewInit {
     if (this.selectedType !== null) {
       filtered = filtered.filter((claim) =>
         this.selectedType === 'manual' ?
-        claim.medical_insurance_id === null :
-        claim.medical_insurance_id !== null
+          claim.medical_insurance_id === null :
+          claim.medical_insurance_id !== null
       );
     }
 
@@ -157,7 +149,6 @@ export class AllMedicalClaimsComponent implements AfterViewInit {
 
     this.filteredClaims = filtered;
     this.totalRecords = filtered.length;
-    console.log('Filtered claims:', this.filteredClaims);
   }
 
   onGlobalFilter(dt: Table, event: Event) {
@@ -173,8 +164,8 @@ export class AllMedicalClaimsComponent implements AfterViewInit {
     if (this.selectedType !== null) {
       filtered = filtered.filter((claim) =>
         this.selectedType === 'manual' ?
-        claim.medical_insurance_id === null :
-        claim.medical_insurance_id !== null
+          claim.medical_insurance_id === null :
+          claim.medical_insurance_id !== null
       );
     }
 
@@ -195,7 +186,6 @@ export class AllMedicalClaimsComponent implements AfterViewInit {
 
     this.filteredClaims = filtered;
     this.totalRecords = filtered.length;
-    console.log('After global filter:', this.filteredClaims);
   }
 
   compareValues(a: MedicalClaim, b: MedicalClaim, field: string | null, order: number): number {
@@ -222,19 +212,16 @@ export class AllMedicalClaimsComponent implements AfterViewInit {
   }
 
   onFilterChange(value: string | null): void {
-    console.log('Status filter changed:', value);
     this.selectedStatus = value;
     this.applyFilters();
   }
 
   onTypeFilterChange(value: string | null): void {
-    console.log('Type filter changed:', value);
     this.selectedType = value;
     this.applyFilters();
   }
 
   onSort(event: { field: string | null; order: number }) {
-    console.log('Sort event:', event);
     this.sortField = event.field;
     this.sortOrder = event.order;
     this.applyFilters();
@@ -242,7 +229,6 @@ export class AllMedicalClaimsComponent implements AfterViewInit {
 
   onPageChange(event: any) {
     this.currentPage = event.page + 1;
-    console.log('Page changed:', this.currentPage);
   }
 
   updateClaimStatus(claim: MedicalClaim, status: 'confirmed' | 'canceled' | 'pending' | 'requested') {
@@ -275,7 +261,7 @@ export class AllMedicalClaimsComponent implements AfterViewInit {
 
   getPagination(): number[] {
     const dataLength = this.filteredClaims.length;
-    return [10, 25, 50, 100,dataLength].filter(opt => opt <= dataLength);
+    return [10, 25, 50, 100, dataLength].filter(opt => opt <= dataLength);
   }
 
   formatDate(dateString: string): string {

@@ -28,18 +28,16 @@ export class ViewBuildTypesComponent {
     private route: ActivatedRoute,
     private ngxSpinnerService: NgxSpinnerService,
     private normalizeActiveStatusService: NormalizeActiveStatusService
-  ) {}  
+  ) { }
 
   ngOnInit(): void {
     this.route.data.subscribe({
       next: (data) => {
-        console.log(data)
         this.buildType = data['data'].data;
-        
+
         if (this.buildType) {
           this.buildType.active_status = this.normalizeActiveStatusService.normalizeActiveStatus(this.buildType.active_status);
         }
-        console.log("form Build Types Page",this.buildType)
       },
       error: (err) => {
         console.error('Failed to load build type', err);

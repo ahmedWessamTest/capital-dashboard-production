@@ -36,13 +36,11 @@ export class ViewBuildCountriesComponent implements OnInit, OnDestroy {
     private route: ActivatedRoute,
     private ngxSpinnerService: NgxSpinnerService,
     private normalizeActiveStatusService: NormalizeActiveStatusService
-  ) {}
+  ) { }
 
   ngOnInit(): void {
     this.dataSubscription = this.route.data.subscribe({
       next: (data) => {
-        console.log(data)
-        console.log(data['data']['buildCountry'])
         if (data?.['data']['buildCountry']) {
           this.buildCountry = data['data']['buildCountry'].data;
           if (this.buildCountry) {
@@ -54,7 +52,6 @@ export class ViewBuildCountriesComponent implements OnInit, OnDestroy {
             }
           }
         }
-        console.log('buildCountry:', this.buildCountry); // Debug log
         this.ngxSpinnerService.hide('actionsLoader');
       },
       error: (err) => {

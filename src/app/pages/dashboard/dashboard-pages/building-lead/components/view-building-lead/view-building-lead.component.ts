@@ -53,18 +53,13 @@ export class ViewBuildingLeadComponent {
 
     this.route.data.subscribe({
       next: (data) => {
-        console.log('Route data received:', data);
 
         // Handle different response structures
         const buildingLeadData = data['data'];
-        console.log('Building lead resolver data:', buildingLeadData);
 
         if (buildingLeadData) {
           // Check if the response has a 'data' property (API wrapper)
           this.buildingLead = buildingLeadData.data || buildingLeadData;
-          console.log('Assigned building lead:', this.buildingLead);
-        } else {
-          console.warn('No building lead data found in route data');
         }
 
         // Hide spinner after processing data

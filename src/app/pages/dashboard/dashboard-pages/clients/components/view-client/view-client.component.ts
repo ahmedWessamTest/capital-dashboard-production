@@ -13,40 +13,36 @@ import { Client } from '../../services/clients.service';
   styleUrl: './view-client.component.scss'
 })
 export class ViewClientComponent {
-client:  Client | null = null;
+  client: Client | null = null;
   columns: Column[] = [
     { field: 'id', header: 'Client ID ', type: 'text' },
     { field: 'en_client_name', header: 'English Client Name', type: 'text' },
     { field: 'ar_client_name', header: 'Arabic Client Name', type: 'text' },
     { field: 'client_image', header: 'Client Image', type: 'image' },
 
-  
+
   ];
 
   constructor(
     private route: ActivatedRoute,
     private ngxSpinnerService: NgxSpinnerService,
-  ) {}
+  ) { }
 
   ngOnInit(): void {
-    console.log('ViewClientComponent initialized');
-    
+
     this.route.data.subscribe({
       next: (data) => {
-        console.log('Route data received:', data);
-        
+
         // Handle different response structures
         const clientData = data['data'];
-        console.log('Client resolver data:', clientData);
-        
+
         if (clientData) {
           // Check if the response has a 'data' property (API wrapper)
           this.client = clientData.data || clientData;
-          console.log('Assigned client:', this.client);
         } else {
           console.warn('No client data found in route data');
         }
-        
+
         // Hide spinner after processing data
         this.ngxSpinnerService.hide("actionsLoader");
       },

@@ -52,7 +52,7 @@ export class AddJopChoiceComponent implements OnInit {
     private ngxSpinnerService: NgxSpinnerService,
     private jopInsuranceChoicesService: JopInsuranceChoicesService,
     private messageService: MessageService
-  ) {}
+  ) { }
 
   ngOnInit() {
     // Set the category_id for job insurance
@@ -62,16 +62,11 @@ export class AddJopChoiceComponent implements OnInit {
 
     this.route.data.subscribe({
       next: ({ data }) => {
-        console.log('from jop insurance data', data);
-        console.log('data', data.data);
-        console.log('jopInsurances', this.jopInsurances);
         // Create options for dropdown
         this.jopInsuranceOptions = data.data.map((insurance: IJopPolicy) => ({
           label: `${insurance.company_name} - ${insurance.en_title}`,
           value: insurance.id,
         }));
-
-        console.log('jopInsuranceOptions', this.jopInsuranceOptions);
         this.initializeFields(); // Initialize fields after data is loaded
       },
       error: (err) => {

@@ -27,14 +27,12 @@ export class ViewContactFormComponent {
   constructor(
     private route: ActivatedRoute,
     private ngxSpinnerService: NgxSpinnerService,
-  ) {}
+  ) { }
 
   ngOnInit(): void {
     this.route.data.subscribe({
       next: (data) => {
-        console.log(data)
         this.contactForm = data['data'].data;
-        console.log("form Contact Form Page",this.contactForm)
       },
       error: (err) => {
         console.error('Failed to load contact form', err);

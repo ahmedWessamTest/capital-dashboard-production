@@ -67,15 +67,14 @@ export class AllMedicalRequestsComponent {
     this.isLoading.set(true);
     this.requests = this.route.snapshot.data['data'].data.reverse();
     this.isLoading.set(false);
-    console.log(this.requests);
-    
+
     this.initRequestTypeOptions();
     this.applyFilters();
     this.ngxSpinnerService.hide('actionsLoader');
 
   }
 
-  constructor(private cdRef: ChangeDetectorRef) {}
+  constructor(private cdRef: ChangeDetectorRef) { }
 
   initDropDownFilter(): void {
     this.selectOptions = [
@@ -178,7 +177,7 @@ export class AllMedicalRequestsComponent {
 
   compareValues(a: MedicalRequest, b: MedicalRequest, field: string | null, order: number): number {
     if (!field) return 0;
-    
+
     let valueA: any = a[field as keyof MedicalRequest];
     let valueB: any = b[field as keyof MedicalRequest];
 
@@ -218,10 +217,10 @@ export class AllMedicalRequestsComponent {
 
   updateRequestStatus(request: MedicalRequest, status: 'confirmed' | 'canceled' | 'pending' | 'requested') {
     this.ngxSpinnerService.show('actionsLoader');
-    
-    const action$ = status === 'canceled' 
+
+    const action$ = status === 'canceled'
       ? this.medicalRequestsService.cancel(request.id)
-      : this.medicalRequestsService.confirm(request.id, status );
+      : this.medicalRequestsService.confirm(request.id, status);
 
     action$.subscribe({
       next: (response) => {
@@ -247,7 +246,7 @@ export class AllMedicalRequestsComponent {
 
   getPagination(): number[] {
     const dataLength = this.filteredRequests.length;
-    return [10, 25, 50, 100,dataLength].filter(opt => opt <= dataLength);
+    return [10, 25, 50, 100, dataLength].filter(opt => opt <= dataLength);
   }
   formatDate(dateString: string): string {
     return new Date(dateString).toLocaleDateString('en-US', {
@@ -259,19 +258,19 @@ export class AllMedicalRequestsComponent {
     });
   }
 
-getStatusLabel(status: string): string {
-  const option = this.selectOptions.find(opt => opt.value === status);
-  return option ? option.label : status;
-}
+  getStatusLabel(status: string): string {
+    const option = this.selectOptions.find(opt => opt.value === status);
+    return option ? option.label : status;
+  }
 
-getStatusIcon(status: string): string {
-  const option = this.selectOptions.find(opt => opt.value === status);
-  return option ? option.icon : '';
-}
+  getStatusIcon(status: string): string {
+    const option = this.selectOptions.find(opt => opt.value === status);
+    return option ? option.icon : '';
+  }
 
-getStatusColor(status: string): string {
-  const option = this.selectOptions.find(opt => opt.value === status);
-  return option ? option.color : '';
-}
+  getStatusColor(status: string): string {
+    const option = this.selectOptions.find(opt => opt.value === status);
+    return option ? option.color : '';
+  }
 
 }

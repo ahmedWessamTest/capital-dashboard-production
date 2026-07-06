@@ -1,6 +1,5 @@
-import { CommonModule, isPlatformBrowser } from "@angular/common";
-import { HttpErrorResponse } from "@angular/common/http";
-import { Component, Inject, PLATFORM_ID } from "@angular/core";
+import { CommonModule } from "@angular/common";
+import { Component } from "@angular/core";
 import { FormControl, FormGroup, FormsModule, ReactiveFormsModule, Validators } from "@angular/forms";
 import { Router } from "@angular/router";
 import { NgxSpinnerModule } from "ngx-spinner";
@@ -35,7 +34,6 @@ export class LoginComponent {
   isLoading: boolean = false;
 
   constructor(
-    @Inject(PLATFORM_ID) private _PLATFORM_ID: Object,
     private authService: AuthService,
     private _Router: Router,
     private tokenService: TokenService,
@@ -48,31 +46,27 @@ export class LoginComponent {
   }
 
   ngOnInit() {
-    if (isPlatformBrowser(this._PLATFORM_ID)) {
-      const savedEmail = localStorage.getItem('savedEmail');
-      if (savedEmail) {
-        this.userData.controls['email'].setValue(savedEmail);
-        this.userData.controls['rememberMe'].setValue(true);
-        this.userData.updateValueAndValidity();
-      }
+    const savedEmail = localStorage.getItem('savedEmail');
+    if (savedEmail) {
+      this.userData.controls['email'].setValue(savedEmail);
+      this.userData.controls['rememberMe'].setValue(true);
+      this.userData.updateValueAndValidity();
     }
   }
   onSignInFormSubmitClick() {
     this.isErrorMessage = false;
     this.isLoading = true;
     this.userData.markAllAsTouched();
-  
+
     if (this.userData.valid) {
       const { email, password, rememberMe } = this.userData.value;
-  
-      if (isPlatformBrowser(this._PLATFORM_ID)) {
-        if (rememberMe) {
-          localStorage.setItem('savedEmail', email);
-        } else {
-          localStorage.removeItem('savedEmail');
-        }
+
+      if (rememberMe) {
+        localStorage.setItem('savedEmail', email);
+      } else {
+        localStorage.removeItem('savedEmail');
       }
-  
+
       let userData = { email, password };
       this.authService.login(userData).subscribe({
         next: (response: any) => {
@@ -82,17 +76,16 @@ export class LoginComponent {
             return;
           }
           if (response.access_token && ['admin', 'employee'].includes(response.user.role)) {
-            if (isPlatformBrowser(this._PLATFORM_ID)) {
-              localStorage.setItem('user', JSON.stringify(response.user));
-              localStorage.setItem('token', JSON.stringify(response.access_token));
-              this.tokenService.setToken(response.access_token, response.expires_in);            }
+            localStorage.setItem('user', JSON.stringify(response.user));
+            localStorage.setItem('token', JSON.stringify(response.access_token));
+            this.tokenService.setToken(response.access_token, response.expires_in);
             this._Router.navigate(['/dashboard/home-statistics']);
           } else {
             this.isErrorMessage = true;
             this.isLoading = false;
           }
         },
-        error: (error: HttpErrorResponse) => {
+        error: () => {
           this.isLoading = false;
           this.isErrorMessage = true;
         },

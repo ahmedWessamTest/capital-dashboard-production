@@ -4,7 +4,6 @@ import { MedicalLead } from '../../services/medical-leads.service';
 import { Column } from '../../../../../../shared/service/genereic-table.service';
 import { ActivatedRoute } from '@angular/router';
 import { NgxSpinnerService } from 'ngx-spinner';
-import { NormalizeActiveStatusService } from '../../../../../../core/normalize-active-status/normalize-active-status.service';
 
 @Component({
   selector: 'app-view-medical-leads',
@@ -51,22 +50,16 @@ export class ViewMedicalLeadsComponent implements OnInit {
   ) { }
 
   ngOnInit(): void {
-    console.log('ViewMedicalLeadsComponent initialized');
 
     this.route.data.subscribe({
       next: (data) => {
-        console.log('Route data received:', data);
 
         // Handle different response structures
         const medicalLeadData = data['medicalLead'];
-        console.log('Medical lead resolver data:', medicalLeadData);
 
         if (medicalLeadData) {
           // Check if the response has a 'data' property (API wrapper)
           this.medicalLead = medicalLeadData.data || medicalLeadData;
-          console.log('Assigned medical lead:', this.medicalLead);
-        } else {
-          console.warn('No medical lead data found in route data');
         }
 
         // Hide spinner after processing data

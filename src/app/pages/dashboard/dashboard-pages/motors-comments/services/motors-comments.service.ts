@@ -48,7 +48,7 @@ export interface ApiResponse<T> {
 export class MotorRequestCommentsService {
   private readonly baseUrl = `${WEB_SITE_BASE_URL}motor-request-comments`;
 
-  constructor(private http: HttpClient) {}
+  constructor(private http: HttpClient) { }
 
   getAll(requestId: number): Observable<ApiResponse<MotorRequestComment[]>> {
     return this.http.get<ApiResponse<MotorRequestComment[]>>(`${this.baseUrl}/${requestId}`);
@@ -56,7 +56,7 @@ export class MotorRequestCommentsService {
 
   create(requestId: number, commentData: CreateMotorCommentRequest, file?: File): Observable<ApiResponse<MotorRequestComment>> {
     const formData = new FormData();
-    
+
     formData.append('user_id', commentData.user_id.toString());
     formData.append('user_role', commentData.user_role);
     formData.append('user_name', commentData.user_name);
@@ -70,7 +70,6 @@ export class MotorRequestCommentsService {
     if (file) {
       formData.append('comment_file', file, file.name);
     }
-console.log(formData)
     return this.http.post<ApiResponse<MotorRequestComment>>(`${this.baseUrl}/${requestId}/store`, formData);
   }
 

@@ -36,12 +36,11 @@ export class ViewJopInsuranceComponent implements OnInit {
   constructor(
     private route: ActivatedRoute,
     private ngxSpinnerService: NgxSpinnerService
-  ) {}
+  ) { }
 
   ngOnInit(): void {
     this.route.data.subscribe({
       next: ({ data }) => {
-        console.log('data', data);
         const jopInsuranceData = data.data.data;
         if (jopInsuranceData) {
           this.jopInsurance = jopInsuranceData;

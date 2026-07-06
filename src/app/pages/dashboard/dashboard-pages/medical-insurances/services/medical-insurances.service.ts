@@ -38,7 +38,7 @@ export interface MedicalInsuranceFormData {
 export class MedicalInsurancesService {
   private baseUrl = `${WEB_SITE_BASE_URL}medical-insurances`;
 
-  constructor(private http: HttpClient) {}
+  constructor(private http: HttpClient) { }
 
   getAll(): Observable<MedicalInsurancesListResponse> {
     return this.http.get<MedicalInsurancesListResponse>(this.baseUrl);
@@ -49,15 +49,14 @@ export class MedicalInsurancesService {
   }
 
   create(data: FormData): Observable<MedicalInsuranceResponse> {
-    this.getAll().subscribe((res) => {
-      console.log(res);
+    this.getAll().subscribe(() => {
+
     })
     return this.http.post<MedicalInsuranceResponse>(this.baseUrl, data);
   }
 
   update(id: number, data: FormData): Observable<MedicalInsuranceResponse> {
-    this.getAll().subscribe((res) => {
-      console.log(res);
+    this.getAll().subscribe(() => {
     })
     return this.http.put<MedicalInsuranceResponse>(`${this.baseUrl}/${id}`, data);
   }

@@ -16,12 +16,11 @@ export class FormErrorDirective implements OnInit, OnDestroy {
     private el: ElementRef,
     @Optional() private control: NgControl,
     private renderer: Renderer2
-  ) {}
+  ) { }
 
   ngOnInit() {
     // Check if control exists before proceeding
     if (!this.control) {
-      console.warn('FormErrorDirective: NgControl not found. Make sure the element has a form control.');
       return;
     }
 
@@ -107,7 +106,7 @@ export class FormErrorDirective implements OnInit, OnDestroy {
     if (control.errors?.['pattern']) return 'Please enter a valid phone number';
     if (control.errors?.['negativeNumber']) return 'Negative numbers are not allowed';
     if (control.errors?.['invalidNumber']) return 'Please enter a valid positive number';
-    
+
     return '';
   }
 }

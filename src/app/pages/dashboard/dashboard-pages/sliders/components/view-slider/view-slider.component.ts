@@ -30,25 +30,19 @@ export class ViewSliderComponent implements OnInit {
     private route: ActivatedRoute,
     private ngxSpinnerService: NgxSpinnerService,
     private slidersService: SlidersService
-  ) {}
+  ) { }
 
   ngOnInit(): void {
-    console.log('ViewSliderComponent initialized');
-    
+
     this.route.data.subscribe({
       next: (data) => {
-        console.log('Route data received:', data);
-        
+
         const sliderData = data['data'];
-        console.log('Slider resolver data:', sliderData);
-        
+
         if (sliderData) {
           this.slider = sliderData.data || sliderData;
-          console.log('Assigned slider:', this.slider);
-        } else {
-          console.warn('No slider data found in route data');
         }
-        
+
         this.ngxSpinnerService.hide("actionsLoader");
       },
       error: (err) => {

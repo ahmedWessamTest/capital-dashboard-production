@@ -29,17 +29,15 @@ export class ViewCountersComponent implements OnInit {
     private route: ActivatedRoute,
     private ngxSpinnerService: NgxSpinnerService,
     private normalizeActiveStatusService: NormalizeActiveStatusService
-  ) {}
+  ) { }
 
   ngOnInit(): void {
     this.route.data.subscribe({
       next: (data) => {
-        console.log(data)
         this.counter = data['counter'].row;
-        if(this.counter){
+        if (this.counter) {
           this.counter.active_status = this.normalizeActiveStatusService.normalizeActiveStatus(this.counter.active_status);
         }
-        console.log("form Counters Page",this.counter)
       },
       error: (err) => {
         console.error('Failed to load counter', err);
