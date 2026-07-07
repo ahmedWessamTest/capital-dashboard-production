@@ -15,12 +15,12 @@
       <input type="text" pInputText placeholder="Search claims..." (input)="onGlobalFilter(dt, $event)" />
     </span>
   </div>
-  <div class="overflow-x-auto">
+  <div>
     <p-table #dt [paginator]="true" [rows]="rowsPerPage" [totalRecords]="totalRecords"
       [rowsPerPageOptions]="getPagination()" [showCurrentPageReport]="true" [value]="filteredClaims"
       responsiveLayout="scroll" [tableStyle]="{ 'min-width': '80rem' }"
       currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries" [sortMode]="'multiple'"
-      (onSort)="onSort($event)" (onPage)="onPageChange($event)">
+      (onSort)="onSort($event)" (onPage)="onPageChange($event)" dropdownAppendTo="body">
       <ng-template pTemplate="header">
         <tr class="text-center">
           <th pSortableColumn="id" class="text-center">
@@ -35,11 +35,11 @@
           <th pSortableColumn="phone" class="text-center">
             Phone <p-sortIcon field="phone"></p-sortIcon>
           </th>
-          <th pSortableColumn="job_title" class="text-center">
-            Professional Title <p-sortIcon field="job_title"></p-sortIcon>
+          <th class="text-center">
+            Professional Title
           </th>
-          <th pSortableColumn="company_name" class="text-center">
-            Claim Number <p-sortIcon field="claim_number"></p-sortIcon>
+          <th class="text-center">
+            Claim Number
           </th>
           <th pSortableColumn="created_at" class="text-center">
             Created <p-sortIcon field="created_at"></p-sortIcon>

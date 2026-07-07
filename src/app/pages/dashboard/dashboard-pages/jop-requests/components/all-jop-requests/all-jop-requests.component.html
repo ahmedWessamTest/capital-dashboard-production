@@ -17,7 +17,7 @@
 
   <div class="overflow-x-auto">
     <p-table #dt [paginator]="true" [rows]="rowsPerPage" [totalRecords]="totalRecords"
-      [rowsPerPageOptions]="getPagination()" [showCurrentPageReport]="true" [value]="filteredRequests"
+      [rowsPerPageOptions]="rowsPerPageOptions" [showCurrentPageReport]="true" [value]="filteredRequests"
       responsiveLayout="scroll" [tableStyle]="{ 'min-width': '80rem' }"
       currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries" [sortMode]="'multiple'"
       (onSort)="onSort($event)" (onPage)="onPageChange($event)">

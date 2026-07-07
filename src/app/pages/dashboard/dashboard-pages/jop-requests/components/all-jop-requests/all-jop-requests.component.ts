@@ -8,13 +8,9 @@ import { ButtonModule } from 'primeng/button';
 import { DropdownModule } from 'primeng/dropdown';
 import { Table, TableModule } from 'primeng/table';
 import { ToastModule } from 'primeng/toast';
-import { debounceTime, Subject } from 'rxjs';
 import { LoadingDataBannerComponent } from '../../../../../../shared/components/loading-data-banner/loading-data-banner.component';
 import { NoDataFoundBannerComponent } from '../../../../../../shared/components/no-data-found-banner/no-data-found-banner.component';
-import {
-  JobRequest,
-  JobRequestsService,
-} from '../../services/jop-requests.service';
+import { JobRequest, JobRequestsService } from '../../services/jop-requests.service';
 
 interface StatusOption {
   label: string;
@@ -37,11 +33,11 @@ interface StatusOption {
     NoDataFoundBannerComponent,
     CommonModule,
     FormsModule,
-    NgxSpinnerModule,
+    NgxSpinnerModule
   ],
   templateUrl: './all-jop-requests.component.html',
   styleUrl: './all-jop-requests.component.scss',
-  providers: [MessageService],
+  providers: [MessageService]
 })
 export class AllJopRequestsComponent {
   private ngxSpinnerService = inject(NgxSpinnerService);
@@ -49,20 +45,22 @@ export class AllJopRequestsComponent {
   private jobRequestsService = inject(JobRequestsService);
   private route = inject(ActivatedRoute);
   private cdRef = inject(ChangeDetectorRef);
+
   isLoading = signal<boolean>(false);
   requests: JobRequest[] = [];
   filteredRequests: JobRequest[] = [];
   totalRecords: number = 0;
   rowsPerPage = 10;
+  rowsPerPageOptions: number[] = [];
   selectedStatus: string | null = null;
   selectedRequestType: string | null = null;
+  searchTerm: string = '';
   requestTypeOptions: { label: string; value: string }[] = [];
   statusSteps = ['requested', 'pending', 'confirmed', 'canceled'];
   sortField: string | null = null;
   sortOrder: number = 1;
   currentPage: number = 1;
   selectOptions: StatusOption[] = [];
-  private searchSubject = new Subject<string>();
   @ViewChild('dt') dt!: Table;
 
   ngOnInit() {
@@ -82,43 +80,15 @@ export class AllJopRequestsComponent {
       this.filteredRequests = [];
       this.totalRecords = 0;
     }
-
     this.ngxSpinnerService.hide('actionsLoader');
-    this.setupSearchDebounce();
-  }
-
-  setupSearchDebounce() {
-    this.searchSubject.pipe(debounceTime(300)).subscribe((value) => {
-      this.applyGlobalFilter(value);
-    });
   }
 
   initDropDownFilter(): void {
     this.selectOptions = [
-      {
-        label: 'Requested',
-        value: 'requested',
-        icon: 'pi pi-inbox',
-        color: 'text-blue-600',
-      },
-      {
-        label: 'Pending',
-        value: 'pending',
-        icon: 'pi pi-clock',
-        color: 'text-yellow-600',
-      },
-      {
-        label: 'Confirmed',
-        value: 'confirmed',
-        icon: 'pi pi-check-circle',
-        color: 'text-green-600',
-      },
-      {
-        label: 'Canceled',
-        value: 'canceled',
-        icon: 'pi pi-times-circle',
-        color: 'text-red-600',
-      },
+      { label: 'Requested', value: 'requested', icon: 'pi pi-inbox', color: 'text-blue-600' },
+      { label: 'Pending', value: 'pending', icon: 'pi pi-clock', color: 'text-yellow-600' },
+      { label: 'Confirmed', value: 'confirmed', icon: 'pi pi-check-circle', color: 'text-green-600' },
+      { label: 'Canceled', value: 'canceled', icon: 'pi pi-times-circle', color: 'text-red-600' }
     ];
   }
 
@@ -132,30 +102,21 @@ export class AllJopRequestsComponent {
 
   getStatusClass(status: string): string {
     switch (status) {
-      case 'confirmed':
-        return 'bg-green-200 text-green-800';
-      case 'canceled':
-        return 'bg-red-200 text-red-800';
-      case 'pending':
-        return 'bg-yellow-200 text-yellow-800';
-      case 'requested':
-        return 'bg-blue-200 text-blue-800';
-      default:
-        return '';
+      case 'confirmed': return 'bg-green-200 text-green-800';
+      case 'canceled': return 'bg-red-200 text-red-800';
+      case 'pending': return 'bg-yellow-200 text-yellow-800';
+      case 'requested': return 'bg-blue-200 text-blue-800';
+      default: return '';
     }
   }
 
   getAvailableStatusOptions(currentStatus: string): StatusOption[] {
     const currentIndex = this.statusSteps.indexOf(currentStatus);
     return this.selectOptions
-      .filter((option) =>
-        currentStatus === 'confirmed' && option.value === 'canceled'
-          ? false
-          : true
-      )
+      .filter(option => currentStatus === 'confirmed' && option.value === 'canceled' ? false : true)
       .map((status, index) => ({
         ...status,
-        disabled: index < currentIndex,
+        disabled: index < currentIndex
       }));
   }
 
@@ -163,103 +124,67 @@ export class AllJopRequestsComponent {
     let filtered = [...this.requests];
 
     if (this.selectedStatus !== null) {
-      filtered = filtered.filter(
-        (request) => request.active_status === this.selectedStatus
-      );
+      filtered = filtered.filter(request => request.active_status === this.selectedStatus);
     }
 
     if (this.selectedRequestType !== null) {
-      filtered = filtered.filter(
-        (request) => (request.request_type || 'individual') === this.selectedRequestType
+      filtered = filtered.filter(request => (request.request_type || 'individual') === this.selectedRequestType);
+    }
+
+    if (this.searchTerm) {
+      const term = this.searchTerm.toLowerCase();
+      filtered = filtered.filter(request =>
+        (request.id?.toString().toLowerCase() || '').includes(term) ||
+        (request.name?.toLowerCase() || '').includes(term) ||
+        (request.email?.toLowerCase() || '').includes(term) ||
+        (request.phone?.toString().toLowerCase() || '').includes(term) ||
+        (request.active_status?.toLowerCase() || '').includes(term) ||
+        (request.job_title?.toLowerCase() || '').includes(term) ||
+        (request.company_name?.toLowerCase() || '').includes(term) ||
+        (request.profession_name?.toLowerCase() || '').includes(term) ||
+        (request.request_type?.toLowerCase() || '').includes(term)
       );
     }
 
     if (this.sortField) {
-      filtered.sort((a, b) =>
-        this.compareValues(a, b, this.sortField, this.sortOrder)
-      );
+      filtered.sort((a, b) => this.compareValues(a, b, this.sortField, this.sortOrder));
     }
 
     this.filteredRequests = filtered;
     this.totalRecords = filtered.length;
+    this.updatePaginationOptions();
   }
 
   onGlobalFilter(event: Event) {
     const inputElement = event.target as HTMLInputElement;
-    const value = inputElement.value.trim().toLowerCase();
-    this.searchSubject.next(value);
-  }
-
-  applyGlobalFilter(value: string): void {
-    let filtered = [...this.requests];
-
-    if (this.selectedStatus !== null) {
-      filtered = filtered.filter(
-        (request) => request.active_status === this.selectedStatus
-      );
-    }
-
-    if (this.selectedRequestType !== null) {
-      filtered = filtered.filter(
-        (request) => (request.request_type || 'individual') === this.selectedRequestType
-      );
-    }
-
-    if (value) {
-      filtered = filtered.filter((request) => {
-        return (
-          (request.id?.toString().toLowerCase() || '').includes(value) ||
-          (request.name?.toLowerCase() || '').includes(value) ||
-          (request.email?.toLowerCase() || '').includes(value) ||
-          (request.phone?.toString().toLowerCase() || '').includes(value) ||
-          (request.active_status?.toLowerCase() || '').includes(value) ||
-          (request.job_title?.toLowerCase() || '').includes(value) ||
-          (request.company_name?.toLowerCase() || '').includes(value) ||
-          (request.profession_name?.toLowerCase() || '').includes(value) ||
-          (request.request_type?.toLowerCase() || '').includes(value)
-        );
-      });
-    }
-
-    if (this.sortField) {
-      filtered.sort((a, b) =>
-        this.compareValues(a, b, this.sortField, this.sortOrder)
-      );
-    }
-
-    this.filteredRequests = filtered;
-    this.totalRecords = filtered.length;
+    this.searchTerm = inputElement.value;
+    
     if (this.dt) {
-      this.dt.first = 0; // Reset pagination to first page
+      this.dt.first = 0;
     }
     this.currentPage = 1;
-    this.cdRef.detectChanges();
+    this.applyFilters();
   }
 
-  compareValues(
-    a: JobRequest,
-    b: JobRequest,
-    field: string | null,
-    order: number
-  ): number {
+  updatePaginationOptions() {
+    const dataLength = this.filteredRequests.length;
+    if (dataLength < 10) {
+      this.rowsPerPageOptions = [dataLength];
+    } else {
+      this.rowsPerPageOptions = [10, 25, 50, 100, dataLength].filter(opt => opt <= dataLength);
+    }
+  }
+
+  compareValues(a: JobRequest, b: JobRequest, field: string | null, order: number): number {
     if (!field) return 0;
 
     let valueA: any = a[field as keyof JobRequest];
     let valueB: any = b[field as keyof JobRequest];
 
-    if (
-      field === 'id' ||
-      field === 'phone' ||
-      field === 'years_of_experience'
-    ) {
+    if (field === 'id' || field === 'phone' || field === 'years_of_experience') {
       valueA = valueA ? Number(valueA) : null;
       valueB = valueB ? Number(valueB) : null;
-    } else if (
-      field === 'created_at' ||
-      field === 'updated_at' ||
-      field === 'start_date' ||
-      field === 'end_date'
-    ) {
+    } else if (field === 'created_at' || field === 'updated_at' || field === 'start_date' || field === 'end_date') {
       valueA = valueA ? new Date(valueA) : null;
       valueB = valueB ? new Date(valueB) : null;
     } else {
@@ -267,28 +192,38 @@ export class AllJopRequestsComponent {
       valueB = valueB ? valueB.toString().toLowerCase() : '';
     }
 
-    if (valueA === null || valueA === undefined || valueA === '')
-      return order * -1;
-    if (valueB === null || valueB === undefined || valueB === '')
-      return order * 1;
+    if (valueA === null || valueA === undefined || valueA === '') return order * -1;
+    if (valueB === null || valueB === undefined || valueB === '') return order * 1;
 
     return valueA < valueB ? order * -1 : valueA > valueB ? order * 1 : 0;
   }
 
   onFilterChange(value: string | null): void {
     this.selectedStatus = value;
+    if (this.dt) {
+      this.dt.first = 0;
+    }
+    this.currentPage = 1;
     this.applyFilters();
   }
 
   onRequestTypeFilterChange(value: string | null): void {
     this.selectedRequestType = value;
+    if (this.dt) {
+      this.dt.first = 0;
+    }
+    this.currentPage = 1;
     this.applyFilters();
   }
 
-  onSort(event:any) {
-    const {field} = event.multisortmeta[0]
-    this.sortField = field;
-    this.sortOrder = field;
+  onSort(event: any) {
+    if (event.multisortmeta && event.multisortmeta.length > 0) {
+      this.sortField = event.multisortmeta[0].field;
+      this.sortOrder = event.multisortmeta[0].order;
+    } else {
+      this.sortField = event.field;
+      this.sortOrder = event.order;
+    }
     this.applyFilters();
   }
 
@@ -296,16 +231,12 @@ export class AllJopRequestsComponent {
     this.currentPage = event.page + 1;
   }
 
-  updateRequestStatus(
-    request: JobRequest,
-    status: 'confirmed' | 'canceled' | 'pending' | 'requested'
-  ) {
+  updateRequestStatus(request: JobRequest, status: 'confirmed' | 'canceled' | 'pending' | 'requested') {
     this.ngxSpinnerService.show('actionsLoader');
 
-    const action$ =
-      status === 'canceled'
-        ? this.jobRequestsService.cancel(request.id)
-        : this.jobRequestsService.changeStatus(request.id, status);
+    const action$ = status === 'canceled'
+      ? this.jobRequestsService.cancel(request.id)
+      : this.jobRequestsService.changeStatus(request.id, status);
 
     action$.subscribe({
       next: (response) => {
@@ -314,7 +245,7 @@ export class AllJopRequestsComponent {
         this.messageService.add({
           severity: 'success',
           summary: 'Updated',
-          detail: response.message,
+          detail: response.message
         });
         this.ngxSpinnerService.hide('actionsLoader');
       },
@@ -322,16 +253,11 @@ export class AllJopRequestsComponent {
         this.messageService.add({
           severity: 'error',
           summary: 'Error',
-          detail: 'Failed to update request status',
+          detail: 'Failed to update request status'
         });
         this.ngxSpinnerService.hide('actionsLoader');
-      },
+      }
     });
-  }
-
-  getPagination(): number[] {
-    const dataLength = this.filteredRequests.length;
-    return [10, 25, 50, 100, dataLength].filter((opt) => opt <= dataLength);
   }
 
   formatDate(dateString: string): string {
@@ -340,21 +266,22 @@ export class AllJopRequestsComponent {
       month: 'short',
       day: 'numeric',
       hour: 'numeric',
-      minute: 'numeric',
+      minute: 'numeric'
     });
   }
+
   getStatusLabel(status: string): string {
-  const option = this.selectOptions.find(opt => opt.value === status);
-  return option ? option.label : status;
-}
+    const option = this.selectOptions.find(opt => opt.value === status);
+    return option ? option.label : status;
+  }
 
-getStatusIcon(status: string): string {
-  const option = this.selectOptions.find(opt => opt.value === status);
-  return option ? option.icon : '';
-}
+  getStatusIcon(status: string): string {
+    const option = this.selectOptions.find(opt => opt.value === status);
+    return option ? option.icon : '';
+  }
 
-getStatusColor(status: string): string {
-  const option = this.selectOptions.find(opt => opt.value === status);
-  return option ? option.color : '';
-}
+  getStatusColor(status: string): string {
+    const option = this.selectOptions.find(opt => opt.value === status);
+    return option ? option.color : '';
+  }
 }

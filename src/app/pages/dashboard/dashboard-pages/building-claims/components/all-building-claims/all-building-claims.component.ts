@@ -263,6 +263,11 @@ export class AllBuildingClaimsComponent {
 
   getPagination(): number[] {
     const dataLength = this.filteredClaims.length;
+
+    if (dataLength <= 10) {
+      return [10];
+    }
+
     return [10, 25, 50, 100, dataLength].filter(opt => opt <= dataLength);
   }
   formatDate(dateString: string): string {

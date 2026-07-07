@@ -52,8 +52,10 @@ export class AllMedicalRequestsComponent {
   filteredRequests: MedicalRequest[] = [];
   totalRecords: number = 0;
   rowsPerPage = 10;
+  rowsPerPageOptions: number[] = [];
   selectedStatus: string | null = null;
   selectedRequestType: string | null = null;
+  searchTerm: string = '';
   requestTypeOptions: { label: string; value: string }[] = [];
   statusSteps = ['requested', 'pending', 'confirmed', 'canceled'];
   sortField: string | null = null;
@@ -71,7 +73,6 @@ export class AllMedicalRequestsComponent {
     this.initRequestTypeOptions();
     this.applyFilters();
     this.ngxSpinnerService.hide('actionsLoader');
-
   }
 
   constructor(private cdRef: ChangeDetectorRef) { }
@@ -135,35 +136,15 @@ export class AllMedicalRequestsComponent {
       filtered = filtered.filter((request) => (request.request_type || 'individual') === this.selectedRequestType);
     }
 
-    if (this.sortField) {
-      filtered.sort((a, b) => this.compareValues(a, b, this.sortField, this.sortOrder));
-    }
-
-    this.filteredRequests = filtered;
-    this.totalRecords = filtered.length;
-  }
-
-  onGlobalFilter(dt: Table, event: Event) {
-    const inputElement = event.target as HTMLInputElement;
-    const value = inputElement.value.toLowerCase();
-    let filtered = [...this.requests];
-
-    if (this.selectedStatus !== null) {
-      filtered = filtered.filter((request) => request.active_status === this.selectedStatus);
-    }
-
-    if (this.selectedRequestType !== null) {
-      filtered = filtered.filter((request) => (request.request_type || 'individual') === this.selectedRequestType);
-    }
-
-    if (value) {
+    if (this.searchTerm) {
+      const term = this.searchTerm.toLowerCase();
       filtered = filtered.filter((request) =>
-        request.id.toString().includes(value) ||
-        request.name.toLowerCase().includes(value) ||
-        (request.email && request.email.toLowerCase().includes(value)) ||
-        (request.phone && request.phone.includes(value)) ||
-        request.active_status.toLowerCase().includes(value) ||
-        (request.request_type && request.request_type.toLowerCase().includes(value))
+        (request.id?.toString().toLowerCase() || '').includes(term) ||
+        (request.name?.toLowerCase() || '').includes(term) ||
+        (request.email?.toLowerCase() || '').includes(term) ||
+        (request.phone?.toString().toLowerCase() || '').includes(term) ||
+        (request.active_status?.toLowerCase() || '').includes(term) ||
+        (request.request_type?.toLowerCase() || '').includes(term)
       );
     }
 
@@ -173,6 +154,27 @@ export class AllMedicalRequestsComponent {
 
     this.filteredRequests = filtered;
     this.totalRecords = filtered.length;
+    this.updatePaginationOptions();
+  }
+
+  onGlobalFilter(dt: Table, event: Event) {
+    const inputElement = event.target as HTMLInputElement;
+    this.searchTerm = inputElement.value;
+
+    if (dt) {
+      dt.first = 0;
+    }
+    this.currentPage = 1;
+    this.applyFilters();
+  }
+
+  updatePaginationOptions() {
+    const dataLength = this.filteredRequests.length;
+    if (dataLength < 10) {
+      this.rowsPerPageOptions = [dataLength];
+    } else {
+      this.rowsPerPageOptions = [10, 25, 50, 100, dataLength].filter(opt => opt <= dataLength);
+    }
   }
 
   compareValues(a: MedicalRequest, b: MedicalRequest, field: string | null, order: number): number {
@@ -197,11 +199,19 @@ export class AllMedicalRequestsComponent {
 
   onFilterChange(value: string | null): void {
     this.selectedStatus = value;
+    if (this.dt) {
+      this.dt.first = 0;
+    }
+    this.currentPage = 1;
     this.applyFilters();
   }
 
   onRequestTypeFilterChange(value: string | null): void {
     this.selectedRequestType = value;
+    if (this.dt) {
+      this.dt.first = 0;
+    }
+    this.currentPage = 1;
     this.applyFilters();
   }
 
@@ -244,10 +254,6 @@ export class AllMedicalRequestsComponent {
     });
   }
 
-  getPagination(): number[] {
-    const dataLength = this.filteredRequests.length;
-    return [10, 25, 50, 100, dataLength].filter(opt => opt <= dataLength);
-  }
   formatDate(dateString: string): string {
     return new Date(dateString).toLocaleDateString('en-US', {
       year: 'numeric',
@@ -272,5 +278,4 @@ export class AllMedicalRequestsComponent {
     const option = this.selectOptions.find(opt => opt.value === status);
     return option ? option.color : '';
   }
-
 }

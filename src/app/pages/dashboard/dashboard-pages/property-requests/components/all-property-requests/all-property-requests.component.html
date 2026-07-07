@@ -16,7 +16,7 @@
   </div>
 
   <p-table #dt [paginator]="true" [rows]="rowsPerPage" [totalRecords]="totalRecords"
-    [rowsPerPageOptions]="getPagination()" [showCurrentPageReport]="true" [value]="filteredRequests"
+    [rowsPerPageOptions]="rowsPerPageOptions" [showCurrentPageReport]="true" [value]="filteredRequests"
     [sortMode]="'multiple'" responsiveLayout="scroll" (onSort)="onSort($event)" (onPage)="onPageChange($event)">
     <ng-template pTemplate="header">
       <tr class="text-center">

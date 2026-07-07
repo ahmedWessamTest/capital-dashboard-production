@@ -11,7 +11,6 @@ import { NoDataFoundBannerComponent } from '../../../../../../shared/components/
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { MotorRequestsService, MotorRequest } from '../../services/motors-requests.service';
-import { debounceTime, Subject } from 'rxjs';
 
 interface StatusOption {
   label: string;
@@ -51,8 +50,10 @@ export class AllMotorsRequestsComponent {
   filteredRequests: MotorRequest[] = [];
   totalRecords: number = 0;
   rowsPerPage = 10;
+  rowsPerPageOptions: number[] = [];
   selectedStatus: string | null = null;
   selectedRequestType: string | null = null;
+  searchTerm: string = '';
   requestTypeOptions: { label: string; value: string }[] = [];
   statusSteps = ['requested', 'pending', 'confirmed', 'canceled'];
   sortField: string | null = null;
@@ -60,7 +61,6 @@ export class AllMotorsRequestsComponent {
   currentPage: number = 1;
   selectOptions: StatusOption[] = [];
   isLoading = signal<boolean>(false);
-  private searchSubject = new Subject<string>();
   @ViewChild('dt') dt!: Table;
 
   ngOnInit() {
@@ -71,13 +71,6 @@ export class AllMotorsRequestsComponent {
     this.initRequestTypeOptions();
     this.applyFilters();
     this.ngxSpinnerService.hide('actionsLoader');
-    this.setupSearchDebounce();
-  }
-
-  setupSearchDebounce() {
-    this.searchSubject.pipe(debounceTime(300)).subscribe(value => {
-      this.applyGlobalFilter(value);
-    });
   }
 
   initDropDownFilter(): void {
@@ -128,57 +121,48 @@ export class AllMotorsRequestsComponent {
       filtered = filtered.filter(request => (request.request_type || 'individual') === this.selectedRequestType);
     }
 
+    if (this.searchTerm) {
+      const term = this.searchTerm.toLowerCase();
+      filtered = filtered.filter(request =>
+        (request.id?.toString().toLowerCase() || '').includes(term) ||
+        (request.name?.toLowerCase() || '').includes(term) ||
+        (request.email?.toLowerCase() || '').includes(term) ||
+        (request.phone?.toString().toLowerCase() || '').includes(term) ||
+        (request.active_status?.toLowerCase() || '').includes(term) ||
+        (request.car_type?.toLowerCase() || '').includes(term) ||
+        (request.car_brand?.toLowerCase() || '').includes(term) ||
+        (request.car_model?.toLowerCase() || '').includes(term) ||
+        (request.request_type?.toLowerCase() || '').includes(term)
+      );
+    }
+
     if (this.sortField) {
       filtered.sort((a, b) => this.compareValues(a, b, this.sortField, this.sortOrder));
     }
 
     this.filteredRequests = filtered;
     this.totalRecords = filtered.length;
-    this.cdRef.detectChanges();
+    this.updatePaginationOptions();
   }
 
   onGlobalFilter(event: Event) {
     const inputElement = event.target as HTMLInputElement;
-    const value = inputElement.value.trim().toLowerCase();
-    this.searchSubject.next(value);
+    this.searchTerm = inputElement.value;
+    
+    if (this.dt) {
+      this.dt.first = 0;
+    }
+    this.currentPage = 1;
+    this.applyFilters();
   }
 
-  applyGlobalFilter(value: string): void {
-    let filtered = [...this.requests];
-
-    if (this.selectedStatus !== null) {
-      filtered = filtered.filter(request => request.active_status === this.selectedStatus);
+  updatePaginationOptions() {
+    const dataLength = this.filteredRequests.length;
+    if (dataLength < 10) {
+      this.rowsPerPageOptions = [dataLength];
+    } else {
+      this.rowsPerPageOptions = [10, 25, 50, 100, dataLength].filter(opt => opt <= dataLength);
     }
-
-    if (this.selectedRequestType !== null) {
-      filtered = filtered.filter(request => (request.request_type || 'individual') === this.selectedRequestType);
-    }
-
-    if (value) {
-      filtered = filtered.filter(request => {
-        return (
-          (request.id?.toString().toLowerCase() || '').includes(value) ||
-          (request.name?.toLowerCase() || '').includes(value) ||
-          (request.email?.toLowerCase() || '').includes(value) ||
-          (request.phone?.toString().toLowerCase() || '').includes(value) ||
-          (request.active_status?.toLowerCase() || '').includes(value) ||
-          (request.car_type?.toLowerCase() || '').includes(value) ||
-          (request.car_brand?.toLowerCase() || '').includes(value) ||
-          (request.car_model?.toLowerCase() || '').includes(value) ||
-          (request.request_type?.toLowerCase() || '').includes(value)
-        );
-      });
-    }
-
-    if (this.sortField) {
-      filtered.sort((a, b) => this.compareValues(a, b, this.sortField, this.sortOrder));
-    }
-
-    this.filteredRequests = filtered;
-    this.totalRecords = filtered.length;
-    this.dt.first = 0; // Reset pagination to first page
-    this.currentPage = 1;
-    this.cdRef.detectChanges();
   }
 
   compareValues(a: MotorRequest, b: MotorRequest, field: string | null, order: number): number {
@@ -206,11 +190,19 @@ export class AllMotorsRequestsComponent {
 
   onFilterChange(value: string | null): void {
     this.selectedStatus = value;
+    if (this.dt) {
+      this.dt.first = 0;
+    }
+    this.currentPage = 1;
     this.applyFilters();
   }
 
   onRequestTypeFilterChange(value: string | null): void {
     this.selectedRequestType = value;
+    if (this.dt) {
+      this.dt.first = 0;
+    }
+    this.currentPage = 1;
     this.applyFilters();
   }
 
@@ -253,11 +245,6 @@ export class AllMotorsRequestsComponent {
     });
   }
 
-  getPagination(): number[] {
-    const dataLength = this.filteredRequests.length;
-    return [10, 25, 50, 100, dataLength].filter(opt => opt <= dataLength);
-  }
-
   formatDate(dateString: string): string {
     return new Date(dateString).toLocaleDateString('en-US', {
       year: 'numeric',
@@ -267,18 +254,19 @@ export class AllMotorsRequestsComponent {
       minute: 'numeric'
     });
   }
+
   getStatusLabel(status: string): string {
-  const option = this.selectOptions.find(opt => opt.value === status);
-  return option ? option.label : status;
-}
+    const option = this.selectOptions.find(opt => opt.value === status);
+    return option ? option.label : status;
+  }
 
-getStatusIcon(status: string): string {
-  const option = this.selectOptions.find(opt => opt.value === status);
-  return option ? option.icon : '';
-}
+  getStatusIcon(status: string): string {
+    const option = this.selectOptions.find(opt => opt.value === status);
+    return option ? option.icon : '';
+  }
 
-getStatusColor(status: string): string {
-  const option = this.selectOptions.find(opt => opt.value === status);
-  return option ? option.color : '';
-}
+  getStatusColor(status: string): string {
+    const option = this.selectOptions.find(opt => opt.value === status);
+    return option ? option.color : '';
+  }
 }

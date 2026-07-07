@@ -44,7 +44,6 @@ interface TypeOption {
     CalendarModule
   ],
   templateUrl: './all-medical-claims.component.html',
-  styleUrl: './all-medical-claims.component.scss',
   providers: [MessageService]
 })
 export class AllMedicalClaimsComponent {
@@ -261,6 +260,11 @@ export class AllMedicalClaimsComponent {
 
   getPagination(): number[] {
     const dataLength = this.filteredClaims.length;
+
+    if (dataLength <= 10) {
+      return [10];
+    }
+
     return [10, 25, 50, 100, dataLength].filter(opt => opt <= dataLength);
   }
 

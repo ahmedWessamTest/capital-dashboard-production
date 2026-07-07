@@ -267,8 +267,6 @@ export class AllUsersComponent implements OnDestroy, OnInit {
 
   toggleStatus(user: any): void {
     this.spinner.show('actionsLoader');
-    // Two-way bound user.is_active is already true/false matching the new toggled state.
-    // API expects 1 to delete/deactivate, and 0 to activate.
     const newStatus = user.is_active ? 0 : 1;
     const action$ = newStatus ? this.userService.delete(user.id) : this.userService.activate(user.id);
     action$.subscribe({
@@ -278,7 +276,6 @@ export class AllUsersComponent implements OnDestroy, OnInit {
         this.spinner.hide('actionsLoader');
       },
       error: () => {
-        // Rollback state in case of API failure
         user.is_active = !user.is_active;
         this.showError('Failed to update user status');
         this.spinner.hide('actionsLoader');

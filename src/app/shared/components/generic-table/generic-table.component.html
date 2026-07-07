@@ -1,7 +1,7 @@
 <p-toast></p-toast>
 
 @if (!isLoading) {
-<div class="card overflow-x-auto">
+<div class="card ">
   <!-- Header Section -->
   <div class="flex flex-column md:flex-row md:justify-content-between md:align-items-center mb-3 gap-2">
     <h2 class="text-xl md:text-2xl font-semibold m-0">{{ title }}</h2>
@@ -35,7 +35,7 @@
     [rowsPerPageOptions]="getPagination()" [showCurrentPageReport]="true"
     currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries" [value]="filteredData"
     responsiveLayout="scroll" [scrollable]="true" scrollDirection="both" (onPage)="onPageChange($event)"
-    [tableStyle]="{ 'min-width': '700px' }" dropdownAppendTo="body">
+    [tableStyle]="{ 'min-width': '50rem' }" dropdownAppendTo="body">
     <ng-template pTemplate="header">
       <tr class="text-center">
         @for (col of columns; track col.field) { @if (col.sortable) {

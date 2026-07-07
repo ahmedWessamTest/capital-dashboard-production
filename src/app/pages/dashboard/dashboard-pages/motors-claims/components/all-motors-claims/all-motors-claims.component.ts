@@ -1,4 +1,4 @@
-import { Component, inject, signal, ViewChild } from '@angular/core';
+import { ChangeDetectionStrategy, Component, inject, signal, ViewChild } from '@angular/core';
 import { ActivatedRoute, RouterLink } from '@angular/router';
 import { NgxSpinnerModule, NgxSpinnerService } from 'ngx-spinner';
 import { MessageService } from 'primeng/api';
@@ -43,8 +43,8 @@ interface TypeOption {
     CalendarModule,
   ],
   templateUrl: './all-motors-claims.component.html',
-  styleUrl: './all-motors-claims.component.scss',
   providers: [MessageService],
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class AllMotorsClaimsComponent {
   private ngxSpinnerService = inject(NgxSpinnerService);
@@ -261,6 +261,11 @@ export class AllMotorsClaimsComponent {
   }
   getPagination(): number[] {
     const dataLength = this.filteredClaims.length;
+
+    if (dataLength <= 10) {
+      return [10];
+    }
+
     return [10, 25, 50, 100, dataLength].filter(opt => opt <= dataLength);
   }
 

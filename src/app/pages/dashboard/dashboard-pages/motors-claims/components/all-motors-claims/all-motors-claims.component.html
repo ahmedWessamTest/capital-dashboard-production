@@ -14,13 +14,13 @@
       <input type="text" pInputText placeholder="Search claims..." (input)="onGlobalFilter(dt, $event)" />
     </span>
   </div>
-  <div class="overflow-x-auto">
+  <div>
 
     <p-table #dt [paginator]="true" [rows]="rowsPerPage" [totalRecords]="totalRecords"
       [rowsPerPageOptions]="getPagination()" [showCurrentPageReport]="true" [value]="filteredClaims"
       responsiveLayout="scroll" [tableStyle]="{ 'min-width': '70rem' }"
       currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries" [sortMode]="'multiple'"
-      (onSort)="onSort($event)" (onPage)="onPageChange($event)">
+      (onSort)="onSort($event)" (onPage)="onPageChange($event)" dropdownAppendTo="body">
       <ng-template pTemplate="header">
         <tr class="text-center">
           <th pSortableColumn="id" class="text-center">
